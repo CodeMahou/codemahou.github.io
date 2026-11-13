@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiMeCo v3.0 — Universal Windows Media &amp; PC Remote Controller | Code Mahou</title>
+  <meta name="description" content="Control Spotify, YouTube, VLC, MPC-HC, PotPlayer, system volume, touchpad, and power timers on your Windows PC directly from your Android phone over Wi-Fi or Bluetooth." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.78);
+      --bg-card-hover: rgba(24, 34, 66, 0.92);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(148, 163, 184, 0.16);
+      --accent-indigo: #6366f1;
+      --accent-violet: #a855f7;
+      --accent-gold: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-cyan: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    html[dir="rtl"] body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 14, 29, 0.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    .brand-link img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-indigo);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fde68a;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .btn-download-win {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 26px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.98rem;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.25s ease;
+    }
+    .btn-download-win:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(124, 58, 237, 0.55);
+    }
+    .btn-playstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 24px;
+      border-radius: 14px;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 0.96rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .btn-playstore:hover {
+      transform: translateY(-2px);
+      opacity: 0.94;
+    }
+
+    .download-card {
+      background: linear-gradient(160deg, rgba(24, 34, 66, 0.85), rgba(13, 18, 36, 0.95));
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 26px;
+      padding: 32px;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
+    }
+    .download-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #f8fafc;
+    }
+    .spec-list {
+      list-style: none;
+      margin: 16px 0 22px;
+    }
+    .spec-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+    .spec-list li strong {
+      color: var(--text-primary);
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 44px 24px;
+    }
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 26px;
+    }
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: #f8fafc;
+    }
+    .card p, .card li {
+      color: var(--text-secondary);
+      font-size: 0.93rem;
+    }
+    .card ul, .card ol {
+      padding-inline-start: 20px;
+      margin-top: 8px;
+    }
+    .card li { margin-bottom: 6px; }
+    .pro-tag {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.16);
+      color: #fde68a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-inline-start: 6px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 36px 24px;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link">
+        <img src="./assets/logo-main.png" alt="Code Mahou" onerror="this.src='./assets/favicon.svg'" />
+        <span>Code Mahou • WiMeCo</span>
+      </a>
+      <div class="nav-actions">
+        <button type="button" class="btn-outline" id="langBtn">🌐 <span id="langLabel">عربي</span></button>
+        <a href="./wimeco_privacy_policy.html" class="btn-outline" data-i18n="navPrivacy">🛡️ Privacy Policy</a>
+        <a href="./index.html" class="btn-outline" data-i18n="navHome">🏠 All Apps</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge-pill">
+          <span>★</span>
+          <span data-i18n="heroBadge">WIMECO V3.0 • WINDOWS &amp; ANDROID REMOTE SUITE</span>
+        </div>
+        <h1 data-i18n-html="heroTitle">
+          Control Any Media Player &amp; Your Windows PC <span class="gradient-text">From Your Phone.</span>
+        </h1>
+        <p class="hero-lead" data-i18n="heroLead">
+          Whether you are watching movies across the room on VLC or MPC-HC, streaming YouTube or Spotify on Chrome, or listening in bed — WiMeCo turns your Android phone into a fast, wireless media dashboard, touchpad, and sleep timer over Wi-Fi or Bluetooth.
+        </p>
+
+        <div class="cta-row">
+          <a href="./downloads/WiMeCo-Windows.zip" download class="btn-download-win">
+            <span>💻</span>
+            <span data-i18n="btnDownloadWin">Download WiMeCo for Windows (.ZIP)</span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.wimico" target="_blank" rel="noopener" class="btn-playstore">
+            <span>▶</span>
+            <span data-i18n="btnPlayStore">Get Android App on Google Play</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <h3 data-i18n="cardWinTitle">💻 WiMeCo Windows Companion v3.0</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;" data-i18n="cardWinDesc">
+          Lightweight, portable desktop server with instant QR code pairing, UDP auto-discovery, and native Windows 10/11 SMTC media session integration.
+        </p>
+        <ul class="spec-list">
+          <li><span data-i18n="specVersion">Latest Version</span><strong>v3.0.0 Release</strong></li>
+          <li><span data-i18n="specPlatform">Supported OS</span><strong>Windows 10 / Windows 11 (64-bit)</strong></li>
+          <li><span data-i18n="specTransport">Connection Modes</span><strong>Wi-Fi (QR / Auto-Discovery) &amp; Bluetooth</strong></li>
+          <li><span data-i18n="specPlayers">Supported Players</span><strong>Spotify, YouTube, VLC, MPC, PotPlayer, All Browsers</strong></li>
+        </ul>
+        <a href="./downloads/WiMeCo-Windows.zip" download class="btn-download-win" style="width: 100%; justify-content: center;">
+          <span data-i18n="btnDirectZip">⬇ Direct Download (WiMeCo-Windows.zip)</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- HOW TO USE / STEP-BY-STEP GUIDE -->
+    <section class="section" id="guide">
+      <h2 class="section-title" data-i18n="guideTitle">🚀 How to Connect &amp; Use WiMeCo</h2>
+      <p class="section-sub" data-i18n="guideSub">Set up wireless control between your Android phone and Windows PC in less than 30 seconds.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-i18n="step1Title">1. Run WiMeCo on Windows</h3>
+          <ol>
+            <li data-i18n="step1_1">Download <strong>WiMeCo-Windows.zip</strong> above and extract the folder on your PC.</li>
+            <li data-i18n="step1_2">Launch <strong>WiMeCo.exe</strong>. A QR Code and a 4-digit Pairing PIN will appear on the main screen.</li>
+            <li data-i18n="step1_3">If Windows Firewall prompts you, allow access on Private/Local networks so your phone can reach your PC.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="step2Title">2. Connect via Wi-Fi (Recommended)</h3>
+          <ol>
+            <li data-i18n="step2_1">Connect your Android phone and Windows PC to the same Wi-Fi network.</li>
+            <li data-i18n="step2_2">Open the WiMeCo Android app and tap the central <strong>Connect</strong> button.</li>
+            <li data-i18n="step2_3">Choose <strong>Scan QR Code from PC Screen</strong> for instant 1-second pairing, or select <strong>Auto-Discover PC on Wi-Fi Network</strong> and enter the 4-digit PIN.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="step3Title">3. Or Connect via Bluetooth</h3>
+          <ol>
+            <li data-i18n="step3_1">Turn on Bluetooth on both your Windows PC and Android phone, and pair them once in Bluetooth settings.</li>
+            <li data-i18n="step3_2">In the WiMeCo Android app, tap <strong>Connect</strong> &rarr; <strong>Connect via Bluetooth</strong> and select your PC.</li>
+            <li data-i18n="step3_3"><em>Note:</em> Over Bluetooth, WiMeCo automatically uses compact album art thumbnails so playback commands respond with zero lag.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES OVERVIEW -->
+    <section class="section">
+      <h2 class="section-title" data-i18n="featTitle">✨ Complete Feature Suite</h2>
+      <p class="section-sub" data-i18n="featSub">Everything you need for couch or bedside PC control — plus an cross-platform Pro unlock.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-i18n="f1Title">🎵 Universal Media &amp; Audio</h3>
+          <ul>
+            <li data-i18n="f1_1">Live Song/Video Title, Artist &amp; Blurred Album Art Cover.</li>
+            <li data-i18n="f1_2">Play / Pause, Next / Previous Track, and Swipe Album Art gestures.</li>
+            <li data-i18n="f1_3">Fast <strong>-10s / +10s</strong> skip buttons &amp; <strong>Fullscreen (F)</strong> toggle.</li>
+            <li data-i18n="f1_4">Master Windows Volume Slider (0–100%) &amp; Instant Mute Toggle.</li>
+            <li data-i18n="f1_5">Send text to PC Clipboard or open any URL directly in your PC browser.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3><span data-i18n="f2Title">🖱 Remote Touchpad &amp; Cinema</span> <span class="pro-tag">PRO ★</span></h3>
+          <ul>
+            <li data-i18n="f2_1"><strong>Interactive Timeline Seekbar:</strong> Jump to any exact second in your song or movie.</li>
+            <li data-i18n="f2_2"><strong>Multi-App Session Switcher:</strong> Switch between Spotify, Chrome/YouTube, and VLC from your phone.</li>
+            <li data-i18n="f2_3"><strong>Remote PC Touchpad &amp; Keyboard:</strong> Control the PC mouse cursor, Left/Right click, type text, or run a 1-tap YouTube search.</li>
+            <li data-i18n="f2_4"><strong>Movie Player Shortcuts:</strong> Toggle Subtitles (V/C), cycle Audio Tracks (B), change Aspect Ratio (A), or close the player (Alt+F4).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3><span data-i18n="f3Title">⏱ Smart Timers &amp; Lock Screen</span> <span class="pro-tag">PRO ★</span></h3>
+          <ul>
+            <li data-i18n="f3_1"><strong>Pause Media Only Timer:</strong> Automatically pause playback after 15, 30, or 60 minutes without shutting down your PC.</li>
+            <li data-i18n="f3_2"><strong>PC Sleep &amp; Shutdown Timer:</strong> Schedule PC Sleep or Shutdown, or immediately Lock Screen / Turn Off Monitor.</li>
+            <li data-i18n="f3_3"><strong>Lock-Screen Media Notification &amp; Home Screen Widget:</strong> Control your PC without even opening the app.</li>
+            <li data-i18n="f3_4"><strong>One Pro Subscription Unlocks Both:</strong> Subscribing on Android (or watching a Rewarded Ad for a 6-hour Free Pro Pass) unlocks Pro features on both Android &amp; Windows!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Code Mahou</strong> — WiMeCo (`com.codemahou.wimico`).</p>
+    <p style="margin-top: 8px;">
+      <a href="./index.html">Code Mahou Studio</a> •
+      <a href="./wimeco_privacy_policy.html">Privacy Policy</a> •
+      <a href="./downloads/WiMeCo-Windows.zip" download>Download Windows ZIP</a> •
+      <a href="https://play.google.com/store/apps/details?id=com.codemahou.wimico" target="_blank" rel="noopener">Google Play</a>
+    </p>
+  </footer>
+
+  <script>
+    const DICT = {
+      en: {
+        navPrivacy: "🛡️ Privacy Policy",
+        navHome: "🏠 All Apps",
+        heroBadge: "WIMECO V3.0 • WINDOWS & ANDROID REMOTE SUITE",
+        heroTitle: 'Control Any Media Player &amp; Your Windows PC <span class="gradient-text">From Your Phone.</span>',
+        heroLead: "Whether you are watching movies across the room on VLC or MPC-HC, streaming YouTube or Spotify on Chrome, or listening in bed — WiMeCo turns your Android phone into a fast, wireless media dashboard, touchpad, and sleep timer over Wi-Fi or Bluetooth.",
+        btnDownloadWin: "Download WiMeCo for Windows (.ZIP)",
+        btnPlayStore: "Get Android App on Google Play",
+        cardWinTitle: "💻 WiMeCo Windows Companion v3.0",
+        cardWinDesc: "Lightweight, portable desktop server with instant QR code pairing, UDP auto-discovery, and native Windows 10/11 SMTC media session integration.",
+        specVersion: "Latest Version",
+        specPlatform: "Supported OS",
+        specTransport: "Connection Modes",
+        specPlayers: "Supported Players",
+        btnDirectZip: "⬇ Direct Download (WiMeCo-Windows.zip)",
+        guideTitle: "🚀 How to Connect & Use WiMeCo",
+        guideSub: "Set up wireless control between your Android phone and Windows PC in less than 30 seconds.",
+        step1Title: "1. Run WiMeCo on Windows",
+        step1_1: "Download WiMeCo-Windows.zip above and extract the folder on your PC.",
+        step1_2: "Launch WiMeCo.exe. A QR Code and a 4-digit Pairing PIN will appear on the main screen.",
+        step1_3: "If Windows Firewall prompts you, allow access on Private/Local networks so your phone can reach your PC.",
+        step2Title: "2. Connect via Wi-Fi (Recommended)",
+        step2_1: "Connect your Android phone and Windows PC to the same Wi-Fi network.",
+        step2_2: "Open the WiMeCo Android app and tap the central Connect button.",
+        step2_3: "Choose Scan QR Code from PC Screen for instant 1-second pairing, or select Auto-Discover PC on Wi-Fi Network and enter the 4-digit PIN.",
+        step3Title: "3. Or Connect via Bluetooth",
+        step3_1: "Turn on Bluetooth on both your Windows PC and Android phone, and pair them once in Bluetooth settings.",
+        step3_2: "In the WiMeCo Android app, tap Connect → Connect via Bluetooth and select your PC.",
+        step3_3: "Note: Over Bluetooth, WiMeCo automatically uses compact album art thumbnails so playback commands respond with zero lag.",
+        featTitle: "✨ Complete Feature Suite",
+        featSub: "Everything you need for couch or bedside PC control — plus a cross-platform Pro unlock.",
+        f1Title: "🎵 Universal Media & Audio",
+        f1_1: "Live Song/Video Title, Artist & Blurred Album Art Cover.",
+        f1_2: "Play / Pause, Next / Previous Track, and Swipe Album Art gestures.",
+        f1_3: "Fast -10s / +10s skip buttons & Fullscreen (F) toggle.",
+        f1_4: "Master Windows Volume Slider (0–100%) & Instant Mute Toggle.",
+        f1_5: "Send text to PC Clipboard or open any URL directly in your PC browser.",
+        f2Title: "🖱 Remote Touchpad & Cinema",
+        f2_1: "Interactive Timeline Seekbar: Jump to any exact second in your song or movie.",
+        f2_2: "Multi-App Session Switcher: Switch between Spotify, Chrome/YouTube, and VLC from your phone.",
+        f2_3: "Remote PC Touchpad & Keyboard: Control the PC mouse cursor, Left/Right click, type text, or run a 1-tap YouTube search.",
+        f2_4: "Movie Player Shortcuts: Toggle Subtitles (V/C), cycle Audio Tracks (B), change Aspect Ratio (A), or close the player (Alt+F4).",
+        f3Title: "⏱ Smart Timers & Lock Screen",
+        f3_1: "Pause Media Only Timer: Automatically pause playback after 15, 30, or 60 minutes without shutting down your PC.",
+        f3_2: "PC Sleep & Shutdown Timer: Schedule PC Sleep or Shutdown, or immediately Lock Screen / Turn Off Monitor.",
+        f3_3: "Lock-Screen Media Notification & Home Screen Widget: Control your PC without even opening the app.",
+        f3_4: "One Pro Subscription Unlocks Both: Subscribing on Android (or watching a Rewarded Ad for a 6-hour Free Pro Pass) unlocks Pro features on both Android & Windows!"
+      },
+      ar: {
+        navPrivacy: "🛡️ سياسة الخصوصية",
+        navHome: "🏠 كل التطبيقات",
+        heroBadge: "WIMECO V3.0 • التحكم الشامل في الكمبيوتر والميديا",
+        heroTitle: 'تحكّم في جميع مشغلات الميديا وجهاز الكمبيوتر <span class="gradient-text">من هاتفك الأندرويد.</span>',
+        heroLead: "سواء كنت تشاهد فيلماً عن بُعد على VLC أو MPC-HC، أو تستمع إلى Spotify و YouTube على المتصفح، يحوّل تطبيق WiMeCo هاتفك إلى لوحة تحكم لاسلكية فائقة السرعة مع ماوس وكيبورد عن بُعد ومؤقت نوم عبر الـ Wi-Fi أو البلوتوث.",
+        btnDownloadWin: "تحميل نسخة الويندوز WiMeCo (.ZIP)",
+        btnPlayStore: "تحميل تطبيق الأندرويد من Google Play",
+        cardWinTitle: "💻 برنامج WiMeCo للويندوز v3.0",
+        cardWinDesc: "نسخة خفيفة ومحمولة (Portable) تعمل فوراً مع اقتران سريع عبر رمز QR واكتشاف تلقائي على الشبكة ودعم كامل لنظام Windows 10/11.",
+        specVersion: "أحدث إصدار",
+        specPlatform: "الأنظمة المدعومة",
+        specTransport: "طرق التوصيل",
+        specPlayers: "المشغلات المدعومة",
+        btnDirectZip: "⬇ تحميل مباشر لنسخة الويندوز (WiMeCo-Windows.zip)",
+        guideTitle: "🚀 طريقة التوصيل والاستخدام",
+        guideSub: "اربط هاتفك الأندرويد بجهاز الكمبيوتر لاسلكياً في أقل من 30 ثانية.",
+        step1Title: "1. تشغيل البرنامج على الكمبيوتر",
+        step1_1: "حمّل ملف WiMeCo-Windows.zip من الأعلى وقم بفك الضغط عنه على جهاز الكمبيوتر.",
+        step1_2: "شغّل ملف WiMeCo.exe، وسيظهر لك رمز QR Code وكود اقتران مكون من 4 أرقام.",
+        step1_3: "إذا ظهرت رسالة من جدار الحماية (Windows Firewall)، اسمح للبرنامج بالاتصال على الشبكة المحلية.",
+        step2Title: "2. التوصيل عبر الـ Wi-Fi (موصى به)",
+        step2_1: "تأكد من اتصال الهاتف والكمبيوتر بنفس شبكة الـ Wi-Fi.",
+        step2_2: "افتح تطبيق WiMeCo على هاتفك واضغط على زر التوصيل الرئيسي (Connect).",
+        step2_3: "اختر مسح رمز الـ QR من شاشة الكمبيوتر للاقتران الفوري، أو اختر البحث التلقائي على الشبكة وأدخل الكود المكون من 4 أرقام.",
+        step3Title: "3. التوصيل عبر البلوتوث (Bluetooth)",
+        step3_1: "شغّل البلوتوث في الهاتف والكمبيوتر وقم بعمل اقتران (Pair) بينهما من إعدادات البلوتوث لمرة واحدة.",
+        step3_2: "من داخل تطبيق الأندرويد اضغط Connect ثم اختر Connect via Bluetooth واختر اسم جهاز الكمبيوتر.",
+        step3_3: "ملاحظة: عند الاتصال عبر البلوتوث يقوم التطبيق تلقائياً بضغط صور الألبومات المصغرة لضمان سرعة استجابة فورية للأزرار.",
+        featTitle: "✨ مميزات التطبيق الكاملة",
+        featSub: "كل ما تحتاجه للتحكم في جهاز الكمبيوتر والميديا عن بُعد — مع اشتراك Pro موحد يفتح المزايا على الهاتف والويندوز معاً.",
+        f1Title: "🎵 تحكم شامل في الصوت والميديا",
+        f1_1: "عرض مباشر لاسم الأغنية/الفيديو والفنان وصورة الألبوم على هاتفك.",
+        f1_2: "تشغيل/إيقاف مؤقت، المقطع التالي/السابق، والسحب يميناً أو يساراً على صورة الألبوم.",
+        f1_3: "أزرار تقديم وتأخير سريع (-10 ثوانٍ / +10 ثوانٍ) وزر تكبير الشاشة (Fullscreen).",
+        f1_4: "شريط تحكم كامل في مستوى صوت الويندوز (0–100%) مع زر كتم الصوت (Mute).",
+        f1_5: "إرسال النصوص لحافظة الكمبيوتر (Clipboard) أو فتح الروابط مباشرة في متصفح الكمبيوتر.",
+        f2Title: "🖱 ماوس وكيبورد واختصارات الأفلام",
+        f2_1: "شريط التقديم الزمني التفاعلي (Timeline Seekbar): انتقل لأي ثانية في الفيلم أو الأغنية مباشرة.",
+        f2_2: "التبديل بين المشغلات (Session Switcher): تنقل بين Spotify و YouTube و VLC من هاتفك.",
+        f2_3: "لوحة لمس (Touchpad) وكيبورد عن بُعد: حرّك مؤشر الماوس، اضغط كليك يمين/يسار، واكتب أو ابحث في يوتيوب بضغطة واحدة.",
+        f2_4: "اختصارات مشغلات الأفلام: تشغيل/تغيير الترجمة (Subtitles)، تغيير المسار الصوتي، تعديل أبعاد الشاشة، أو إغلاق المشغل.",
+        f3Title: "⏱ مؤقت النوم والتحكم من شاشة القفل",
+        f3_1: "مؤقت إيقاف الميديا فقط (Pause Media Only): أوقف تشغيل الفيديو أو الموسيقى بعد 15 أو 30 أو 60 دقيقة مع ترك الكمبيوتر يعمل.",
+        f3_2: "مؤقت النوم وإيقاف التشغيل: جدولة وضع السكون (Sleep) أو إيقاف التشغيل (Shutdown) أو قفل الشاشة وإطفاء الشاشة فوراً.",
+        f3_3: "إشعار الميديا التفاعلي ووالتحكم من الشاشة الرئيسية (Widget) وأزرار الصوت حتى والهاتف مغلق.",
+        f3_4: "اشتراك Pro واحد يفتح كل شيء: اشتراكك في الأندرويد (أو مشاهدة إعلان للحصول على 6 ساعات Pro مجاناً) يفعّل كافة ميزات البرو على الهاتف والويندوز معاً!"
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "en";
+    const langBtn = document.getElementById("langBtn");
+    const langLabel = document.getElementById("langLabel");
+
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      langLabel.textContent = l === "ar" ? "English" : "عربي";
+      const d = DICT[l];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (d[k]) el.textContent = d[k];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const k = el.getAttribute("data-i18n-html");
+        if (d[k]) el.innerHTML = d[k];
+      });
+    }
+
+    langBtn.addEventListener("click", () => setLang(lang === "en" ? "ar" : "en"));
+    setLang(lang);
+  </script>
+</body>
+</html>

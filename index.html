@@ -1490,6 +1490,22 @@
           </div>
           <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
         </a>
+
+        <a href="./wimeco_privacy_policy.html" class="legal-card">
+          <div class="legal-info">
+            <h3>WiMeCo: Windows Media Controller — Privacy Policy</h3>
+            <p>com.codemahou.wimico • AR / EN</p>
+          </div>
+          <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./wimeco.html" class="legal-card">
+          <div class="legal-info">
+            <h3>WiMeCo v3.0 — Official Guide &amp; Windows Client Download</h3>
+            <p>downloads/WiMeCo-Windows.zip • AR / EN</p>
+          </div>
+          <span class="legal-badge">Download &amp; Guide &rarr;</span>
+        </a>
       </div>
     </section>
   </main>
@@ -1503,6 +1519,8 @@
       <div class="footer-links">
         <a href="#apps" data-i18n="navApps">Applications</a>
         <a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a>
+        <a href="./wimeco.html">WiMeCo Windows App</a>
+        <a href="./wimeco_privacy_policy.html">WiMeCo Policy</a>
         <a href="./dosemint_privacy_policy.html">DoseMint Policy</a>
         <a href="./cairo_metro_privacy_policy.html">Cairo Metro Policy</a>
         <a href="./japandizer_privacy_policy.html">Japandizer Policy</a>
@@ -1630,8 +1648,8 @@
       },
       {
         id: "wimico",
-        name: "WiMeCo Pro",
-        nameAr: "WiMeCo Pro",
+        name: "WiMeCo: Windows Media Controller",
+        nameAr: "WiMeCo: التحكم في ميديا الكمبيوتر",
         packageId: "com.codemahou.wimico",
         categoryKey: "utility",
         categoryLabel: { en: "Pro Tools & Utilities", ar: "أدوات احترافية" },
@@ -1639,14 +1657,15 @@
         iconBg: "rgba(245, 158, 11, 0.14)",
         glow: "rgba(245, 158, 11, 0.24)",
         playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.wimico",
-        privacyPolicyUrl: null,
+        privacyPolicyUrl: "./wimeco_privacy_policy.html",
+        webPageUrl: "./wimeco.html",
         description: {
-          en: "Professional-grade utility engineered by Code Mahou for seamless control, streamlined workflow management, and high-efficiency mobile performance with a clean Pro experience.",
-          ar: "أداة احترافية متطورة من استوديو Code Mahou مصممة لتوفير تحكم سلس، وأداء فائق السرعة، وتجربة استخدام Pro متكاملة وخالية من التعقيد."
+          en: "Universal Windows PC Media & System Controller. Control Spotify, YouTube, VLC, MPC-HC, master volume, remote touchpad, and sleep timers from your phone over Wi-Fi or Bluetooth.",
+          ar: "تحكم شامل في جميع مشغلات الميديا والصوت والماوس ومؤقت النوم على جهاز الكمبيوتر (Windows) من هاتفك الأندرويد لاسلكياً عبر الـ Wi-Fi أو البلوتوث."
         },
         features: {
-          en: ["Pro-Grade Edition", "Fast & Lightweight", "Intuitive Controls", "Precision Engineered"],
-          ar: ["نسخة احترافية Pro", "خفيف وفائق السرعة", "واجهة تحكم ذكية", "أداء عالي الاعتمادية"]
+          en: ["Wi-Fi QR & Bluetooth", "Remote PC Touchpad", "Timeline & Session Switch", "Sleep & Pause Timer"],
+          ar: ["توصيل Wi-Fi وبلوتوث", "ماوس وكيبورد عن بُعد", "تبديل المشغلات والتقديم", "مؤقت نوم وإيقاف الميديا"]
         },
         svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M24 8L38 14V24C38 33 31.5 39.5 24 42C16.5 39.5 10 33 10 24V14L24 8Z" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
@@ -1789,6 +1808,13 @@
              </a>`
           : "";
 
+        const webPageBtnHtml = app.webPageUrl
+          ? `<a href="${app.webPageUrl}" class="btn-policy">
+               <span>💻</span>
+               <span>${currentLang === "ar" ? "نسخة الويندوز والشرح" : "Windows App & Guide"}</span>
+             </a>`
+          : "";
+
         return `
           <article class="app-card" style="--app-accent: ${app.accent}; --app-icon-bg: ${app.iconBg}; --app-glow: ${app.glow};">
             <div>
@@ -1823,6 +1849,7 @@
                 </svg>
                 <span>${dict.playStoreBtn}</span>
               </a>
+              ${webPageBtnHtml}
               ${policyBtnHtml}
             </div>
           </article>
