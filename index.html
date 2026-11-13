@@ -20,15 +20,15 @@
 
   <style>
     /* ==========================================================================
-       DESIGN TOKENS & THEME VARIABLES
+       DESIGN TOKENS & CUSTOM MAGIC WAND CURSOR
        ========================================================================== */
     :root,
     [data-theme="dark"] {
       --bg-base: #060813;
       --bg-surface: #0d1224;
-      --bg-card: rgba(17, 24, 46, 0.68);
-      --bg-card-hover: rgba(24, 34, 66, 0.85);
-      --bg-glass: rgba(10, 14, 29, 0.78);
+      --bg-card: rgba(17, 24, 46, 0.72);
+      --bg-card-hover: rgba(24, 34, 66, 0.88);
+      --bg-glass: rgba(10, 14, 29, 0.82);
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
@@ -42,6 +42,9 @@
       --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
       --shadow-glow: 0 0 45px rgba(99, 102, 241, 0.22);
       --watermark-color: rgba(99, 102, 241, 0.04);
+
+      /* Custom SVG Magic Wand Cursor (Hotspot at glowing star tip 7,6) */
+      --wand-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36' fill='none'%3E%3Cpath d='M10 10L30 30' stroke='%230f172a' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 10L30 30' stroke='url(%23wg)' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M10 10L14.5 14.5' stroke='%23fef08a' stroke-width='3.8' stroke-linecap='round'/%3E%3Cpath d='M8 1C8 5.5 9.7 7.2 14.2 7.2C9.7 7.2 8 8.9 8 13.4C8 8.9 6.3 7.2 1.8 7.2C6.3 7.2 8 5.5 8 1Z' fill='%23fbbf24'/%3E%3Ccircle cx='8' cy='7.2' r='1.8' fill='%23ffffff'/%3E%3Ccircle cx='17' cy='4' r='1.3' fill='%2338bdf8'/%3E%3Ccircle cx='4' cy='17' r='1.3' fill='%23c084fc'/%3E%3Cdefs%3E%3ClinearGradient id='wg' x1='10' y1='10' x2='30' y2='30' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23f59e0b'/%3E%3Cstop offset='0.45' stop-color='%23818cf8'/%3E%3Cstop offset='1' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") 8 7, pointer;
     }
 
     [data-theme="light"] {
@@ -49,7 +52,7 @@
       --bg-surface: #f1f5f9;
       --bg-card: rgba(255, 255, 255, 0.88);
       --bg-card-hover: #ffffff;
-      --bg-glass: rgba(255, 255, 255, 0.85);
+      --bg-glass: rgba(255, 255, 255, 0.88);
       --text-primary: #0f172a;
       --text-secondary: #475569;
       --text-muted: #64748b;
@@ -97,12 +100,12 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(110px);
-      opacity: 0.28;
+      opacity: 0.26;
       animation: floatOrb 18s ease-in-out infinite alternate;
     }
 
     [data-theme="light"] .ambient-orb {
-      opacity: 0.14;
+      opacity: 0.12;
     }
 
     .orb-1 {
@@ -145,6 +148,29 @@
       100% { transform: translate(35px, 45px) scale(1.08); }
     }
 
+    /* Magic Wand Cursor Trail Particle */
+    .wand-trail-star {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 12px;
+      color: #fef08a;
+      text-shadow: 0 0 8px #f59e0b, 0 0 14px #38bdf8;
+      animation: wandStarFade 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      user-select: none;
+    }
+
+    @keyframes wandStarFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -140%) scale(1.25) rotate(45deg);
+      }
+    }
+
     /* ==========================================================================
        NAVBAR & MAGICAL LOGO HOVER MORPH (ENGLISH -> JAPANESE)
        ========================================================================== */
@@ -176,7 +202,7 @@
       gap: 12px;
       text-decoration: none;
       color: var(--text-primary);
-      cursor: pointer;
+      cursor: var(--wand-cursor);
     }
 
     .brand-emblem-wrap {
@@ -224,7 +250,6 @@
       position: relative;
     }
 
-    /* English Primary Text vs Magical Hover Japanese Text */
     .brand-title-morph {
       position: relative;
       display: inline-grid;
@@ -258,7 +283,6 @@
       background: linear-gradient(135deg, #fef08a 0%, #f59e0b 45%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
       pointer-events: none;
     }
 
@@ -272,18 +296,6 @@
       opacity: 1;
       transform: translateY(0) scale(1);
       filter: blur(0);
-    }
-
-    .nav-sparkle-badge {
-      font-size: 0.72rem;
-      color: var(--accent-gold);
-      opacity: 0.75;
-      transition: transform 0.35s ease, opacity 0.35s ease;
-    }
-
-    .brand-link:hover .nav-sparkle-badge {
-      opacity: 1;
-      transform: rotate(25deg) scale(1.25);
     }
 
     .brand-subtitle {
@@ -347,33 +359,84 @@
     }
 
     /* ==========================================================================
-       HERO SECTION & INTERACTIVE MAGIC LOGO SHOWCASE
+       STUDIO COVER HEADER & HERO SECTION
        ========================================================================== */
-    .hero {
+    .hero-wrapper {
       position: relative;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 76px 24px 56px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-      gap: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
     }
 
-    /* English-first Hero Watermark (< /> by default) */
-    .hero-watermark {
+    /* Featured Cover used as a true atmospheric Hero Cover Backdrop */
+    .hero-cover-backdrop {
       position: absolute;
-      top: 15px;
-      right: 4%;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(7rem, 15vw, 13rem);
-      font-weight: 800;
-      color: var(--watermark-color);
+      inset: 0;
+      background-image: url('./assets/featured-cover.png');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.22;
+      filter: saturate(1.15);
       pointer-events: none;
-      user-select: none;
-      line-height: 1;
-      z-index: -1;
-      transition: all 0.5s ease;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 65%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 65%, transparent 100%);
+    }
+
+    [data-theme="light"] .hero-cover-backdrop {
+      opacity: 0.08;
+    }
+
+    /* Panoramic Studio Cover Banner at Top of Page */
+    .studio-cover-stage {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+    }
+
+    .studio-cover-frame {
+      position: relative;
+      width: 100%;
+      height: clamp(190px, 28vw, 330px);
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid rgba(129, 140, 248, 0.28);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(99, 102, 241, 0.18);
+      background: #070913;
+    }
+
+    .studio-cover-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .studio-cover-frame:hover img {
+      transform: scale(1.02);
+    }
+
+    .studio-cover-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6, 8, 19, 0.72) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px 68px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 48px;
     }
 
     .eyebrow-badge {
@@ -385,10 +448,10 @@
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(168, 85, 247, 0.14));
       border: 1px solid rgba(99, 102, 241, 0.35);
       color: var(--accent-cyan);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
-      margin-bottom: 22px;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
     }
 
     .eyebrow-badge .spark-dot {
@@ -400,11 +463,11 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 4.6vw, 3.85rem);
+      font-size: clamp(2.35rem, 4.4vw, 3.65rem);
       font-weight: 800;
       line-height: 1.12;
       letter-spacing: -0.025em;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .hero h1 .magic-highlight {
@@ -414,17 +477,17 @@
     }
 
     .hero-lead {
-      font-size: 1.12rem;
+      font-size: 1.08rem;
       color: var(--text-secondary);
       max-width: 600px;
-      margin-bottom: 32px;
+      margin-bottom: 30px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-bottom: 40px;
+      margin-bottom: 38px;
     }
 
     .btn-primary {
@@ -436,7 +499,7 @@
       background: linear-gradient(135deg, var(--accent-indigo), var(--accent-violet));
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       text-decoration: none;
       box-shadow: 0 10px 28px rgba(99, 102, 241, 0.38);
       transition: all 0.25s ease;
@@ -457,7 +520,7 @@
       background: var(--bg-card);
       color: var(--text-primary);
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       text-decoration: none;
       border: 1px solid var(--border-subtle);
       transition: all 0.25s ease;
@@ -469,19 +532,19 @@
       transform: translateY(-2px);
     }
 
-    /* Studio Metrics Strip (100% English Primary) */
+    /* Studio Metrics Strip */
     .hero-metrics {
       display: grid;
       grid-template-columns: repeat(3, auto);
       gap: 28px;
-      padding-top: 26px;
+      padding-top: 24px;
       border-top: 1px solid var(--border-subtle);
       max-width: 540px;
     }
 
     .metric-item strong {
       display: block;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1.2;
@@ -493,7 +556,7 @@
       font-weight: 600;
     }
 
-    /* Right Hero Logo Showcase Card with Magical Hover Morph */
+    /* Right Hero Interactive Emblem Pedestal (Clean, Executive, Magic Wand Cursor) */
     .hero-visual {
       display: flex;
       justify-content: center;
@@ -503,16 +566,16 @@
     .logo-showcase-card {
       position: relative;
       width: 100%;
-      max-width: 440px;
-      padding: 36px 28px 30px;
-      border-radius: 28px;
-      background: linear-gradient(160deg, rgba(30, 27, 75, 0.74), rgba(15, 23, 42, 0.9));
-      border: 1px solid rgba(129, 140, 248, 0.32);
+      max-width: 390px;
+      padding: 40px 32px 34px;
+      border-radius: 30px;
+      background: linear-gradient(160deg, rgba(22, 27, 58, 0.72), rgba(10, 14, 29, 0.88));
+      border: 1px solid rgba(129, 140, 248, 0.28);
       box-shadow: var(--shadow-card), var(--shadow-glow);
       text-align: center;
       backdrop-filter: blur(20px);
       overflow: hidden;
-      cursor: pointer;
+      cursor: var(--wand-cursor);
       transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease, box-shadow 0.45s ease;
     }
 
@@ -523,31 +586,31 @@
 
     .logo-showcase-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(245, 158, 11, 0.65);
-      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6), 0 0 55px rgba(245, 158, 11, 0.25), 0 0 80px rgba(168, 85, 247, 0.3);
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6), 0 0 55px rgba(245, 158, 11, 0.22), 0 0 80px rgba(168, 85, 247, 0.28);
     }
 
-    /* Magical Rotating Arcane Aura Behind Emblem */
+    /* Rotating Arcane Ring Behind Emblem */
     .arcane-aura-ring {
       position: absolute;
-      top: 18px;
+      top: 22px;
       left: 50%;
-      width: 230px;
-      height: 230px;
-      margin-left: -115px;
+      width: 244px;
+      height: 244px;
+      margin-left: -122px;
       border-radius: 50%;
-      border: 1.5px dashed rgba(56, 189, 248, 0.3);
+      border: 1.5px dashed rgba(56, 189, 248, 0.28);
       pointer-events: none;
-      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo-showcase-card:hover .arcane-aura-ring {
-      transform: rotate(90deg) scale(1.1);
-      border-color: rgba(245, 158, 11, 0.75);
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.28);
+      transform: rotate(90deg) scale(1.08);
+      border-color: rgba(245, 158, 11, 0.7);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
     }
 
-    /* Floating Sparkle Particles on Hover */
+    /* Subtle Sparkle Accents on Hover */
     .magic-sparkles {
       position: absolute;
       inset: 0;
@@ -558,31 +621,30 @@
     .sparkle {
       position: absolute;
       color: #fef08a;
-      font-size: 1.1rem;
+      font-size: 1rem;
       opacity: 0;
-      transform: translateY(15px) scale(0.4);
+      transform: translateY(12px) scale(0.4);
       transition: opacity 0.45s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
       text-shadow: 0 0 12px #f59e0b;
     }
 
-    .sparkle.s1 { top: 14%; left: 16%; transition-delay: 0.03s; }
-    .sparkle.s2 { top: 20%; right: 15%; transition-delay: 0.09s; font-size: 1.35rem; color: #38bdf8; }
-    .sparkle.s3 { top: 48%; left: 10%; transition-delay: 0.14s; font-size: 0.95rem; }
-    .sparkle.s4 { top: 45%; right: 11%; transition-delay: 0.06s; color: #c084fc; font-size: 1.25rem; }
-    .sparkle.s5 { top: 8%; left: 50%; transition-delay: 0.12s; }
+    .sparkle.s1 { top: 14%; left: 15%; transition-delay: 0.03s; }
+    .sparkle.s2 { top: 18%; right: 14%; transition-delay: 0.08s; font-size: 1.2rem; color: #38bdf8; }
+    .sparkle.s3 { bottom: 26%; left: 12%; transition-delay: 0.12s; font-size: 0.9rem; }
+    .sparkle.s4 { bottom: 28%; right: 12%; transition-delay: 0.06s; color: #c084fc; font-size: 1.15rem; }
 
     .logo-showcase-card:hover .sparkle {
       opacity: 1;
-      transform: translateY(-8px) scale(1.15) rotate(20deg);
+      transform: translateY(-6px) scale(1.1) rotate(18deg);
     }
 
     /* Dual-Layer Emblem Frame (English Primary -> Japanese Hover) */
     .emblem-frame {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 216px;
+      height: 216px;
       margin: 0 auto 22px;
-      border-radius: 40px;
+      border-radius: 44px;
       padding: 5px;
       background: linear-gradient(135deg, #38bdf8, #6366f1, #c084fc, #f59e0b);
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
@@ -590,15 +652,15 @@
     }
 
     .logo-showcase-card:hover .emblem-frame {
-      transform: scale(1.05);
-      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.38);
+      transform: scale(1.04);
+      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.36);
     }
 
     .emblem-inner {
       position: relative;
       width: 100%;
       height: 100%;
-      border-radius: 35px;
+      border-radius: 39px;
       overflow: hidden;
       background: #090d16;
     }
@@ -638,91 +700,75 @@
       z-index: 3;
     }
 
-    /* Wordmark Morph inside Showcase Card */
-    .showcase-wordmark-wrap {
+    /* Minimal Executive Identity Caption Below Emblem */
+    .showcase-caption-morph {
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 76px;
-      margin-bottom: 12px;
+      min-height: 44px;
     }
 
-    .showcase-wordmark-en,
-    .showcase-wordmark-jp {
+    .caption-state-en,
+    .caption-state-jp {
       grid-area: 1 / 1;
-      transition: opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1), transform 0.48s cubic-bezier(0.16, 1, 0.3, 1), filter 0.48s ease;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease;
     }
 
-    .showcase-wordmark-en {
+    .caption-state-en {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
 
-    .showcase-svg-logo {
-      max-width: 300px;
-      width: 100%;
-      height: auto;
+    .caption-title-en {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f8fafc;
+    }
+
+    .caption-title-en span {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .caption-sub {
       display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-top: 3px;
     }
 
-    .showcase-wordmark-jp {
+    .caption-state-jp {
       opacity: 0;
-      transform: translateY(10px) scale(0.92);
-      filter: blur(5px);
+      transform: translateY(8px);
+      filter: blur(4px);
       pointer-events: none;
     }
 
-    .jp-magic-title {
+    .caption-title-jp {
       font-family: 'Noto Sans JP', sans-serif;
-      font-size: 2.15rem;
+      font-size: 1.45rem;
       font-weight: 900;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.15;
     }
 
-    .jp-magic-sub {
-      display: block;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #38bdf8;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .logo-showcase-card:hover .showcase-wordmark-en {
+    .logo-showcase-card:hover .caption-state-en {
       opacity: 0;
-      transform: translateY(-10px) scale(0.92);
-      filter: blur(5px);
+      transform: translateY(-8px);
+      filter: blur(4px);
     }
 
-    .logo-showcase-card:hover .showcase-wordmark-jp {
+    .logo-showcase-card:hover .caption-state-jp {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
       filter: blur(0);
-    }
-
-    .magic-hover-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 15px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: #cbd5e1;
-      font-size: 0.79rem;
-      font-weight: 600;
-      transition: all 0.35s ease;
-    }
-
-    .logo-showcase-card:hover .magic-hover-hint {
-      background: rgba(245, 158, 11, 0.16);
-      border-color: rgba(245, 158, 11, 0.5);
-      color: #fef08a;
     }
 
     /* ==========================================================================
@@ -1009,48 +1055,6 @@
     }
 
     /* ==========================================================================
-       FEATURED STUDIO COVER BANNER SHOWCASE
-       ========================================================================== */
-    .cover-banner-card {
-      position: relative;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid var(--border-glow);
-      box-shadow: var(--shadow-card), var(--shadow-glow);
-      background: #070913;
-    }
-
-    .cover-banner-card img {
-      width: 100%;
-      max-height: 460px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .cover-banner-overlay {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 20px 28px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(16px);
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .cover-banner-info h3 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-
-    .cover-banner-info p {
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-    }
-
-    /* ==========================================================================
        STUDIO PHILOSOPHY ("THE MAGIC BEHIND OUR CODE")
        ========================================================================== */
     .pillars-grid {
@@ -1218,7 +1222,7 @@
       .hero {
         grid-template-columns: 1fr;
         text-align: center;
-        padding-top: 48px;
+        padding-top: 36px;
       }
 
       .hero-lead {
@@ -1260,23 +1264,21 @@
     <div class="ambient-grid"></div>
   </div>
 
-  <!-- ================= NAVBAR (English Primary -> Magical Hover Morph to Japanese) ================= -->
+  <!-- ================= NAVBAR ================= -->
   <header class="navbar">
     <div class="nav-container">
-      <a href="#" class="brand-link" id="navBrandLogo" aria-label="Code Mahou Home — Hover for Magic">
+      <a href="#" class="brand-link magic-wand-zone" id="navBrandLogo" aria-label="Code Mahou Home">
         <div class="brand-emblem-wrap">
-          <img src="./assets/logo-main.png" alt="Code Mahou Primary English Emblem" class="nav-logo-en" onerror="this.src='./assets/favicon.svg'" />
-          <img src="./assets/logo-jp.png" alt="Code Mahou Japanese Magic Emblem" class="nav-logo-jp" />
+          <img src="./assets/logo-main.png" alt="Code Mahou Emblem" class="nav-logo-en" onerror="this.src='./assets/favicon.svg'" />
+          <img src="./assets/logo-jp.png" alt="Code Mahou Emblem JP" class="nav-logo-jp" />
         </div>
         <div class="brand-text-wrap" dir="ltr">
           <div class="brand-title-morph">
             <span class="brand-title-en">
               Code<span class="gradient-text">Mahou</span>
-              <span class="nav-sparkle-badge">✦</span>
             </span>
             <span class="brand-title-jp">
               コード魔法
-              <span class="nav-sparkle-badge">✨</span>
             </span>
           </div>
           <span class="brand-subtitle" data-i18n="navSubtitle">Digital Magic Studio</span>
@@ -1285,7 +1287,6 @@
 
       <ul class="nav-links">
         <li><a href="#apps" data-i18n="navApps">Applications</a></li>
-        <li><a href="#brand-cover" data-i18n="navBrand">Studio Cover</a></li>
         <li><a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a></li>
         <li><a href="#policies" data-i18n="navPolicies">Privacy &amp; Legal</a></li>
       </ul>
@@ -1302,92 +1303,93 @@
     </div>
   </header>
 
-  <!-- ================= HERO SECTION ================= -->
+  <!-- ================= HERO & STUDIO COVER HEADER ================= -->
   <main>
-    <section class="hero">
-      <div class="hero-watermark" id="heroWatermark" aria-hidden="true">&lt;/&gt;</div>
+    <div class="hero-wrapper">
+      <!-- Atmospheric Hero Cover Backdrop -->
+      <div class="hero-cover-backdrop" aria-hidden="true"></div>
 
-      <div class="hero-content">
-        <div class="eyebrow-badge">
-          <span class="spark-dot"></span>
-          <span data-i18n="heroEyebrow">CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC</span>
-        </div>
-
-        <h1 data-i18n-html="heroTitle">
-          Crafting <span class="magic-highlight">Digital Magic</span> Through Everyday Mobile Apps.
-        </h1>
-
-        <p class="hero-lead" data-i18n="heroLead">
-          At Code Mahou ("Mahou" = Magic), we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#apps" class="btn-primary">
-            <span data-i18n="ctaExplore">Explore Our Apps</span>
-            <span>&rarr;</span>
-          </a>
-          <a href="#policies" class="btn-secondary" data-i18n="ctaPolicies">
-            Official Privacy Policies
-          </a>
-        </div>
-
-        <div class="hero-metrics">
-          <div class="metric-item">
-            <strong>5+</strong>
-            <span data-i18n="metricApps">Published Android Apps</span>
-          </div>
-          <div class="metric-item">
-            <strong>100%</strong>
-            <span data-i18n="metricPrivacy">Local-First Privacy</span>
-          </div>
-          <div class="metric-item">
-            <strong>PRO</strong>
-            <span data-i18n="metricCraft">High-Craft UX &amp; Speed</span>
-          </div>
+      <!-- Panoramic Studio Cover Banner -->
+      <div class="studio-cover-stage">
+        <div class="studio-cover-frame">
+          <img src="./assets/featured-cover.png" alt="Code Mahou — Crafting Digital Magic in Code" />
         </div>
       </div>
 
-      <!-- Interactive Brand Logo Showcase (Primary English -> Hover Morphs to Japanese Magic) -->
-      <div class="hero-visual">
-        <div class="logo-showcase-card" id="heroLogoCard" title="Hover to cast Mahou (Magic)">
-          <div class="arcane-aura-ring" aria-hidden="true"></div>
-
-          <div class="magic-sparkles" aria-hidden="true">
-            <span class="sparkle s1">✦</span>
-            <span class="sparkle s2">✧</span>
-            <span class="sparkle s3">★</span>
-            <span class="sparkle s4">✦</span>
-            <span class="sparkle s5">✨</span>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow-badge">
+            <span class="spark-dot"></span>
+            <span data-i18n="heroEyebrow">CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC</span>
           </div>
 
-          <div class="emblem-frame">
-            <div class="emblem-inner">
-              <!-- Primary English Logo Emblem (Default) -->
-              <img src="./assets/logo-main.png" alt="Code Mahou Official English Logo" class="emblem-img en-primary" onerror="this.src='./assets/favicon.svg'" />
-              <!-- Magical Hover Japanese Emblem -->
-              <img src="./assets/logo-jp.png" alt="Code Mahou Magical Japanese Emblem (魔法)" class="emblem-img jp-magic" />
-            </div>
+          <h1 data-i18n-html="heroTitle">
+            Crafting <span class="magic-highlight">Digital Magic</span> Through Everyday Mobile Apps.
+          </h1>
+
+          <p class="hero-lead" data-i18n="heroLead">
+            At Code Mahou, we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#apps" class="btn-primary">
+              <span data-i18n="ctaExplore">Explore Our Apps</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="#policies" class="btn-secondary" data-i18n="ctaPolicies">
+              Official Privacy Policies
+            </a>
           </div>
 
-          <div class="showcase-wordmark-wrap" dir="ltr">
-            <!-- Default English Wordmark -->
-            <div class="showcase-wordmark-en">
-              <img src="./assets/logo.svg" alt="Code Mahou English Wordmark" class="showcase-svg-logo" />
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <strong>5+</strong>
+              <span data-i18n="metricApps">Published Android Apps</span>
             </div>
-            <!-- Hover Magical Japanese Wordmark -->
-            <div class="showcase-wordmark-jp">
-              <div class="jp-magic-title">コード魔法</div>
-              <span class="jp-magic-sub">MAHOU = MAGIC IN CODE ✨</span>
+            <div class="metric-item">
+              <strong>100%</strong>
+              <span data-i18n="metricPrivacy">Local-First Privacy</span>
             </div>
-          </div>
-
-          <div class="magic-hover-hint">
-            <span>✨</span>
-            <span data-i18n="hoverMagicHint">Hover over logo for a Magical Touch</span>
+            <div class="metric-item">
+              <strong>PRO</strong>
+              <span data-i18n="metricCraft">High-Craft UX &amp; Speed</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+
+        <!-- Clean Executive Logo Pedestal (Morphs from English to Japanese with Magic Wand Cursor) -->
+        <div class="hero-visual">
+          <div class="logo-showcase-card magic-wand-zone" id="heroLogoCard">
+            <div class="arcane-aura-ring" aria-hidden="true"></div>
+
+            <div class="magic-sparkles" aria-hidden="true">
+              <span class="sparkle s1">✦</span>
+              <span class="sparkle s2">✧</span>
+              <span class="sparkle s3">★</span>
+              <span class="sparkle s4">✦</span>
+            </div>
+
+            <div class="emblem-frame">
+              <div class="emblem-inner">
+                <img src="./assets/logo-main.png" alt="Code Mahou Official Logo" class="emblem-img en-primary" onerror="this.src='./assets/favicon.svg'" />
+                <img src="./assets/logo-jp.png" alt="Code Mahou Emblem (魔法)" class="emblem-img jp-magic" />
+              </div>
+            </div>
+
+            <div class="showcase-caption-morph" dir="ltr">
+              <div class="caption-state-en">
+                <div class="caption-title-en">Code <span>Mahou</span></div>
+                <span class="caption-sub">MOBILE ENGINEERING STUDIO</span>
+              </div>
+              <div class="caption-state-jp">
+                <div class="caption-title-jp">コード魔法</div>
+                <span class="caption-sub">CRAFTING DIGITAL MAGIC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- ================= PORTFOLIO / APPLICATIONS SECTION ================= -->
     <section class="section" id="apps">
@@ -1411,37 +1413,6 @@
 
       <!-- Dynamic App Cards Container -->
       <div class="apps-grid" id="appsGrid"></div>
-    </section>
-
-    <!-- ================= FEATURED COVER BANNER SECTION ================= -->
-    <section class="section" id="brand-cover">
-      <div class="section-header">
-        <div class="section-title-group">
-          <span class="section-tag" data-i18n="coverTag">BRAND IDENTITY &amp; FEATURED ARTWORK</span>
-          <h2 class="section-title" data-i18n="coverTitle">Code Mahou Official Cover</h2>
-          <p class="section-desc" data-i18n="coverDesc">
-            Our official English studio identity and widescreen featured cover banner designed for developer showcases.
-          </p>
-        </div>
-      </div>
-
-      <div class="cover-banner-card">
-        <img src="./assets/featured-cover.png" alt="Code Mahou Official Featured Cover Banner" />
-        <div class="cover-banner-overlay">
-          <div class="cover-banner-info">
-            <h3>Code Mahou — Official Featured Cover &amp; Brand Assets</h3>
-            <p data-i18n="coverSub">Primary English Logo &amp; Widescreen Cover Banner (16:9)</p>
-          </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="./assets/logo-main.png" target="_blank" rel="noopener" class="btn-secondary" style="padding: 9px 16px; font-size: 0.85rem;">
-              Primary Logo (EN) &nearr;
-            </a>
-            <a href="./assets/featured-cover.png" target="_blank" rel="noopener" class="btn-primary" style="padding: 9px 16px; font-size: 0.85rem;">
-              Featured Cover &nearr;
-            </a>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- ================= STUDIO PHILOSOPHY SECTION ================= -->
@@ -1531,7 +1502,7 @@
       </div>
       <div class="footer-links">
         <a href="#apps" data-i18n="navApps">Applications</a>
-        <a href="#brand-cover" data-i18n="navBrand">Studio Cover</a>
+        <a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a>
         <a href="./dosemint_privacy_policy.html">DoseMint Policy</a>
         <a href="./cairo_metro_privacy_policy.html">Cairo Metro Policy</a>
         <a href="./app-ads.txt">app-ads.txt</a>
@@ -1690,18 +1661,16 @@
       en: {
         navSubtitle: "Digital Magic Studio",
         navApps: "Applications",
-        navBrand: "Studio Cover",
         navPhilosophy: "Our Philosophy",
         navPolicies: "Privacy & Legal",
         heroEyebrow: "CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC",
         heroTitle: 'Crafting <span class="magic-highlight">Digital Magic</span> Through Everyday Mobile Apps.',
-        heroLead: 'At Code Mahou ("Mahou" = Magic), we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.',
+        heroLead: "At Code Mahou, we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.",
         ctaExplore: "Explore Our Apps",
         ctaPolicies: "Official Privacy Policies",
         metricApps: "Published Android Apps",
         metricPrivacy: "Local-First Privacy",
         metricCraft: "High-Craft UX & Speed",
-        hoverMagicHint: "Hover over logo for a Magical Touch",
         appsSectionTag: "OFFICIAL PORTFOLIO",
         appsSectionTitle: "Our Featured Applications",
         appsSectionDesc: "Discover our suite of Android applications engineered for reliability, speed, and an effortless user experience.",
@@ -1714,10 +1683,6 @@
         policyBtn: "Privacy Policy",
         copyBtn: "Copy",
         copiedToast: "Copied package ID: ",
-        coverTag: "BRAND IDENTITY & FEATURED ARTWORK",
-        coverTitle: "Code Mahou Official Cover",
-        coverDesc: "Our official English studio identity and widescreen featured cover banner designed for developer showcases.",
-        coverSub: "Primary English Logo & Widescreen Cover Banner (16:9)",
         philTag: "THE CODE MAHOU STANDARD",
         philTitle: "Why Users Trust Code Mahou",
         philDesc: "Every application bearing the Code Mahou emblem is built around three core engineering principles.",
@@ -1736,18 +1701,16 @@
       ar: {
         navSubtitle: "Digital Magic Studio",
         navApps: "تطبيقاتنا",
-        navBrand: "غلاف الاستوديو",
         navPhilosophy: "فلسفة الاستوديو",
         navPolicies: "سياسات الخصوصية",
         heroEyebrow: "CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC",
         heroTitle: 'نصنع <span class="magic-highlight">سحر البرمجة</span> في تطبيقات ذكية لحياتك اليومية.',
-        heroLead: 'في استوديو Code Mahou (حيث تعني كلمة Mahou السحر)، ندمج الهندسة البرمجية المتقنة مع التصميم الفاخر لنبتكر تطبيقات أندرويد عالية الاعتمادية تحترم خصوصيتك في مجالات الصحة، المواصلات، تعلم اللغات، الأنمي، والأدوات الاحترافية.',
+        heroLead: "في استوديو Code Mahou ندمج الهندسة البرمجية المتقنة مع التصميم الفاخر لنبتكر تطبيقات أندرويد عالية الاعتمادية تحترم خصوصيتك في مجالات الصحة، المواصلات، تعلم اللغات، الأنمي، والأدوات الاحترافية.",
         ctaExplore: "استكشف تطبيقاتنا",
         ctaPolicies: "سياسات الخصوصية الرسمية",
         metricApps: "تطبيقات أندرويد منشورة",
         metricPrivacy: "خصوصية محلية تامة",
         metricCraft: "تصميم عصري وأداء فائق",
-        hoverMagicHint: "مرّر الماوس على اللوجو لتفعيل اللمسة السحرية",
         appsSectionTag: "OFFICIAL PORTFOLIO • معرض الأعمال",
         appsSectionTitle: "تطبيقات Code Mahou المميزة",
         appsSectionDesc: "تعرّف على باقة تطبيقاتنا المصممة بعناية لتقديم تجربة استخدام سلسة، سريعة، وموثوقة.",
@@ -1760,10 +1723,6 @@
         policyBtn: "سياسة الخصوصية",
         copyBtn: "نسخ",
         copiedToast: "تم نسخ معرّف الحزمة: ",
-        coverTag: "BRAND IDENTITY • الهوية البصرية",
-        coverTitle: "الغلاف الرسمي لاستوديو Code Mahou",
-        coverDesc: "الهوية الإنجليزية الرئيسية وصورة الغلاف الرسمية (Featured Cover) الخاصة باستوديو Code Mahou.",
-        coverSub: "النسخة الإنجليزية الرئيسية وصورة الغلاف العريضة (16:9)",
         philTag: "THE CODE MAHOU STANDARD",
         philTitle: "لماذا يثق المستخدمون في Code Mahou؟",
         philDesc: "كل تطبيق يحمل شعار Code Mahou يرتكز على ثلاثة مبادئ هندسية أساسية.",
@@ -1781,7 +1740,6 @@
       }
     };
 
-    /* Default to English priority */
     let currentLang = localStorage.getItem("codemahou_lang") || "en";
     let currentFilter = "all";
 
@@ -1791,20 +1749,26 @@
     const themeToggleBtn = document.getElementById("themeToggleBtn");
     const themeToggleIcon = document.getElementById("themeToggleIcon");
     const copyToast = document.getElementById("copyToast");
-    const heroWatermark = document.getElementById("heroWatermark");
-    const heroLogoCard = document.getElementById("heroLogoCard");
-    const navBrandLogo = document.getElementById("navBrandLogo");
 
-    /* Sync Hero Watermark with Magical Logo Hover (English </> by default, morphs to 魔法 on hover) */
-    function setMagicHoverState(isHovering) {
-      if (!heroWatermark) return;
-      heroWatermark.textContent = isHovering ? "魔法" : "</>";
-    }
+    /* Magic Wand Starlight Trail on Logo Hover */
+    let lastTrailTime = 0;
+    const trailChars = ["✦", "✧", "⋆"];
+    document.querySelectorAll(".magic-wand-zone").forEach(zone => {
+      zone.addEventListener("mousemove", e => {
+        const now = performance.now();
+        if (now - lastTrailTime < 55) return;
+        lastTrailTime = now;
 
-    heroLogoCard.addEventListener("mouseenter", () => setMagicHoverState(true));
-    heroLogoCard.addEventListener("mouseleave", () => setMagicHoverState(false));
-    navBrandLogo.addEventListener("mouseenter", () => setMagicHoverState(true));
-    navBrandLogo.addEventListener("mouseleave", () => setMagicHoverState(false));
+        const star = document.createElement("span");
+        star.className = "wand-trail-star";
+        star.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+        star.style.left = `${e.clientX}px`;
+        star.style.top = `${e.clientY}px`;
+        document.body.appendChild(star);
+
+        setTimeout(() => star.remove(), 650);
+      });
+    });
 
     function renderApps() {
       const dict = I18N[currentLang];
