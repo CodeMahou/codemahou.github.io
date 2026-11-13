@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Primary Arcane Gradient -->
+    <linearGradient id="mahouGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="45%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+
+    <!-- Gold Magic Spark Gradient -->
+    <linearGradient id="goldSpark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+
+    <!-- Dark Shield / Emblem Fill -->
+    <linearGradient id="emblemBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+
+    <!-- Soft Outer Glow -->
+    <filter id="arcaneGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- ================= EMBLEM MARK (Left - English Primary) ================= -->
+  <g transform="translate(10, 10)">
+    <circle cx="60" cy="60" r="54" fill="url(#emblemBg)" stroke="url(#mahouGrad)" stroke-width="2.5" />
+    <circle cx="60" cy="60" r="46" stroke="url(#mahouGrad)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+    <rect x="28" y="28" width="64" height="64" rx="8" transform="rotate(45 60 60)" stroke="url(#mahouGrad)" stroke-width="1.2" opacity="0.35" />
+
+    <!-- Left Code Bracket '<' -->
+    <path d="M 35 42 L 19 60 L 35 78" stroke="url(#mahouGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#arcaneGlow)" />
+
+    <!-- Right Code Bracket '>' -->
+    <path d="M 85 42 L 101 60 L 85 78" stroke="url(#mahouGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#arcaneGlow)" />
+
+    <!-- Top 4-Point Star Spark -->
+    <path d="M 60 15 C 60 24, 63 27, 72 27 C 63 27, 60 30, 60 39 C 60 30, 57 27, 48 27 C 57 27, 60 24, 60 15 Z" fill="url(#goldSpark)" filter="url(#arcaneGlow)" />
+
+    <!-- English Primary Monogram CM -->
+    <text x="60" y="68" text-anchor="middle" fill="#ffffff" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif" font-weight="800" font-size="22" letter-spacing="-0.5">CM</text>
+
+    <!-- Corner Sparkles -->
+    <circle cx="60" cy="6" r="2.5" fill="#38bdf8" />
+    <circle cx="60" cy="114" r="2.5" fill="#c084fc" />
+    <circle cx="6" cy="60" r="2.5" fill="#38bdf8" />
+    <circle cx="114" cy="60" r="2.5" fill="#c084fc" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY (Right - Pure English Primary) ================= -->
+  <g transform="translate(148, 0)">
+    <text x="0" y="72" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, sans-serif" font-weight="800" font-size="46" letter-spacing="-1">
+      <tspan fill="#f8fafc">Code</tspan>
+      <tspan fill="url(#mahouGrad)">Mahou</tspan>
+    </text>
+
+    <!-- Magic Spark Icon next to Wordmark -->
+    <path d="M 310 34 C 310 43, 313 46, 322 46 C 313 46, 310 49, 310 58 C 310 49, 307 46, 298 46 C 307 46, 310 43, 310 34 Z" fill="url(#goldSpark)" />
+
+    <!-- Tagline -->
+    <text x="2" y="102" fill="#94a3b8" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, sans-serif" font-weight="600" font-size="13" letter-spacing="3.5">
+      CRAFTING DIGITAL MAGIC IN CODE
+    </text>
+  </g>
+</svg>

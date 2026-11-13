@@ -1,129 +1,1925 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CodeMahou — App Policies & Legal Documents</title>
+  <title>Code Mahou — Digital Magic &amp; Mobile App Studio</title>
+  <meta name="description" content="Code Mahou is an independent mobile application studio crafting high-class Android apps across health, transit, language learning, anime discovery, and pro utilities." />
+  <meta property="og:title" content="Code Mahou — Crafting Digital Magic in Code" />
+  <meta property="og:description" content="Explore official Android applications by Code Mahou: DoseMint, Cairo Metro Guide, Japandizer, MAL Random Anime Generator, and WiMeCo Pro." />
+  <meta property="og:image" content="./assets/featured-cover.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="./assets/featured-cover.png" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
-    :root {
-      --primary: #0d9488;
-      --primary-dark: #065f46;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #475569;
-      --border: #e2e8f0;
+    /* ==========================================================================
+       DESIGN TOKENS & THEME VARIABLES
+       ========================================================================== */
+    :root,
+    [data-theme="dark"] {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.68);
+      --bg-card-hover: rgba(24, 34, 66, 0.85);
+      --bg-glass: rgba(10, 14, 29, 0.78);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --border-glow: rgba(99, 102, 241, 0.45);
+      --accent-indigo: #6366f1;
+      --accent-violet: #a855f7;
+      --accent-cyan: #38bdf8;
+      --accent-gold: #f59e0b;
+      --accent-emerald: #10b981;
+      --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --shadow-glow: 0 0 45px rgba(99, 102, 241, 0.22);
+      --watermark-color: rgba(99, 102, 241, 0.04);
     }
-    * { box-sizing: border-box; }
-    body {
+
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card-hover: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --border-glow: rgba(99, 102, 241, 0.4);
+      --shadow-card: 0 16px 40px rgba(15, 23, 42, 0.07);
+      --shadow-glow: 0 10px 30px rgba(99, 102, 241, 0.14);
+      --watermark-color: rgba(99, 102, 241, 0.035);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", Tahoma, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: #fff;
-      padding: 44px 20px;
-      text-align: center;
-    }
-    header h1 { margin: 0 0 8px; font-size: 30px; }
-    header p { margin: 0; opacity: 0.92; font-size: 16px; }
-    .container {
-      max-width: 820px;
-      margin: 32px auto;
-      padding: 0 16px 48px;
-    }
-    .policy-list {
-      display: grid;
-      gap: 16px;
-      list-style: none;
       padding: 0;
-      margin: 0;
     }
-    .policy-card {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    html[dir="rtl"] body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Ambient Arcane Aurora Background */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.28;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+    }
+
+    [data-theme="light"] .ambient-orb {
+      opacity: 0.14;
+    }
+
+    .orb-1 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, var(--accent-indigo), transparent 70%);
+      top: -140px;
+      left: -100px;
+    }
+
+    .orb-2 {
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, var(--accent-violet), transparent 70%);
+      top: 25%;
+      right: -120px;
+      animation-delay: -6s;
+    }
+
+    .orb-3 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+      bottom: -100px;
+      left: 25%;
+      animation-delay: -11s;
+    }
+
+    .ambient-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.15));
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.15));
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(35px, 45px) scale(1.08); }
+    }
+
+    /* ==========================================================================
+       NAVBAR & MAGICAL LOGO HOVER MORPH (ENGLISH -> JAPANESE)
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.25s ease;
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 26px;
+    }
+
+    .brand-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       text-decoration: none;
-      color: var(--text);
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      color: var(--text-primary);
+      cursor: pointer;
     }
-    .policy-card:hover {
+
+    .brand-emblem-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.28);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    }
+
+    .brand-emblem-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .brand-emblem-wrap .nav-logo-jp {
+      opacity: 0;
+      transform: scale(0.82) rotate(-12deg);
+    }
+
+    .brand-link:hover .brand-emblem-wrap {
+      transform: rotate(6deg) scale(1.08);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.65), 0 0 36px rgba(168, 85, 247, 0.5);
+    }
+
+    .brand-link:hover .brand-emblem-wrap .nav-logo-en {
+      opacity: 0;
+      transform: scale(1.15) rotate(12deg);
+    }
+
+    .brand-link:hover .brand-emblem-wrap .nav-logo-jp {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* English Primary Text vs Magical Hover Japanese Text */
+    .brand-title-morph {
+      position: relative;
+      display: inline-grid;
+      align-items: center;
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .brand-title-en,
+    .brand-title-jp {
+      grid-area: 1 / 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), filter 0.42s ease;
+    }
+
+    .brand-title-en .gradient-text {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title-jp {
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      filter: blur(4px);
+      font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 45%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
+      pointer-events: none;
+    }
+
+    .brand-link:hover .brand-title-en {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+      filter: blur(4px);
+    }
+
+    .brand-link:hover .brand-title-jp {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    .nav-sparkle-badge {
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      opacity: 0.75;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .brand-link:hover .nav-sparkle-badge {
+      opacity: 1;
+      transform: rotate(25deg) scale(1.25);
+    }
+
+    .brand-subtitle {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+      transition: color 0.3s ease;
+    }
+
+    .brand-link:hover .brand-subtitle {
+      color: var(--accent-gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.94rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      border-color: var(--accent-indigo);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       HERO SECTION & INTERACTIVE MAGIC LOGO SHOWCASE
+       ========================================================================== */
+    .hero {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 76px 24px 56px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* English-first Hero Watermark (< /> by default) */
+    .hero-watermark {
+      position: absolute;
+      top: 15px;
+      right: 4%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(7rem, 15vw, 13rem);
+      font-weight: 800;
+      color: var(--watermark-color);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      z-index: -1;
+      transition: all 0.5s ease;
+    }
+
+    .eyebrow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(168, 85, 247, 0.14));
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow-badge .spark-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4.6vw, 3.85rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .magic-highlight {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 45%, #c084fc 80%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.12rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-violet));
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.38);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary:hover {
       transform: translateY(-2px);
-      border-color: var(--primary);
-      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.12);
+      box-shadow: 0 14px 34px rgba(168, 85, 247, 0.5);
     }
-    .policy-info h2 {
-      margin: 0 0 4px;
-      font-size: 20px;
-      color: var(--primary-dark);
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.25s ease;
     }
-    .policy-info p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--muted);
+
+    .btn-secondary:hover {
+      border-color: var(--accent-indigo);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
     }
-    .badge {
+
+    /* Studio Metrics Strip (100% English Primary) */
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 28px;
+      padding-top: 26px;
+      border-top: 1px solid var(--border-subtle);
+      max-width: 540px;
+    }
+
+    .metric-item strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .metric-item span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Right Hero Logo Showcase Card with Magical Hover Morph */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-showcase-card {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      padding: 36px 28px 30px;
+      border-radius: 28px;
+      background: linear-gradient(160deg, rgba(30, 27, 75, 0.74), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(129, 140, 248, 0.32);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+      text-align: center;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease, box-shadow 0.45s ease;
+    }
+
+    [data-theme="light"] .logo-showcase-card {
+      background: linear-gradient(160deg, #1e1b4b, #0f172a);
+      color: #f8fafc;
+    }
+
+    .logo-showcase-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245, 158, 11, 0.65);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6), 0 0 55px rgba(245, 158, 11, 0.25), 0 0 80px rgba(168, 85, 247, 0.3);
+    }
+
+    /* Magical Rotating Arcane Aura Behind Emblem */
+    .arcane-aura-ring {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      width: 230px;
+      height: 230px;
+      margin-left: -115px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(56, 189, 248, 0.3);
+      pointer-events: none;
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .logo-showcase-card:hover .arcane-aura-ring {
+      transform: rotate(90deg) scale(1.1);
+      border-color: rgba(245, 158, 11, 0.75);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.28);
+    }
+
+    /* Floating Sparkle Particles on Hover */
+    .magic-sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      color: #fef08a;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: translateY(15px) scale(0.4);
+      transition: opacity 0.45s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      text-shadow: 0 0 12px #f59e0b;
+    }
+
+    .sparkle.s1 { top: 14%; left: 16%; transition-delay: 0.03s; }
+    .sparkle.s2 { top: 20%; right: 15%; transition-delay: 0.09s; font-size: 1.35rem; color: #38bdf8; }
+    .sparkle.s3 { top: 48%; left: 10%; transition-delay: 0.14s; font-size: 0.95rem; }
+    .sparkle.s4 { top: 45%; right: 11%; transition-delay: 0.06s; color: #c084fc; font-size: 1.25rem; }
+    .sparkle.s5 { top: 8%; left: 50%; transition-delay: 0.12s; }
+
+    .logo-showcase-card:hover .sparkle {
+      opacity: 1;
+      transform: translateY(-8px) scale(1.15) rotate(20deg);
+    }
+
+    /* Dual-Layer Emblem Frame (English Primary -> Japanese Hover) */
+    .emblem-frame {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 22px;
+      border-radius: 40px;
+      padding: 5px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1, #c084fc, #f59e0b);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s ease;
+    }
+
+    .logo-showcase-card:hover .emblem-frame {
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.38);
+    }
+
+    .emblem-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 35px;
+      overflow: hidden;
+      background: #090d16;
+    }
+
+    .emblem-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.55s ease;
+    }
+
+    .emblem-img.en-primary {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      z-index: 2;
+    }
+
+    .emblem-img.jp-magic {
+      opacity: 0;
+      transform: scale(0.84) rotate(-10deg);
+      filter: brightness(1.3) blur(6px);
+      z-index: 1;
+    }
+
+    .logo-showcase-card:hover .emblem-img.en-primary {
+      opacity: 0;
+      transform: scale(1.14) rotate(8deg);
+      filter: blur(6px);
+    }
+
+    .logo-showcase-card:hover .emblem-img.jp-magic {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: brightness(1) blur(0);
+      z-index: 3;
+    }
+
+    /* Wordmark Morph inside Showcase Card */
+    .showcase-wordmark-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 76px;
+      margin-bottom: 12px;
+    }
+
+    .showcase-wordmark-en,
+    .showcase-wordmark-jp {
+      grid-area: 1 / 1;
+      transition: opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1), transform 0.48s cubic-bezier(0.16, 1, 0.3, 1), filter 0.48s ease;
+    }
+
+    .showcase-wordmark-en {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .showcase-svg-logo {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .showcase-wordmark-jp {
+      opacity: 0;
+      transform: translateY(10px) scale(0.92);
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    .jp-magic-title {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 2.15rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .jp-magic-sub {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #38bdf8;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .logo-showcase-card:hover .showcase-wordmark-en {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.92);
+      filter: blur(5px);
+    }
+
+    .logo-showcase-card:hover .showcase-wordmark-jp {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    .magic-hover-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      font-size: 0.79rem;
+      font-weight: 600;
+      transition: all 0.35s ease;
+    }
+
+    .logo-showcase-card:hover .magic-hover-hint {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fef08a;
+    }
+
+    /* ==========================================================================
+       PORTFOLIO / APPS SECTION
+       ========================================================================== */
+    .section {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .section-title-group {
+      max-width: 640px;
+    }
+
+    .section-tag {
       display: inline-block;
-      background: #ccfbf1;
-      color: var(--primary-dark);
+      color: var(--accent-indigo);
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Category Filter Pills */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--accent-indigo);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-violet));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    /* Apps Grid */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 26px;
+    }
+
+    .app-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+      overflow: hidden;
+    }
+
+    .app-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--app-accent, var(--accent-indigo));
+      opacity: 0.85;
+    }
+
+    .app-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--app-accent, var(--border-glow));
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.5), 0 0 32px var(--app-glow, rgba(99, 102, 241, 0.18));
+    }
+
+    .app-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .app-icon-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--app-icon-bg, rgba(99, 102, 241, 0.15));
+      border: 1px solid var(--app-accent, rgba(99, 102, 241, 0.4));
+      box-shadow: 0 10px 24px var(--app-glow, rgba(99, 102, 241, 0.2));
+      overflow: hidden;
+    }
+
+    .app-icon-box svg,
+    .app-icon-box img {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+    }
+
+    .app-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .app-category-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--app-icon-bg);
+      color: var(--app-accent);
+      margin-bottom: 6px;
+    }
+
+    .app-title {
+      font-size: 1.26rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    /* Package ID Copy Row */
+    .package-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 10px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      max-width: 100%;
+    }
+
+    .package-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .copy-pkg-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: color 0.15s ease;
+    }
+
+    .copy-pkg-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .app-description {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .app-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 24px;
+    }
+
+    .feature-chip {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 8px;
+      background: rgba(148, 163, 184, 0.07);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .app-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .btn-playstore {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: var(--text-primary);
+      color: var(--bg-base);
+      font-weight: 700;
+      font-size: 0.86rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-playstore:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-policy {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      font-weight: 600;
+      font-size: 0.84rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-policy:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       FEATURED STUDIO COVER BANNER SHOWCASE
+       ========================================================================== */
+    .cover-banner-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border-glow);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+      background: #070913;
+    }
+
+    .cover-banner-card img {
+      width: 100%;
+      max-height: 460px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-banner-overlay {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 28px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cover-banner-info h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .cover-banner-info p {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       STUDIO PHILOSOPHY ("THE MAGIC BEHIND OUR CODE")
+       ========================================================================== */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 24px;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 30px;
+      transition: border-color 0.25s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--border-glow);
+    }
+
+    .pillar-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+      color: var(--accent-cyan);
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+
+    .pillar-card h3 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .pillar-card p {
+      color: var(--text-secondary);
+      font-size: 0.93rem;
+    }
+
+    /* ==========================================================================
+       POLICIES & LEGAL HUB SECTION
+       ========================================================================== */
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .legal-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 26px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .legal-card:hover {
+      border-color: var(--accent-indigo);
+      transform: translateY(-2px);
+    }
+
+    .legal-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .legal-info p {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .legal-badge {
       padding: 6px 14px;
       border-radius: 999px;
-      font-size: 13px;
+      background: rgba(99, 102, 241, 0.14);
+      color: var(--accent-cyan);
+      font-size: 0.8rem;
       font-weight: 700;
       white-space: nowrap;
     }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
     footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      padding: 24px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 48px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Copy Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-violet));
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 48px;
+      }
+
+      .hero-lead {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-metrics {
+        margin: 0 auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .apps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>CodeMahou — Public Policies</h1>
-    <p>Official Privacy Policies &amp; Terms for CodeMahou Applications</p>
+  <!-- Ambient Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- ================= NAVBAR (English Primary -> Magical Hover Morph to Japanese) ================= -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-link" id="navBrandLogo" aria-label="Code Mahou Home — Hover for Magic">
+        <div class="brand-emblem-wrap">
+          <img src="./assets/logo-main.png" alt="Code Mahou Primary English Emblem" class="nav-logo-en" onerror="this.src='./assets/favicon.svg'" />
+          <img src="./assets/logo-jp.png" alt="Code Mahou Japanese Magic Emblem" class="nav-logo-jp" />
+        </div>
+        <div class="brand-text-wrap" dir="ltr">
+          <div class="brand-title-morph">
+            <span class="brand-title-en">
+              Code<span class="gradient-text">Mahou</span>
+              <span class="nav-sparkle-badge">✦</span>
+            </span>
+            <span class="brand-title-jp">
+              コード魔法
+              <span class="nav-sparkle-badge">✨</span>
+            </span>
+          </div>
+          <span class="brand-subtitle" data-i18n="navSubtitle">Digital Magic Studio</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#apps" data-i18n="navApps">Applications</a></li>
+        <li><a href="#brand-cover" data-i18n="navBrand">Studio Cover</a></li>
+        <li><a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a></li>
+        <li><a href="#policies" data-i18n="navPolicies">Privacy &amp; Legal</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="Switch Language">
+          <span>🌐</span>
+          <span id="langToggleLabel">عربي</span>
+        </button>
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Theme">
+          <span id="themeToggleIcon">☀️</span>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <main class="container">
-    <ul class="policy-list">
-      <!-- DoseMint Privacy Policy -->
-      <li>
-        <a class="policy-card" href="./dosemint_privacy_policy.html">
-          <div class="policy-info">
-            <h2>DoseMint (دوز مينت) — Privacy Policy | سياسة الخصوصية</h2>
-            <p>Package: <code>com.codemahou.dosemint</code> • Updated: November 2026</p>
-          </div>
-          <span class="badge">View Policy &rarr;</span>
-        </a>
-      </li>
-	  
-	  <li>
-        <a class="policy-card" href="./cairo_metro_privacy_policy.html">
-          <div class="policy-info">
-            <h2>Cairo Metro Guide: Map & Fare (دليل مترو القاهرة: خريطة ومسار) — Privacy Policy | سياسة الخصوصية</h2>
-            <p>Package: <code>com.codemahou.cairometroguide</code> • Updated: November 2026</p>
-          </div>
-          <span class="badge">View Policy &rarr;</span>
-        </a>
-      </li>
+  <!-- ================= HERO SECTION ================= -->
+  <main>
+    <section class="hero">
+      <div class="hero-watermark" id="heroWatermark" aria-hidden="true">&lt;/&gt;</div>
 
-      <!-- Add future app policy cards here -->
-    </ul>
+      <div class="hero-content">
+        <div class="eyebrow-badge">
+          <span class="spark-dot"></span>
+          <span data-i18n="heroEyebrow">CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC</span>
+        </div>
+
+        <h1 data-i18n-html="heroTitle">
+          Crafting <span class="magic-highlight">Digital Magic</span> Through Everyday Mobile Apps.
+        </h1>
+
+        <p class="hero-lead" data-i18n="heroLead">
+          At Code Mahou ("Mahou" = Magic), we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#apps" class="btn-primary">
+            <span data-i18n="ctaExplore">Explore Our Apps</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="#policies" class="btn-secondary" data-i18n="ctaPolicies">
+            Official Privacy Policies
+          </a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <strong>5+</strong>
+            <span data-i18n="metricApps">Published Android Apps</span>
+          </div>
+          <div class="metric-item">
+            <strong>100%</strong>
+            <span data-i18n="metricPrivacy">Local-First Privacy</span>
+          </div>
+          <div class="metric-item">
+            <strong>PRO</strong>
+            <span data-i18n="metricCraft">High-Craft UX &amp; Speed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Brand Logo Showcase (Primary English -> Hover Morphs to Japanese Magic) -->
+      <div class="hero-visual">
+        <div class="logo-showcase-card" id="heroLogoCard" title="Hover to cast Mahou (Magic)">
+          <div class="arcane-aura-ring" aria-hidden="true"></div>
+
+          <div class="magic-sparkles" aria-hidden="true">
+            <span class="sparkle s1">✦</span>
+            <span class="sparkle s2">✧</span>
+            <span class="sparkle s3">★</span>
+            <span class="sparkle s4">✦</span>
+            <span class="sparkle s5">✨</span>
+          </div>
+
+          <div class="emblem-frame">
+            <div class="emblem-inner">
+              <!-- Primary English Logo Emblem (Default) -->
+              <img src="./assets/logo-main.png" alt="Code Mahou Official English Logo" class="emblem-img en-primary" onerror="this.src='./assets/favicon.svg'" />
+              <!-- Magical Hover Japanese Emblem -->
+              <img src="./assets/logo-jp.png" alt="Code Mahou Magical Japanese Emblem (魔法)" class="emblem-img jp-magic" />
+            </div>
+          </div>
+
+          <div class="showcase-wordmark-wrap" dir="ltr">
+            <!-- Default English Wordmark -->
+            <div class="showcase-wordmark-en">
+              <img src="./assets/logo.svg" alt="Code Mahou English Wordmark" class="showcase-svg-logo" />
+            </div>
+            <!-- Hover Magical Japanese Wordmark -->
+            <div class="showcase-wordmark-jp">
+              <div class="jp-magic-title">コード魔法</div>
+              <span class="jp-magic-sub">MAHOU = MAGIC IN CODE ✨</span>
+            </div>
+          </div>
+
+          <div class="magic-hover-hint">
+            <span>✨</span>
+            <span data-i18n="hoverMagicHint">Hover over logo for a Magical Touch</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PORTFOLIO / APPLICATIONS SECTION ================= -->
+    <section class="section" id="apps">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag" data-i18n="appsSectionTag">OFFICIAL PORTFOLIO</span>
+          <h2 class="section-title" data-i18n="appsSectionTitle">Our Featured Applications</h2>
+          <p class="section-desc" data-i18n="appsSectionDesc">
+            Discover our suite of Android applications engineered for reliability, speed, and an effortless user experience.
+          </p>
+        </div>
+
+        <div class="filter-bar" role="tablist" aria-label="Filter applications by category">
+          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filterAll">All Apps (5)</button>
+          <button type="button" class="filter-btn" data-filter="health" data-i18n="filterHealth">Health &amp; Care</button>
+          <button type="button" class="filter-btn" data-filter="transit" data-i18n="filterTransit">Navigation &amp; Transit</button>
+          <button type="button" class="filter-btn" data-filter="culture" data-i18n="filterCulture">Japanese &amp; Anime</button>
+          <button type="button" class="filter-btn" data-filter="utility" data-i18n="filterUtility">Pro Utilities</button>
+        </div>
+      </div>
+
+      <!-- Dynamic App Cards Container -->
+      <div class="apps-grid" id="appsGrid"></div>
+    </section>
+
+    <!-- ================= FEATURED COVER BANNER SECTION ================= -->
+    <section class="section" id="brand-cover">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag" data-i18n="coverTag">BRAND IDENTITY &amp; FEATURED ARTWORK</span>
+          <h2 class="section-title" data-i18n="coverTitle">Code Mahou Official Cover</h2>
+          <p class="section-desc" data-i18n="coverDesc">
+            Our official English studio identity and widescreen featured cover banner designed for developer showcases.
+          </p>
+        </div>
+      </div>
+
+      <div class="cover-banner-card">
+        <img src="./assets/featured-cover.png" alt="Code Mahou Official Featured Cover Banner" />
+        <div class="cover-banner-overlay">
+          <div class="cover-banner-info">
+            <h3>Code Mahou — Official Featured Cover &amp; Brand Assets</h3>
+            <p data-i18n="coverSub">Primary English Logo &amp; Widescreen Cover Banner (16:9)</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="./assets/logo-main.png" target="_blank" rel="noopener" class="btn-secondary" style="padding: 9px 16px; font-size: 0.85rem;">
+              Primary Logo (EN) &nearr;
+            </a>
+            <a href="./assets/featured-cover.png" target="_blank" rel="noopener" class="btn-primary" style="padding: 9px 16px; font-size: 0.85rem;">
+              Featured Cover &nearr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STUDIO PHILOSOPHY SECTION ================= -->
+    <section class="section" id="philosophy">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag" data-i18n="philTag">THE CODE MAHOU STANDARD</span>
+          <h2 class="section-title" data-i18n="philTitle">Why Users Trust Code Mahou</h2>
+          <p class="section-desc" data-i18n="philDesc">
+            Every application bearing the Code Mahou emblem is built around three core engineering principles.
+          </p>
+        </div>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🛡️</div>
+          <h3 data-i18n="pillar1Title">Privacy-First Architecture</h3>
+          <p data-i18n="pillar1Desc">
+            Your personal data belongs on your device. From medication schedules in DoseMint to GPS station lookups in Cairo Metro Guide, core processing happens locally on your phone.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">✨</div>
+          <h3 data-i18n="pillar2Title">High-Class UI &amp; Intuition</h3>
+          <p data-i18n="pillar2Desc">
+            True magic feels effortless. We obsess over clean typography, bilingual accessibility, dark-mode comfort, and zero-clutter workflows.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">⚡</div>
+          <h3 data-i18n="pillar3Title">Native Android Reliability</h3>
+          <p data-i18n="pillar3Desc">
+            Whether firing exact-time medication alarms, calculating metro fares offline, or discovering your next anime, our apps are optimized for speed and battery efficiency.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRIVACY POLICIES & LEGAL HUB ================= -->
+    <section class="section" id="policies">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag" data-i18n="legalTag">COMPLIANCE &amp; TRANSPARENCY</span>
+          <h2 class="section-title" data-i18n="legalTitle">Official Privacy Policies &amp; Legal Documents</h2>
+          <p class="section-desc" data-i18n="legalDesc">
+            Direct access to official privacy policies, permissions disclosures, and developer verification files for Code Mahou applications.
+          </p>
+        </div>
+      </div>
+
+      <div class="legal-grid">
+        <a href="./dosemint_privacy_policy.html" class="legal-card">
+          <div class="legal-info">
+            <h3>DoseMint: Pill &amp; Med Reminder — Privacy Policy</h3>
+            <p>com.codemahou.dosemint • AR / EN</p>
+          </div>
+          <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./cairo_metro_privacy_policy.html" class="legal-card">
+          <div class="legal-info">
+            <h3>Cairo Metro Guide: Map &amp; Fare — Privacy Policy</h3>
+            <p>com.codemahou.cairometroguide • AR / EN</p>
+          </div>
+          <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./app-ads.txt" class="legal-card">
+          <div class="legal-info">
+            <h3>Authorized Digital Sellers (app-ads.txt)</h3>
+            <p>Google AdMob Publisher Verification</p>
+          </div>
+          <span class="legal-badge">app-ads.txt &rarr;</span>
+        </a>
+      </div>
+    </section>
   </main>
 
+  <!-- ================= FOOTER ================= -->
   <footer>
-    &copy; 2026 CodeMahou. All rights reserved.
+    <div class="footer-inner">
+      <div class="footer-copy">
+        &copy; 2026 <strong>Code Mahou</strong>. <span data-i18n="footerRights">All rights reserved. Crafted with Digital Magic.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#apps" data-i18n="navApps">Applications</a>
+        <a href="#brand-cover" data-i18n="navBrand">Studio Cover</a>
+        <a href="./dosemint_privacy_policy.html">DoseMint Policy</a>
+        <a href="./cairo_metro_privacy_policy.html">Cairo Metro Policy</a>
+        <a href="./app-ads.txt">app-ads.txt</a>
+      </div>
+    </div>
   </footer>
+
+  <!-- Toast Notification -->
+  <div id="copyToast" class="toast" role="status" aria-live="polite">Package ID copied!</div>
+
+  <!-- ==========================================================================
+       STRUCTURED APP DATA & INTERACTIVE SCRIPT
+       ========================================================================== -->
+  <script>
+    const APPS_CONFIG = [
+      {
+        id: "dosemint",
+        name: "DoseMint: Pill & Med Reminder",
+        nameAr: "DoseMint: منبه الدواء ومواعيد الجرعات",
+        packageId: "com.codemahou.dosemint",
+        categoryKey: "health",
+        categoryLabel: { en: "Health & Medical", ar: "الصحة والعناية" },
+        accent: "#10b981",
+        iconBg: "rgba(16, 185, 129, 0.14)",
+        glow: "rgba(16, 185, 129, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.dosemint",
+        privacyPolicyUrl: "./dosemint_privacy_policy.html",
+        description: {
+          en: "Smart family medication tracker and exact-time pill reminder. Manage prescriptions, track dosages for loved ones, and keep health records 100% private on your device with optional Google Drive backup.",
+          ar: "رفيقك الذكي لتنظيم مواعيد الأدوية والجرعات لجميع أفراد العائلة. منبهات دقيقة في موعدها، سجل التزام بالجرعات، وخصوصية تامة بتخزين محلي مع نسخ احتياطي اختياري عبر Google Drive."
+        },
+        features: {
+          en: ["Exact-Time Alarms", "Family Profiles", "Local-First Privacy", "Google Drive Backup"],
+          ar: ["منبهات دقيقة", "ملفات للعائلة", "خصوصية محلية 100%", "نسخ احتياطي سحابي"]
+        },
+        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="18" width="32" height="16" rx="8" transform="rotate(-35 24 24)" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="2.5"/>
+          <path d="M18 19L29 30" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M34 10C34 14 36 16 40 16C36 16 34 18 34 22C34 18 32 16 28 16C32 16 34 14 34 10Z" fill="#34d399"/>
+        </svg>`
+      },
+      {
+        id: "cairometro",
+        name: "Cairo Metro Guide: Map & Fare",
+        nameAr: "Cairo Metro Guide: دليل مترو القاهرة",
+        packageId: "com.codemahou.cairometroguide",
+        categoryKey: "transit",
+        categoryLabel: { en: "Transit & Navigation", ar: "المواصلات والملاحة" },
+        accent: "#3b82f6",
+        iconBg: "rgba(59, 130, 246, 0.14)",
+        glow: "rgba(59, 130, 246, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.cairometroguide",
+        privacyPolicyUrl: "./cairo_metro_privacy_policy.html",
+        description: {
+          en: "The complete companion for navigating the Cairo Metro network. Instantly locate the nearest station via on-device GPS, plan optimal transfer routes across lines, and calculate ticket & subscription fares.",
+          ar: "الدليل الشامل للتنقل في شبكة مترو أنفاق القاهرة. تحديد أقرب محطة لموقعك عبر الـ GPS، تخطيط أسرع مسار والتحويلات بين الخطوط، وحساب أسعار التذاكر والاشتراكات بدقة."
+        },
+        features: {
+          en: ["Nearest Station GPS", "Route & Transfer Planner", "Fare Calculator", "Offline Ready"],
+          ar: ["أقرب محطة بالـ GPS", "مخطط المسارات والتحويلات", "حاسبة التذاكر والاشتراكات", "يعمل بدون إنترنت"]
+        },
+        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="11" y="8" width="26" height="28" rx="6" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-width="2.5"/>
+          <path d="M11 24H37" stroke="#3b82f6" stroke-width="2.5"/>
+          <circle cx="17" cy="30" r="2.2" fill="#60a5fa"/>
+          <circle cx="31" cy="30" r="2.2" fill="#60a5fa"/>
+          <path d="M16 36L12 42M32 36L36 42" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "japandizer",
+        name: "Japandizer: Learn Easy Japanese",
+        nameAr: "Japandizer: تعلّم اليابانية بسهولة",
+        packageId: "com.codemahou.japandizer",
+        categoryKey: "culture",
+        categoryLabel: { en: "Education & Language", ar: "التعليم واللغات" },
+        accent: "#f43f5e",
+        iconBg: "rgba(244, 63, 94, 0.14)",
+        glow: "rgba(244, 63, 94, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.japandizer",
+        privacyPolicyUrl: null,
+        description: {
+          en: "Master Japanese step by step in a fun, approachable way. Practice Hiragana, Katakana, essential Kanji, and everyday Japanese phrases with interactive drills designed for beginners and self-learners.",
+          ar: "تعلّم اللغة اليابانية خطوة بخطوة بأسلوب تفاعلي ممتع ومبسط. إتقان الهيراغانا والكاتاكانا وأهم رموز الكانجي والمحادثات اليومية عبر تدريبات ذكية وسلسة."
+        },
+        features: {
+          en: ["Hiragana & Katakana", "Essential Kanji", "Daily Vocabulary", "Interactive Quizzes"],
+          ar: ["هيراغانا وكاتاكانا", "أساسيات الكانجي", "مفردات ومحادثات", "اختبارات تفاعلية"]
+        },
+        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 14C18 17 30 17 40 14" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
+          <path d="M12 22H36" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 15V39M32 15V39" stroke="#f43f5e" stroke-width="2.8" stroke-linecap="round"/>
+          <circle cx="24" cy="31" r="5" fill="#fb7185" fill-opacity="0.35" stroke="#fb7185" stroke-width="2"/>
+        </svg>`
+      },
+      {
+        id: "malrandomanime",
+        name: "MAL Random Anime Generator",
+        nameAr: "MAL Random Anime Generator",
+        packageId: "com.codemahou.malrandomanime",
+        categoryKey: "culture",
+        categoryLabel: { en: "Anime & Entertainment", ar: "أنمي وترفيه" },
+        accent: "#a855f7",
+        iconBg: "rgba(168, 85, 247, 0.14)",
+        glow: "rgba(168, 85, 247, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.malrandomanime",
+        privacyPolicyUrl: null,
+        description: {
+          en: "End decision fatigue and discover your next favorite anime in one tap. Spin smart random anime recommendations, filter by genres or ratings, and explore curated titles synced with MyAnimeList.",
+          ar: "وداعاً للحيرة عند اختيار الأنمي القادم! احصل على اقتراحات أنمي عشوائية ذكية بضغطة واحدة، مع إمكانية الفلترة حسب التصنيف والتقييم والربط مع قوائم MyAnimeList."
+        },
+        features: {
+          en: ["1-Tap Anime Roulette", "MAL List Sync", "Genre & Score Filters", "Synopsis & Trailers"],
+          ar: ["اقتراح عشوائي ذكي", "مزامنة MyAnimeList", "فلترة بالتصنيف والتقييم", "تفاصيل وتقييمات شاملة"]
+        },
+        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="9" y="9" width="30" height="30" rx="8" fill="#a855f7" fill-opacity="0.2" stroke="#a855f7" stroke-width="2.5"/>
+          <circle cx="17" cy="17" r="2.5" fill="#c084fc"/>
+          <circle cx="31" cy="17" r="2.5" fill="#c084fc"/>
+          <circle cx="24" cy="24" r="2.5" fill="#fbbf24"/>
+          <circle cx="17" cy="31" r="2.5" fill="#c084fc"/>
+          <circle cx="31" cy="31" r="2.5" fill="#c084fc"/>
+        </svg>`
+      },
+      {
+        id: "wimico",
+        name: "WiMeCo Pro",
+        nameAr: "WiMeCo Pro",
+        packageId: "com.codemahou.wimico",
+        categoryKey: "utility",
+        categoryLabel: { en: "Pro Tools & Utilities", ar: "أدوات احترافية" },
+        accent: "#f59e0b",
+        iconBg: "rgba(245, 158, 11, 0.14)",
+        glow: "rgba(245, 158, 11, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.wimico",
+        privacyPolicyUrl: null,
+        description: {
+          en: "Professional-grade utility engineered by Code Mahou for seamless control, streamlined workflow management, and high-efficiency mobile performance with a clean Pro experience.",
+          ar: "أداة احترافية متطورة من استوديو Code Mahou مصممة لتوفير تحكم سلس، وأداء فائق السرعة، وتجربة استخدام Pro متكاملة وخالية من التعقيد."
+        },
+        features: {
+          en: ["Pro-Grade Edition", "Fast & Lightweight", "Intuitive Controls", "Precision Engineered"],
+          ar: ["نسخة احترافية Pro", "خفيف وفائق السرعة", "واجهة تحكم ذكية", "أداء عالي الاعتمادية"]
+        },
+        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 8L38 14V24C38 33 31.5 39.5 24 42C16.5 39.5 10 33 10 24V14L24 8Z" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M18 26C21.5 22.5 26.5 22.5 30 26" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M15 21C20 16.5 28 16.5 33 21" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="30" r="2.5" fill="#fbbf24"/>
+        </svg>`
+      }
+    ];
+
+    const I18N = {
+      en: {
+        navSubtitle: "Digital Magic Studio",
+        navApps: "Applications",
+        navBrand: "Studio Cover",
+        navPhilosophy: "Our Philosophy",
+        navPolicies: "Privacy & Legal",
+        heroEyebrow: "CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC",
+        heroTitle: 'Crafting <span class="magic-highlight">Digital Magic</span> Through Everyday Mobile Apps.',
+        heroLead: 'At Code Mahou ("Mahou" = Magic), we blend precision software engineering with high-class design to build reliable, privacy-first Android applications across healthcare, transit, language learning, anime discovery, and pro utilities.',
+        ctaExplore: "Explore Our Apps",
+        ctaPolicies: "Official Privacy Policies",
+        metricApps: "Published Android Apps",
+        metricPrivacy: "Local-First Privacy",
+        metricCraft: "High-Craft UX & Speed",
+        hoverMagicHint: "Hover over logo for a Magical Touch",
+        appsSectionTag: "OFFICIAL PORTFOLIO",
+        appsSectionTitle: "Our Featured Applications",
+        appsSectionDesc: "Discover our suite of Android applications engineered for reliability, speed, and an effortless user experience.",
+        filterAll: "All Apps (5)",
+        filterHealth: "Health & Care",
+        filterTransit: "Navigation & Transit",
+        filterCulture: "Japanese & Anime",
+        filterUtility: "Pro Utilities",
+        playStoreBtn: "Google Play",
+        policyBtn: "Privacy Policy",
+        copyBtn: "Copy",
+        copiedToast: "Copied package ID: ",
+        coverTag: "BRAND IDENTITY & FEATURED ARTWORK",
+        coverTitle: "Code Mahou Official Cover",
+        coverDesc: "Our official English studio identity and widescreen featured cover banner designed for developer showcases.",
+        coverSub: "Primary English Logo & Widescreen Cover Banner (16:9)",
+        philTag: "THE CODE MAHOU STANDARD",
+        philTitle: "Why Users Trust Code Mahou",
+        philDesc: "Every application bearing the Code Mahou emblem is built around three core engineering principles.",
+        pillar1Title: "Privacy-First Architecture",
+        pillar1Desc: "Your personal data belongs on your device. From medication schedules in DoseMint to GPS station lookups in Cairo Metro Guide, core processing happens locally on your phone.",
+        pillar2Title: "High-Class UI & Intuition",
+        pillar2Desc: "True magic feels effortless. We obsess over clean typography, bilingual accessibility, dark-mode comfort, and zero-clutter workflows.",
+        pillar3Title: "Native Android Reliability",
+        pillar3Desc: "Whether firing exact-time medication alarms, calculating metro fares offline, or discovering your next anime, our apps are optimized for speed and battery efficiency.",
+        legalTag: "COMPLIANCE & TRANSPARENCY",
+        legalTitle: "Official Privacy Policies & Legal Documents",
+        legalDesc: "Direct access to official privacy policies, permissions disclosures, and developer verification files for Code Mahou applications.",
+        viewDoc: "View Policy →",
+        footerRights: "All rights reserved. Crafted with Digital Magic."
+      },
+      ar: {
+        navSubtitle: "Digital Magic Studio",
+        navApps: "تطبيقاتنا",
+        navBrand: "غلاف الاستوديو",
+        navPhilosophy: "فلسفة الاستوديو",
+        navPolicies: "سياسات الخصوصية",
+        heroEyebrow: "CODE MAHOU STUDIO • WHERE CODE MEETS MAGIC",
+        heroTitle: 'نصنع <span class="magic-highlight">سحر البرمجة</span> في تطبيقات ذكية لحياتك اليومية.',
+        heroLead: 'في استوديو Code Mahou (حيث تعني كلمة Mahou السحر)، ندمج الهندسة البرمجية المتقنة مع التصميم الفاخر لنبتكر تطبيقات أندرويد عالية الاعتمادية تحترم خصوصيتك في مجالات الصحة، المواصلات، تعلم اللغات، الأنمي، والأدوات الاحترافية.',
+        ctaExplore: "استكشف تطبيقاتنا",
+        ctaPolicies: "سياسات الخصوصية الرسمية",
+        metricApps: "تطبيقات أندرويد منشورة",
+        metricPrivacy: "خصوصية محلية تامة",
+        metricCraft: "تصميم عصري وأداء فائق",
+        hoverMagicHint: "مرّر الماوس على اللوجو لتفعيل اللمسة السحرية",
+        appsSectionTag: "OFFICIAL PORTFOLIO • معرض الأعمال",
+        appsSectionTitle: "تطبيقات Code Mahou المميزة",
+        appsSectionDesc: "تعرّف على باقة تطبيقاتنا المصممة بعناية لتقديم تجربة استخدام سلسة، سريعة، وموثوقة.",
+        filterAll: "الكل (5)",
+        filterHealth: "الصحة والعناية",
+        filterTransit: "المواصلات والملاحة",
+        filterCulture: "اليابانية والأنمي",
+        filterUtility: "أدوات احترافية",
+        playStoreBtn: "Google Play",
+        policyBtn: "سياسة الخصوصية",
+        copyBtn: "نسخ",
+        copiedToast: "تم نسخ معرّف الحزمة: ",
+        coverTag: "BRAND IDENTITY • الهوية البصرية",
+        coverTitle: "الغلاف الرسمي لاستوديو Code Mahou",
+        coverDesc: "الهوية الإنجليزية الرئيسية وصورة الغلاف الرسمية (Featured Cover) الخاصة باستوديو Code Mahou.",
+        coverSub: "النسخة الإنجليزية الرئيسية وصورة الغلاف العريضة (16:9)",
+        philTag: "THE CODE MAHOU STANDARD",
+        philTitle: "لماذا يثق المستخدمون في Code Mahou؟",
+        philDesc: "كل تطبيق يحمل شعار Code Mahou يرتكز على ثلاثة مبادئ هندسية أساسية.",
+        pillar1Title: "الخصوصية أولاً بالتصميم",
+        pillar1Desc: "بياناتك الشخصية ملكك وحدك على هاتفك. بدءاً من جداول الأدوية في DoseMint وحتى تحديد أقرب محطة مترو بالـ GPS، تتم المعالجة محلياً بالكامل على جهازك.",
+        pillar2Title: "واجهات راقية وسهولة فائقة",
+        pillar2Desc: "السحر الحقيقي يكمن في البساطة. نهتم بأدق تفاصيل الخطوط، ودعم اللغتين الإنجليزية والعربية، والوضع الليلي المريح للعين.",
+        pillar3Title: "اعتمادية وسرعة على أندرويد",
+        pillar3Desc: "سواء كان الأمر يتعلق بمنبهات الدواء الدقيقة، أو حساب تذاكر المترو بدون إنترنت، أو اكتشاف أنمي جديد، فإن تطبيقاتنا محسّنة للسرعة وتوفير البطارية.",
+        legalTag: "COMPLIANCE & TRANSPARENCY",
+        legalTitle: "سياسات الخصوصية والوثائق الرسمية",
+        legalDesc: "روابط مباشرة لصفحات سياسة الخصوصية الرسمية وتوضيح الصلاحيات وملف التحقق الإعلاني لتطبيقات Code Mahou.",
+        viewDoc: "عرض الوثيقة ←",
+        footerRights: "جميع الحقوق محفوظة. صُنع بإتقان وسحر برمجي."
+      }
+    };
+
+    /* Default to English priority */
+    let currentLang = localStorage.getItem("codemahou_lang") || "en";
+    let currentFilter = "all";
+
+    const appsGrid = document.getElementById("appsGrid");
+    const langToggleBtn = document.getElementById("langToggleBtn");
+    const langToggleLabel = document.getElementById("langToggleLabel");
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const themeToggleIcon = document.getElementById("themeToggleIcon");
+    const copyToast = document.getElementById("copyToast");
+    const heroWatermark = document.getElementById("heroWatermark");
+    const heroLogoCard = document.getElementById("heroLogoCard");
+    const navBrandLogo = document.getElementById("navBrandLogo");
+
+    /* Sync Hero Watermark with Magical Logo Hover (English </> by default, morphs to 魔法 on hover) */
+    function setMagicHoverState(isHovering) {
+      if (!heroWatermark) return;
+      heroWatermark.textContent = isHovering ? "魔法" : "</>";
+    }
+
+    heroLogoCard.addEventListener("mouseenter", () => setMagicHoverState(true));
+    heroLogoCard.addEventListener("mouseleave", () => setMagicHoverState(false));
+    navBrandLogo.addEventListener("mouseenter", () => setMagicHoverState(true));
+    navBrandLogo.addEventListener("mouseleave", () => setMagicHoverState(false));
+
+    function renderApps() {
+      const dict = I18N[currentLang];
+      const filtered = currentFilter === "all"
+        ? APPS_CONFIG
+        : APPS_CONFIG.filter(app => app.categoryKey === currentFilter);
+
+      appsGrid.innerHTML = filtered.map(app => {
+        const title = currentLang === "ar" ? app.nameAr : app.name;
+        const category = app.categoryLabel[currentLang];
+        const desc = app.description[currentLang];
+        const features = app.features[currentLang];
+
+        const policyBtnHtml = app.privacyPolicyUrl
+          ? `<a href="${app.privacyPolicyUrl}" class="btn-policy">
+               <span>🛡️</span>
+               <span>${dict.policyBtn}</span>
+             </a>`
+          : "";
+
+        return `
+          <article class="app-card" style="--app-accent: ${app.accent}; --app-icon-bg: ${app.iconBg}; --app-glow: ${app.glow};">
+            <div>
+              <div class="app-card-top">
+                <div class="app-icon-box" aria-hidden="true">
+                  ${app.svgIcon}
+                </div>
+                <div class="app-meta">
+                  <span class="app-category-badge">${category}</span>
+                  <h3 class="app-title">${title}</h3>
+                </div>
+              </div>
+
+              <div class="package-row" dir="ltr" title="Android Package Name">
+                <code class="package-code">${app.packageId}</code>
+                <button type="button" class="copy-pkg-btn" onclick="copyPackageId('${app.packageId}')">
+                  ${dict.copyBtn}
+                </button>
+              </div>
+
+              <p class="app-description">${desc}</p>
+
+              <div class="app-features">
+                ${features.map(f => `<span class="feature-chip">${f}</span>`).join("")}
+              </div>
+            </div>
+
+            <div class="app-actions">
+              <a href="${app.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn-playstore">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M3.609 1.814L13.792 12 3.61 22.186a1.76 1.76 0 0 1-.61-1.34V3.154c0-.517.225-.996.609-1.34zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1.47 1.47 0 0 1 0 2.53l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
+                </svg>
+                <span>${dict.playStoreBtn}</span>
+              </a>
+              ${policyBtnHtml}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("codemahou_lang", lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      langToggleLabel.textContent = lang === "ar" ? "English" : "عربي";
+
+      const dict = I18N[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const key = el.getAttribute("data-i18n-html");
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+
+      renderApps();
+    }
+
+    function copyPackageId(pkg) {
+      navigator.clipboard.writeText(pkg).then(() => {
+        copyToast.textContent = I18N[currentLang].copiedToast + pkg;
+        copyToast.classList.add("show");
+        setTimeout(() => copyToast.classList.remove("show"), 2400);
+      });
+    }
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.getAttribute("data-filter");
+        renderApps();
+      });
+    });
+
+    langToggleBtn.addEventListener("click", () => {
+      applyLanguage(currentLang === "en" ? "ar" : "en");
+    });
+
+    const savedTheme = localStorage.getItem("codemahou_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    themeToggleIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("codemahou_theme", next);
+      themeToggleIcon.textContent = next === "dark" ? "☀️" : "🌙";
+    });
+
+    applyLanguage(currentLang);
+  </script>
 </body>
 </html>
