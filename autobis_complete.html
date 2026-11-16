@@ -267,6 +267,25 @@
   </header>
 
   <main>
+    <!-- Smart Room Deep-Link Auto-Redirect Banner (Shown when opened via WhatsApp invite link ?target=BUS-XXX) -->
+    <div id="roomJoinBanner" style="display:none; max-width:1180px; margin:24px auto 0; padding:0 24px;">
+      <div style="background:linear-gradient(135deg, #15803d, #0f172a); border:3px solid #fde047; border-radius:24px; padding:28px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6);">
+        <div style="font-size:2.6rem; margin-bottom:8px;">🚌🔔</div>
+        <h2 id="roomJoinTitle" style="font-size:1.75rem; font-weight:900; color:#fde047; margin-bottom:8px;">
+          جاري فتح الغرفة في تطبيق "أوتوبيس كومبليت"...
+        </h2>
+        <p id="roomJoinSub" style="color:#f8fafc; font-size:1.05rem; margin-bottom:18px; font-weight:700;"></p>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+          <a id="openInAppBtn" href="#" class="btn-playstore" style="background:linear-gradient(135deg, #fde047, #f59e0b); color:#0f172a; font-size:1.08rem;">
+            🚀 اضغط هنا لفتح الغرفة داخل اللعبة فوراً!
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.autobis_complete" class="btn-outline" style="padding:14px 22px; background:rgba(255,255,255,0.12);">
+            📲 حمّل اللعبة من Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+
     <section class="hero">
       <div>
         <div class="badge-pill">
@@ -436,6 +455,39 @@
 
     langBtn.addEventListener("click", () => setLang(lang === "ar" ? "en" : "ar"));
     setLang(lang);
+
+    // Smart Deep-Link Redirector for WhatsApp / Telegram Room Invites
+    (function handleRoomInviteQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const target = params.get("target") || params.get("code");
+      const mode = params.get("mode") || "online";
+      const code = params.get("code") || target;
+      if (!target) return;
+
+      const banner = document.getElementById("roomJoinBanner");
+      const sub = document.getElementById("roomJoinSub");
+      const btn = document.getElementById("openInAppBtn");
+      if (banner && sub && btn) {
+        banner.style.display = "block";
+        sub.textContent = `كود الغرفة: ${code} (${mode === "local" ? "شبكة محلية Wi-Fi / Hotspot: " + target : "غرفة أونلاين"})`;
+        const qs = `mode=${encodeURIComponent(mode)}&target=${encodeURIComponent(target)}&code=${encodeURIComponent(code)}`;
+        const customSchemeUrl = `autobis://join?${qs}`;
+        const androidIntentUrl = `intent://join?${qs}#Intent;scheme=autobis;package=com.codemahou.autobis_complete;S.browser_fallback_url=${encodeURIComponent("https://play.google.com/store/apps/details?id=com.codemahou.autobis_complete")};end`;
+
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        btn.href = isAndroid ? androidIntentUrl : customSchemeUrl;
+
+        // Automatically trigger the app open intent immediately upon page load!
+        setTimeout(() => {
+          window.location.href = customSchemeUrl;
+        }, 120);
+        if (isAndroid) {
+          setTimeout(() => {
+            window.location.href = androidIntentUrl;
+          }, 650);
+        }
+      }
+    })();
   </script>
 </body>
 </html>
