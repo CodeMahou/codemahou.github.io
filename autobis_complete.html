@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أوتوبيس كومبليت - كشكول الذكريات | Autobis Complete: Scattergories Notebook | Code Mahou</title>
+  <meta name="description" content="اللعبة الأصلية بالورقة والقلم (ولد، بنت، حيوان، نبات، جماد، بلد + 36 فكرة) دلوقتي مع شلتك على نفس شبكة الـ Wi-Fi والهوتسبوت بدون إنترنت أو أونلاين بكود الغرفة والـ QR!" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.82);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --accent-gold: #f59e0b;
+      --accent-blue: #3b82f6;
+      --accent-red: #ef4444;
+      --accent-emerald: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 14, 29, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 800;
+      font-size: 1.15rem;
+    }
+    .brand-link img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-gold);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #fde047 0%, #f59e0b 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .btn-playstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-playstore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(245, 158, 11, 0.5);
+    }
+
+    .showcase-card {
+      background: linear-gradient(160deg, rgba(30, 58, 138, 0.75), rgba(15, 23, 42, 0.95));
+      border: 2px solid rgba(245, 158, 11, 0.45);
+      border-radius: 28px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+    }
+    .showcase-card img {
+      width: 170px;
+      height: 170px;
+      border-radius: 36px;
+      border: 4px solid #fde047;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 18px;
+    }
+    .spec-list {
+      list-style: none;
+      margin: 16px 0 0;
+      text-align: start;
+    }
+    .spec-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .spec-list li strong {
+      color: #fde047;
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 44px 24px;
+    }
+    .section-title {
+      font-size: 1.9rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 26px;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #fde047;
+    }
+    .card p, .card li {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .card ul {
+      padding-inline-start: 20px;
+      margin-top: 8px;
+    }
+    .card li { margin-bottom: 6px; }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 36px 24px;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #fde047;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .cta-row { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link">
+        <img src="./assets/autobis-icon.png" alt="Autobis Complete" onerror="this.src='./assets/logo-main.png'" />
+        <span>Code Mahou • أوتوبيس كومبليت</span>
+      </a>
+      <div class="nav-actions">
+        <button type="button" class="btn-outline" id="langBtn">🌐 <span id="langLabel">English</span></button>
+        <a href="./autobis_complete_privacy_policy.html" class="btn-outline" data-i18n="navPrivacy">🛡️ سياسة الخصوصية</a>
+        <a href="./index.html" class="btn-outline" data-i18n="navHome">🏠 كل تطبيقات الاستوديو</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge-pill">
+          <span>🚌</span>
+          <span data-i18n="heroBadge">لعبة الشلة واللمة رقم #1 بالعربي والإنجليزي</span>
+        </div>
+        <h1 data-i18n-html="heroTitle">
+          أوتوبيس كومبليت — <span class="gradient-text">كشكول الذكريات</span> مع شلتك في أي مكان!
+        </h1>
+        <p class="hero-lead" data-i18n="heroLead">
+          استرجع ذكريات الكشكول المسطر والقلم الجاف الأزرق وختم الدرجة النهائية 10/10! العب (ولد، بنت، حيوان، نبات، جماد، بلد + 36 فئة مبتكرة) مع أصحابك على نفس شبكة الـ Wi-Fi أو الـ Hotspot بدون إنترنت، أو أونلاين بكود الغرفة ومسح الـ QR السريع، أو ضد لاعبين افتراضيين أذكياء (Bots).
+        </p>
+
+        <div class="cta-row">
+          <a href="https://play.google.com/store/apps/details?id=com.autobiscomplete.app.autobis_complete" target="_blank" rel="noopener" class="btn-playstore">
+            <span>▶</span>
+            <span data-i18n="btnPlayStore">حمّل اللعبة مجاناً من Google Play</span>
+          </a>
+          <a href="./autobis_complete_privacy_policy.html" class="btn-outline" style="padding: 15px 22px; font-size: 0.96rem;">
+            <span>🛡️</span>
+            <span data-i18n="btnPolicy">سياسة الخصوصية الرسمية</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <img src="./assets/autobis-icon.png" alt="أوتوبيس كومبليت - كشكول الذكريات" onerror="this.src='./assets/logo-main.png'" />
+        <h3 data-i18n="cardTitle">🚌 أوتوبيس كومبليت (الإصدار الكامل)</h3>
+        <ul class="spec-list">
+          <li><span data-i18n="specPkg">معرّف الحزمة</span><strong dir="ltr">com.autobiscomplete.app.autobis_complete</strong></li>
+          <li><span data-i18n="specModes">أطوار اللعب</span><strong data-i18n="specModesVal">Wi-Fi / Hotspot محلي • أونلاين • Bots</strong></li>
+          <li><span data-i18n="specLangs">اللغات المدعومة</span><strong data-i18n="specLangsVal">العربية (أ-ي) والإنجليزية (A-Z)</strong></li>
+          <li><span data-i18n="specTemplates">القوالب والأفكار</span><strong data-i18n="specTemplatesVal">4 قوالب جاهزة + 36 فكرة + تصميم حر</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="featTitle">✨ أهم مميزات لعبة أوتوبيس كومبليت</h2>
+      <p class="section-sub" data-i18n="featSub">تجربة كشكول تفاعلية مصممة لأقصى حماس وسرعة على جميع الهواتف.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-i18n="f1Title">📡 ٣ طرق لعب جماعية وفردية</h3>
+          <ul>
+            <li data-i18n="f1_1"><strong>شبكة محلية / Hotspot بدون إنترنت:</strong> اكتشاف تلقائي للغرف القريبة أو انضمام فوري بمسح كود الـ QR بالكاميرا.</li>
+            <li data-i18n="f1_2"><strong>غرف أونلاين سريعة:</strong> أنشئ غرفة بكود قصير وشارك رابط الدعوة المباشر على واتساب ليفتح اللعبة على الغرفة فوراً.</li>
+            <li data-i18n="f1_3"><strong>تحدي الكمبيوتر (Smart Bots):</strong> العب في أي وقت ضد شخصيات ذكية (سارة الدحيحة، كريم السريع، عمر الفنان).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f2Title">🖍️ تصحيح جماعي عادل بالقلم الأحمر</h3>
+          <ul>
+            <li data-i18n="f2_1"><strong>منع تصحيح اللاعب لنفسه:</strong> يصحح كل لاعب إجابات المنافسين فقط (10 صح فريد، 5 مكرر، 0 خطأ) والأغلبية تحسم الدرجة والهوست يكسر التعادل.</li>
+            <li data-i18n="f2_2"><strong>مدقق لغوي ذكي (عربي/إنجليزي):</strong> يقبل الكلمات مع أو بدون (ال التعريف / The) ويوحد الهمزات تلقائياً ويكتشف الإجابات المكررة.</li>
+            <li data-i18n="f2_3"><strong>وقت الجولة والتصحيح قابل للتخصيص:</strong> شريط أوتوبيس علوي ثابت يعرض العد التنازلي طوال الوقت دون أن يختفي أثناء التمرير.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f3Title">💡 وسائل مساعدة، تراكات موسيقية، وأرشيف</h3>
+          <ul>
+            <li data-i18n="f3_1"><strong>٣ وسائل مساعدة تكتيكية:</strong> برشامة التلميح 💡، الحبر السري 🖋️ (يحمي إجابتك بـ 10 درجات حتى لو تكررت!)، ووقت إضافي +15 ثانية ⏳.</li>
+            <li data-i18n="f3_2"><strong>صندوق موسيقى بـ ٥ تراكات + وضع عشوائي:</strong> ألحان حماسية متنوعة لتكسر الملل مع مؤثرات كلاكس الأوتوبيس والأختام.</li>
+            <li data-i18n="f3_3"><strong>كشكول الذكريات ودرع VIP للهوست:</strong> احفظ نتائج سهراتك في الأرشيف، وإذا كان الهوست مشتركاً في VIP تُعفى الغرفة بالكامل من الإعلانات!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Code Mahou</strong> — Autobis Complete (`com.autobiscomplete.app.autobis_complete`).</p>
+    <p style="margin-top: 8px;">
+      <a href="./index.html">Code Mahou Studio</a> •
+      <a href="./autobis_complete_privacy_policy.html">Privacy Policy | سياسة الخصوصية</a> •
+      <a href="https://play.google.com/store/apps/details?id=com.autobiscomplete.app.autobis_complete" target="_blank" rel="noopener">Google Play</a>
+    </p>
+  </footer>
+
+  <script>
+    const DICT = {
+      ar: {
+        navPrivacy: "🛡️ سياسة الخصوصية",
+        navHome: "🏠 كل تطبيقات الاستوديو",
+        heroBadge: "لعبة الشلة واللمة رقم #1 بالعربي والإنجليزي",
+        heroTitle: 'أوتوبيس كومبليت — <span class="gradient-text">كشكول الذكريات</span> مع شلتك في أي مكان!',
+        heroLead: "استرجع ذكريات الكشكول المسطر والقلم الجاف الأزرق وختم الدرجة النهائية 10/10! العب (ولد، بنت، حيوان، نبات، جماد، بلد + 36 فئة مبتكرة) مع أصحابك على نفس شبكة الـ Wi-Fi أو الـ Hotspot بدون إنترنت، أو أونلاين بكود الغرفة ومسح الـ QR السريع، أو ضد لاعبين افتراضيين أذكياء (Bots).",
+        btnPlayStore: "حمّل اللعبة مجاناً من Google Play",
+        btnPolicy: "سياسة الخصوصية الرسمية",
+        cardTitle: "🚌 أوتوبيس كومبليت (الإصدار الكامل)",
+        specPkg: "معرّف الحزمة",
+        specModes: "أطوار اللعب",
+        specModesVal: "Wi-Fi / Hotspot محلي • أونلاين • Bots",
+        specLangs: "اللغات المدعومة",
+        specLangsVal: "العربية (أ-ي) والإنجليزية (A-Z)",
+        specTemplates: "القوالب والأفكار",
+        specTemplatesVal: "4 قوالب جاهزة + 36 فكرة + تصميم حر",
+        featTitle: "✨ أهم مميزات لعبة أوتوبيس كومبليت",
+        featSub: "تجربة كشكول تفاعلية مصممة لأقصى حماس وسرعة على جميع الهواتف.",
+        f1Title: "📡 ٣ طرق لعب جماعية وفردية",
+        f1_1: "شبكة محلية / Hotspot بدون إنترنت: اكتشاف تلقائي للغرف القريبة أو انضمام فوري بمسح كود الـ QR بالكاميرا.",
+        f1_2: "غرف أونلاين سريعة: أنشئ غرفة بكود قصير وشارك رابط الدعوة المباشر على واتساب ليفتح اللعبة على الغرفة فوراً.",
+        f1_3: "تحدي الكمبيوتر (Smart Bots): العب في أي وقت ضد شخصيات ذكية (سارة الدحيحة، كريم السريع، عمر الفنان).",
+        f2Title: "🖍️ تصحيح جماعي عادل بالقلم الأحمر",
+        f2_1: "منع تصحيح اللاعب لنفسه: يصحح كل لاعب إجابات المنافسين فقط (10 صح فريد، 5 مكرر، 0 خطأ) والأغلبية تحسم الدرجة والهوست يكسر التعادل.",
+        f2_2: "مدقق لغوي ذكي (عربي/إنجليزي): يقبل الكلمات مع أو بدون (ال التعريف / The) ويوحد الهمزات تلقائياً ويكتشف الإجابات المكررة.",
+        f2_3: "وقت الجولة والتصحيح قابل للتخصيص: شريط أوتوبيس علوي ثابت يعرض العد التنازلي طوال الوقت دون أن يختفي أثناء التمرير.",
+        f3Title: "💡 وسائل مساعدة، تراكات موسيقية، وأرشيف",
+        f3_1: "٣ وسائل مساعدة تكتيكية: برشامة التلميح 💡، الحبر السري 🖋️ (يحمي إجابتك بـ 10 درجات حتى لو تكررت!)، ووقت إضافي +15 ثانية ⏳.",
+        f3_2: "صندوق موسيقى بـ ٥ تراكات + وضع عشوائي: ألحان حماسية متنوعة لتكسر الملل مع مؤثرات كلاكس الأوتوبيس والأختام.",
+        f3_3: "كشكول الذكريات ودرع VIP للهوست: احفظ نتائج سهراتك في الأرشيف، وإذا كان الهوست مشتركاً في VIP تُعفى الغرفة بالكامل من الإعلانات!"
+      },
+      en: {
+        navPrivacy: "🛡️ Privacy Policy",
+        navHome: "🏠 All Studio Apps",
+        heroBadge: "THE #1 BILINGUAL SCATTERGORIES PARTY NOTEBOOK GAME",
+        heroTitle: 'Autobis Complete — <span class="gradient-text">Scattergories Notebook</span> Party Game!',
+        heroLead: "Relive the classic paper-and-pen 'Stop the Bus' challenge! Play in Arabic (أ-ي) or English (A-Z) with friends over Local Wi-Fi / Mobile Hotspot offline, join online rooms via instant QR scan or direct invite links, or challenge clever AI Bots.",
+        btnPlayStore: "Get It Free on Google Play",
+        btnPolicy: "Official Privacy Policy",
+        cardTitle: "🚌 Autobis Complete (Party Edition)",
+        specPkg: "Package ID",
+        specModes: "Game Modes",
+        specModesVal: "Local Wi-Fi/Hotspot • Online • Smart Bots",
+        specLangs: "Supported Languages",
+        specLangsVal: "Arabic (أ-ي) & English (A-Z)",
+        specTemplates: "Templates & Categories",
+        specTemplatesVal: "4 Presets + 36 Ideas + Custom Builder",
+        featTitle: "✨ Complete Feature Highlights",
+        featSub: "A nostalgic ruled-notebook party experience engineered for 60fps performance.",
+        f1Title: "📡 3 Multiplayer & Solo Modes",
+        f1_1: "Offline Local Wi-Fi / Hotspot: Auto-discover nearby rooms on the same network or scan the Host's QR code with the built-in camera scanner.",
+        f1_2: "Online Room Codes & Deep Links: Share a QR card image or a direct join link on WhatsApp that opens the game straight inside your room.",
+        f1_3: "Smart AI Classmate Bots: Practice or play solo anytime against Sarah Genius, Leo Speedy, and Maya Creative.",
+        f2Title: "🖍️ Fair Peer-Only Red-Pen Grading",
+        f2_1: "Peer-Only Voting: Players see their own answer for comparison only and grade opponents (10 Unique, 5 Duplicate, 0 Wrong). Majority rules & Host breaks ties!",
+        f2_2: "Smart Bilingual Validator: Automatically normalizes Arabic Hamzas, ignores leading 'ال' / 'The', and highlights duplicate answers.",
+        f2_3: "Pinned Bus Countdown & Custom Timers: Non-scrolling top bus timer bar plus customizable round and grading durations (1–10 minutes).",
+        f3Title: "💡 Tactical Power-ups & 5-Track Jukebox",
+        f3_1: "3 Tactical Tools (Max 3/Game): Hint Note 💡, Secret Ink Stamp 🖋️ (protects your answer for a full 10 pts even if duplicated!), and +15s Extra Time ⏳.",
+        f3_2: "5-Track Music Jukebox + Auto-Shuffle: Switch between 5 upbeat polyphonic background tracks with authentic bus horn and stamp SFX.",
+        f3_3: "Memory Notebook & Host VIP Shield: Save match standings forever, and if the Host is a VIP subscriber, the entire room plays 100% ad-free!"
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "ar";
+    const langBtn = document.getElementById("langBtn");
+    const langLabel = document.getElementById("langLabel");
+
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      langLabel.textContent = l === "ar" ? "English" : "عربي";
+      const d = DICT[l];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (d[k]) el.textContent = d[k];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const k = el.getAttribute("data-i18n-html");
+        if (d[k]) el.innerHTML = d[k];
+      });
+    }
+
+    langBtn.addEventListener("click", () => setLang(lang === "ar" ? "en" : "ar"));
+    setLang(lang);
+  </script>
+</body>
+</html>
