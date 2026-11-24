@@ -1343,7 +1343,7 @@
 
           <div class="hero-metrics">
             <div class="metric-item">
-              <strong>5+</strong>
+              <strong>6+</strong>
               <span data-i18n="metricApps">Published Android Apps</span>
             </div>
             <div class="metric-item">
@@ -1403,7 +1403,7 @@
         </div>
 
         <div class="filter-bar" role="tablist" aria-label="Filter applications by category">
-          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filterAll">All Apps (5)</button>
+          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filterAll">All Apps (6)</button>
           <button type="button" class="filter-btn" data-filter="health" data-i18n="filterHealth">Health &amp; Care</button>
           <button type="button" class="filter-btn" data-filter="transit" data-i18n="filterTransit">Navigation &amp; Transit</button>
           <button type="button" class="filter-btn" data-filter="culture" data-i18n="filterCulture">Japanese &amp; Anime</button>
@@ -1522,6 +1522,22 @@
           </div>
           <span class="legal-badge">Game Page &rarr;</span>
         </a>
+
+        <a href="./mal_random_anime_privacy_policy.html" class="legal-card">
+          <div class="legal-info">
+            <h3>MAL Random Anime — Privacy Policy</h3>
+            <p>com.codemahou.malrandomanime • AR / EN</p>
+          </div>
+          <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./mal_random_anime.html" class="legal-card">
+          <div class="legal-info">
+            <h3>MAL Random Anime — Official App Page &amp; Guide</h3>
+            <p>mal_random_anime.html • AR / EN</p>
+          </div>
+          <span class="legal-badge">App Page &rarr;</span>
+        </a>
       </div>
     </section>
   </main>
@@ -1537,7 +1553,9 @@
         <a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a>
         <a href="./wimeco.html">WiMeCo Windows App</a>
         <a href="./autobis_complete.html">Autobis Complete</a>
+        <a href="./mal_random_anime.html">MAL Random Anime</a>
         <a href="./autobis_complete_privacy_policy.html">Autobis Policy</a>
+        <a href="./mal_random_anime_privacy_policy.html">MAL Anime Policy</a>
         <a href="./wimeco_privacy_policy.html">WiMeCo Policy</a>
         <a href="./dosemint_privacy_policy.html">DoseMint Policy</a>
         <a href="./cairo_metro_privacy_policy.html">Cairo Metro Policy</a>
@@ -1637,8 +1655,8 @@
       },
       {
         id: "malrandomanime",
-        name: "MAL Random Anime Generator",
-        nameAr: "MAL Random Anime Generator",
+        name: "MAL Random Anime",
+        nameAr: "MAL Random Anime: اقتراح أنمي عشوائي",
         packageId: "com.codemahou.malrandomanime",
         categoryKey: "culture",
         categoryLabel: { en: "Anime & Entertainment", ar: "أنمي وترفيه" },
@@ -1646,23 +1664,17 @@
         iconBg: "rgba(168, 85, 247, 0.14)",
         glow: "rgba(168, 85, 247, 0.24)",
         playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.malrandomanime",
-        privacyPolicyUrl: null,
+        privacyPolicyUrl: "./mal_random_anime_privacy_policy.html",
+        webPageUrl: "./mal_random_anime.html",
         description: {
-          en: "End decision fatigue and discover your next favorite anime in one tap. Spin smart random anime recommendations, filter by genres or ratings, and explore curated titles synced with MyAnimeList.",
-          ar: "وداعاً للحيرة عند اختيار الأنمي القادم! احصل على اقتراحات أنمي عشوائية ذكية بضغطة واحدة، مع إمكانية الفلترة حسب التصنيف والتقييم والربط مع قوائم MyAnimeList."
+          en: "End decision fatigue and discover your next favorite anime from 15,000+ titles in one tap! Spin smart random anime recommendations, filter by genres, type, rating, and airing year, browse seasonal anime lineups, translate synopses, and unlock collectible anime memes.",
+          ar: "وداعاً للحيرة عند اختيار الأنمي القادم! اكتشف أنميات جديدة بضغطة زر من قاعدة بيانات تضم +15,000 أنمي، مع فلترة متقدمة حسب التصنيف والنوع وسنة العرض، وتصفح أنميات المواسم، وترجمة القصة، وألبوم ميمز ومقولات الأنمي."
         },
         features: {
-          en: ["1-Tap Anime Roulette", "MAL List Sync", "Genre & Score Filters", "Synopsis & Trailers"],
-          ar: ["اقتراح عشوائي ذكي", "مزامنة MyAnimeList", "فلترة بالتصنيف والتقييم", "تفاصيل وتقييمات شاملة"]
+          en: ["15,000+ Anime Roulette", "Genre & Year Filters", "Seasonal Anime Charts", "Memes & Quotes Gallery"],
+          ar: ["اقتراح من +15,000 أنمي", "فلترة بالتصنيف والسنة", "دليل أنميات المواسم", "ألبوم ميمز ومقولات"]
         },
-        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="9" y="9" width="30" height="30" rx="8" fill="#a855f7" fill-opacity="0.2" stroke="#a855f7" stroke-width="2.5"/>
-          <circle cx="17" cy="17" r="2.5" fill="#c084fc"/>
-          <circle cx="31" cy="17" r="2.5" fill="#c084fc"/>
-          <circle cx="24" cy="24" r="2.5" fill="#fbbf24"/>
-          <circle cx="17" cy="31" r="2.5" fill="#c084fc"/>
-          <circle cx="31" cy="31" r="2.5" fill="#c084fc"/>
-        </svg>`
+        svgIcon: `<img src="./assets/mal-random-anime-icon.png" alt="MAL Random Anime" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       },
       {
         id: "wimico",

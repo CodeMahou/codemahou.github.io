@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAL Random Anime Privacy Policy | سياسة الخصوصية لتطبيق MAL Random Anime</title>
+  <style>
+    :root {
+      --primary: #9333ea;
+      --primary-dark: #581c87;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", Tahoma, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 42px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--accent);
+    }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; opacity: 0.94; font-size: 15px; }
+    .container {
+      max-width: 940px;
+      margin: 28px auto;
+      padding: 0 16px 48px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    }
+    h2 {
+      color: var(--primary-dark);
+      margin-top: 0;
+      border-bottom: 2px solid #f3e8ff;
+      padding-bottom: 8px;
+    }
+    h3 { color: var(--primary); margin-bottom: 6px; }
+    ul { padding-inline-start: 22px; }
+    li { margin-bottom: 6px; }
+    a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .en-section { direction: ltr; text-align: left; }
+    .badge {
+      display: inline-block;
+      background: #f3e8ff;
+      color: var(--primary-dark);
+      border: 1px solid #d8b4fe;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MAL Random Anime — Privacy Policy | سياسة الخصوصية</h1>
+    <p>Package: com.codemahou.malrandomanime • Developer: Code Mahou • Effective Date: November 2026</p>
+  </header>
+
+  <div class="container">
+    <!-- ARABIC SECTION -->
+    <div class="card" dir="rtl">
+      <span class="badge">النسخة العربية</span>
+      <h2>سياسة الخصوصية لتطبيق MAL Random Anime (`com.codemahou.malrandomanime`)</h2>
+      <p>
+        طوّر استوديو <strong>Code Mahou</strong> تطبيق <strong>MAL Random Anime</strong> كتطبيق ترفيهي مجاني لمحبي الأنمي لاكتشاف واقتراح أعمال الأنمي عشوائياً أو عبر فلاتر متقدمة، وتصفح أنميات المواسم، والبحث في قاعدة بيانات تضم أكثر من 15,000 أنمي. توضح هذه الوثيقة كيفية تعامل التطبيق مع البيانات والصلاحيات التزاماً بسياسات متجر Google Play.
+      </p>
+
+      <h3>1. عدم اشتراط إنشاء حساب والتخزين المحلي (Local-First Storage)</h3>
+      <ul>
+        <li>لا يتطلب التطبيق إنشاء حساب مستخدم أو تسجيل الدخول أو إدخال أي بيانات شخصية (مثل الاسم أو البريد الإلكتروني أو رقم الهاتف).</li>
+        <li>جميع تفضيلاتك داخل التطبيق — بما في ذلك سجل الأنميات التي ظهرت لك (<code>History</code>)، مجموعة الميمز المفتوحة (<code>Memes Collection</code>)، إعدادات الفلتر العمري، الوضع الليلي (<code>Dark Theme</code>)، والخلفيات المخصصة — تُحفظ <strong>محلياً داخل جهازك فقط</strong> عبر قاعدة بيانات SQLite المدمجة و <code>SharedPreferences</code>.</li>
+        <li>يمكنك في أي وقت مسح سجل الأنميات أو مسح الذاكرة المؤقتة (<code>Clear Cache</code>) بضغطة زر من داخل إعدادات التطبيق.</li>
+      </ul>
+
+      <h3>2. الصلاحيات التي يستخدمها التطبيق والغرض منها</h3>
+      <ul>
+        <li><strong>الاتصال بالإنترنت (<code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code>):</strong> يُستخدم لجلب بوسترات وصور الأنمي، قوائم أنميات المواسم الجديدة، التفاصيل الإضافية من MyAnimeList، ولتحميل الإعلانات عبر شبكة Google AdMob واستقبال الإشعارات الاختيارية عبر Firebase. (علماً بأن قاعدة بيانات الاقتراح العشوائي والفلترة المدمجة تعمل محلياً بسرعة فائقة).</li>
+        <li><strong>الوصول إلى الصور والتخزين (<code>READ_EXTERNAL_STORAGE</code>, <code>WRITE_EXTERNAL_STORAGE</code>):</strong> صلاحية اختيارية تُطلب فقط عندما يختار المستخدم بنفسه تخصيص خلفية الشاشة الرئيسية أو القائمة الجانبية بصورة من معرض هاتفه، أو عند رغبته في حفظ صورة بوستر أو ميم أنمي على جهازه. لا يقوم التطبيق بالوصول إلى أي ملفات دون إجراء مباشر من المستخدم.</li>
+      </ul>
+
+      <h3>3. خدمات الأطراف الثالثة والروابط الخارجية (Google AdMob &amp; Firebase)</h3>
+      <p>يعتمد التطبيق على خدمات رسمية موثوقة من شركة Google:</p>
+      <ul>
+        <li><strong>إعلانات Google AdMob:</strong> يعرض التطبيق إعلانات (Banner، Interstitial، Native، وإعلانات مكافأة اختيارية Rewarded Ads لفتح خانات إضافية في معرض الميمز أو الحصول على اقتراح يومي بدون زر الإعلان). قد تستخدم حزمة Google Mobile Ads SDK معرّف الإعلانات الخاص بالجهاز (Advertising ID) لتقديم الإعلانات ومكافحة الاحتيال.</li>
+        <li><strong>تحليلات وإشعارات Firebase (Firebase Analytics &amp; Cloud Messaging):</strong> تُستخدم لتحليل استقرار التطبيق وإرسال تنبيهات التحديثات أو اقتراحات الأنمي باستخدام معرّفات تثبيت غير شخصية (Firebase Installation ID).</li>
+        <li><strong>الروابط الخارجية:</strong> يتيح التطبيق أزراراً اختيارية لفتح صفحة الأنمي على موقع <em>MyAnimeList</em>، أو مشاهدة العرض الدعائي (Trailer) على <em>YouTube</em>، أو البحث عن خلفية الأنمي وترجمة القصة عبر <em>Google</em> في متصفحك الخارجي، وتخضع تلك المواقع لسياسات الخصوصية الخاصة بها.</li>
+        <li>روابط سياسات الخصوصية الرسمية لمزودي الخدمة:
+          <ul>
+            <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">سياسة خصوصية Google &amp; Google Play Services</a></li>
+            <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">معلومات خصوصية Google AdMob</a></li>
+            <li><a href="https://firebase.google.com/policies/analytics" target="_blank" rel="noopener">سياسة خصوصية Google Analytics for Firebase</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>4. الفلتر العمري، خصوصية الأطفال، والتواصل معنا</h3>
+      <ul>
+        <li>التطبيق موجه لجمهور محبي الأنمي (من عمر 13 عاماً فأكثر)، ويحتوي عند التشغيل الأول على نافذة تأكيد الفئة العمرية لفلترة التصنيفات العمرية تلقائياً داخل قاعدة البيانات المحلية.</li>
+        <li>لا يجمع التطبيق عمداً أي معلومات تعريف شخصية من الأطفال دون سن 13 عاماً.</li>
+        <li>لأي استفسار يتعلق بسياسة الخصوصية، يسعدنا تواصلكم مع استوديو <strong>Code Mahou</strong> عبر البريد الإلكتروني: <a href="mailto:world.nice44@gmail.com">world.nice44@gmail.com</a> أو زيارة الصفحة الرسمية: <a href="./mal_random_anime.html">https://codemahou.github.io/mal_random_anime.html</a>.</li>
+      </ul>
+    </div>
+
+    <!-- ENGLISH SECTION -->
+    <div class="card en-section" dir="ltr">
+      <span class="badge">English Version</span>
+      <h2>Privacy Policy for MAL Random Anime (`com.codemahou.malrandomanime`)</h2>
+      <p>
+        <strong>Code Mahou</strong> built the <strong>MAL Random Anime</strong> app as a free anime discovery and entertainment application for Android. This Privacy Policy informs users regarding our policies with the collection, use, and disclosure of information when using the App in compliance with Google Play Developer Policies.
+      </p>
+
+      <h3>1. No Account Required &amp; Local-First Storage</h3>
+      <ul>
+        <li><strong>MAL Random Anime</strong> does not require you to register an account, log in, or provide any personally identifiable information (such as your name, email address, or phone number).</li>
+        <li>All user preferences and activity — including your generated anime <code>History</code> list, unlocked <code>Memes Collection</code> slots, age-rating filter setting, Dark Theme preference, custom search prefix/suffix, and custom wallpaper URI — are stored <strong>100% locally on your device</strong> via an encrypted/local SQLite database and Android <code>SharedPreferences</code>.</li>
+        <li>You can permanently clear your saved anime discovery history or image cache at any time directly from the in-app History and Settings screens.</li>
+      </ul>
+
+      <h3>2. Device Permissions &amp; How They Are Used</h3>
+      <ul>
+        <li><strong>Internet &amp; Network State (<code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code>):</strong> Used to fetch anime cover art, gallery pictures, seasonal anime lineups, and live MyAnimeList metadata, as well as to load Google AdMob advertisements and receive Firebase Cloud Messaging notifications.</li>
+        <li><strong>Storage / Media Access (<code>READ_EXTERNAL_STORAGE</code>, <code>WRITE_EXTERNAL_STORAGE</code>):</strong> Optional runtime permission requested strictly when you explicitly choose to set a custom background wallpaper from your device gallery for the home screen or navigation drawer, or when you tap the download button to save an anime image/meme to your device.</li>
+      </ul>
+
+      <h3>3. Third-Party Services &amp; External Links (Google AdMob &amp; Firebase)</h3>
+      <p>The App integrates official Google SDKs that may automatically collect non-personal device identifiers and diagnostic data:</p>
+      <ul>
+        <li><strong>Google AdMob (Google Mobile Ads SDK):</strong> Displays Banner, Interstitial, Native, and optional Rewarded advertisements (e.g., watching a voluntary ad to unlock +10 Meme Collection slots or enjoy a daily reward spin). AdMob may use your device's Advertising ID (AAID), coarse IP location, and ad interaction events for ad serving and fraud prevention.</li>
+        <li><strong>Google Analytics for Firebase &amp; Firebase Cloud Messaging (FCM):</strong> Collects anonymous app usage statistics, crash logs, and FCM tokens to improve app stability and deliver optional notifications.</li>
+        <li><strong>External Links:</strong> The App provides convenient buttons to open anime pages on <em>MyAnimeList.net</em>, watch trailers on <em>YouTube</em>, translate synopses via <em>Google Translate</em>, or search for wallpapers on <em>Google Images</em> in your external browser. Those external sites are governed by their own privacy policies.</li>
+        <li>Third-party privacy policies:
+          <ul>
+            <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Play Services &amp; Google Privacy Policy</a></li>
+            <li><a href="https://support.google.com/admob/answer/6128543?hl=en" target="_blank" rel="noopener">Google AdMob Privacy Information</a></li>
+            <li><a href="https://firebase.google.com/policies/analytics" target="_blank" rel="noopener">Google Analytics for Firebase Policy</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>4. Age Filter, Children's Privacy &amp; Contact Us</h3>
+      <ul>
+        <li>The App is intended for general anime audiences aged 13 and older and includes an in-app age confirmation filter on first launch to restrict age-rated titles locally. We do not knowingly collect personally identifiable information from children under 13.</li>
+        <li>You can reset your Advertising ID or opt out of personalized ads at any time in your Android settings (<em>Settings &gt; Google &gt; Ads</em>), and you can delete all local app data by clearing app storage or uninstalling the App.</li>
+        <li>If you have any questions about this Privacy Policy, please contact <strong>Code Mahou</strong> at <a href="mailto:world.nice44@gmail.com">world.nice44@gmail.com</a> or visit <a href="./mal_random_anime.html">https://codemahou.github.io/mal_random_anime.html</a>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Code Mahou — MAL Random Anime (`com.codemahou.malrandomanime`). All rights reserved. • <a href="./mal_random_anime.html">MAL Random Anime Official Page</a> • <a href="./index.html">Code Mahou Studio Home</a>
+  </footer>
+</body>
+</html>

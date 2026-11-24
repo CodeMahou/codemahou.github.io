@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAL Random Anime — Smart Anime Roulette, Seasonal Guide &amp; Memes | Code Mahou</title>
+  <meta name="description" content="Discover your next favorite anime from 15,000+ titles! 1-Tap Random Anime Roulette, Advanced Genre & Year Filters, Seasonal Anime Browser, Synopsis Translation, and Collectible Anime Memes." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.82);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --accent-violet: #a855f7;
+      --accent-indigo: #6366f1;
+      --accent-gold: #f59e0b;
+      --accent-cyan: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    html[dir="rtl"] body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 14, 29, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 800;
+      font-size: 1.15rem;
+    }
+    .brand-link img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-violet);
+      object-fit: cover;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-violet);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.16);
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      color: #e9d5ff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 3.25rem);
+      font-weight: 900;
+      line-height: 1.18;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #c084fc 0%, #818cf8 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      font-size: 1.06rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .btn-playstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #9333ea, #6366f1);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(147, 51, 234, 0.38);
+      transition: all 0.25s ease;
+    }
+    .btn-playstore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(147, 51, 234, 0.55);
+    }
+
+    .showcase-card {
+      background: linear-gradient(160deg, rgba(59, 7, 100, 0.65), rgba(15, 23, 42, 0.95));
+      border: 2px solid rgba(168, 85, 247, 0.45);
+      border-radius: 28px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+    }
+    .showcase-card img {
+      width: 164px;
+      height: 164px;
+      border-radius: 36px;
+      border: 3px solid #c084fc;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 18px;
+      object-fit: cover;
+    }
+    .spec-list {
+      list-style: none;
+      margin: 16px 0 0;
+      text-align: start;
+    }
+    .spec-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .spec-list li strong {
+      color: #e9d5ff;
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 44px 24px;
+    }
+    .section-title {
+      font-size: 1.9rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 26px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .card:hover {
+      border-color: rgba(168, 85, 247, 0.45);
+      transform: translateY(-3px);
+    }
+    .card h3 {
+      font-size: 1.18rem;
+      margin-bottom: 10px;
+      color: #e9d5ff;
+    }
+    .card p, .card li {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+    }
+    .card ul {
+      padding-inline-start: 20px;
+      margin-top: 8px;
+    }
+    .card li { margin-bottom: 6px; }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 36px 24px;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #c084fc;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .cta-row { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link">
+        <img src="./assets/mal-random-anime-icon.png" alt="MAL Random Anime" onerror="this.src='./assets/logo-main.png'" />
+        <span>Code Mahou • MAL Random Anime</span>
+      </a>
+      <div class="nav-actions">
+        <button type="button" class="btn-outline" id="langBtn">🌐 <span id="langLabel">عربي</span></button>
+        <a href="./mal_random_anime_privacy_policy.html" class="btn-outline" data-i18n="navPrivacy">🛡️ Privacy Policy</a>
+        <a href="./index.html" class="btn-outline" data-i18n="navHome">🏠 All Studio Apps</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge-pill">
+          <span>🎲</span>
+          <span data-i18n="heroBadge">15,000+ ANIME DATABASE • OFFLINE &amp; LIVE MAL SYNC</span>
+        </div>
+        <h1 data-i18n-html="heroTitle">
+          MAL Random Anime — <span class="gradient-text">Discover Your Next Favorite Anime</span> in One Tap!
+        </h1>
+        <p class="hero-lead" data-i18n="heroLead">
+          Don't know what to watch next? End decision fatigue with an instant random anime roulette across 15,000+ titles, or fine-tune your discovery by genre, type, rating, and release year. Explore seasonal anime charts, translate synopses, and unlock collectible anime memes!
+        </p>
+
+        <div class="cta-row">
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.malrandomanime" target="_blank" rel="noopener noreferrer" class="btn-playstore">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a1.76 1.76 0 0 1-.61-1.34V3.154c0-.517.225-.996.609-1.34zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1.47 1.47 0 0 1 0 2.53l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
+            </svg>
+            <span data-i18n="ctaPlayStore">Download on Google Play</span>
+          </a>
+          <a href="./mal_random_anime_privacy_policy.html" class="btn-outline" style="padding: 15px 22px;">
+            <span>🛡️</span>
+            <span data-i18n="ctaPrivacy">Official Privacy Policy</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <img src="./assets/mal-random-anime-icon.png" alt="MAL Random Anime Icon" />
+        <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 4px;">MAL Random Anime</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">com.codemahou.malrandomanime</p>
+        <ul class="spec-list">
+          <li><span data-i18n="specDbLabel">Embedded Database</span><strong data-i18n="specDbVal">15,000+ Anime Titles</strong></li>
+          <li><span data-i18n="specModesLabel">Discovery Modes</span><strong data-i18n="specModesVal">1-Tap, Advanced &amp; Seasonal</strong></li>
+          <li><span data-i18n="specExtraLabel">Fun Extras</span><strong data-i18n="specExtraVal">Anime Quotes &amp; Memes Gallery</strong></li>
+          <li><span data-i18n="specThemeLabel">Customization</span><strong data-i18n="specThemeVal">Dark Mode &amp; Custom Wallpapers</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="featSectionTitle">Everything You Need to Find Your Next Anime</h2>
+      <p class="section-sub" data-i18n="featSectionSub">Engineered for anime fans who want both instant offline discovery and rich MyAnimeList integration.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-i18n="f1Title">🎲 1-Tap Random Anime Roulette</h3>
+          <p data-i18n="f1Desc">Tap "Let's Find An Awesome Random Anime" to pull a surprise recommendation from 15,000+ classic and modern anime titles with a theater-curtain reveal animation.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f2Title">🎯 Advanced Multi-Filter Search</h3>
+          <p data-i18n="f2Desc">Customize your random roll by selecting specific Anime Types (TV, Movie, OVA, Special, ONA), Age Ratings, multiple Genres at once, and exact Airing Year ranges (From / To).</p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f3Title">📅 Seasonal Anime Charts</h3>
+          <p data-i18n="f3Desc">Browse current or past anime seasons by selecting any year and season (Winter, Spring, Summer, Fall) to see every airing title and jump straight into its details.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f4Title">🌐 Synopsis Translation &amp; Trailers</h3>
+          <p data-i18n="f4Desc">View English, Japanese, and alternative titles, episodes, studios, opening/ending themes, official trailers, 1-tap Google Translate for the story synopsis, and direct MyAnimeList links.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f5Title">🖼️ Exact-Screen Wallpaper Finder</h3>
+          <p data-i18n="f5Desc">View high-res anime image galleries with pinch-to-zoom, download or share posters, or launch a 1-tap Google Images search pre-filtered to your phone's exact screen resolution!</p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f6Title">😂 Anime Quotes, Memes &amp; History</h3>
+          <p data-i18n="f6Desc">Read iconic anime quotes or memes while loading, unlock and expand your personal Memes Collection gallery, review your full discovery History, and set custom wallpapers &amp; Dark Theme.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 <strong>Code Mahou</strong> — MAL Random Anime (<code>com.codemahou.malrandomanime</code>).
+    <br />
+    <a href="./index.html">Studio Home</a> •
+    <a href="./mal_random_anime_privacy_policy.html">Privacy Policy</a> •
+    <a href="https://play.google.com/store/apps/details?id=com.codemahou.malrandomanime" target="_blank" rel="noopener">Google Play</a>
+  </footer>
+
+  <script>
+    const I18N = {
+      en: {
+        navPrivacy: "🛡️ Privacy Policy",
+        navHome: "🏠 All Studio Apps",
+        heroBadge: "15,000+ ANIME DATABASE • OFFLINE & LIVE MAL SYNC",
+        heroTitle: 'MAL Random Anime — <span class="gradient-text">Discover Your Next Favorite Anime</span> in One Tap!',
+        heroLead: "Don't know what to watch next? End decision fatigue with an instant random anime roulette across 15,000+ titles, or fine-tune your discovery by genre, type, rating, and release year. Explore seasonal anime charts, translate synopses, and unlock collectible anime memes!",
+        ctaPlayStore: "Download on Google Play",
+        ctaPrivacy: "Official Privacy Policy",
+        specDbLabel: "Embedded Database",
+        specDbVal: "15,000+ Anime Titles",
+        specModesLabel: "Discovery Modes",
+        specModesVal: "1-Tap, Advanced & Seasonal",
+        specExtraLabel: "Fun Extras",
+        specExtraVal: "Anime Quotes & Memes Gallery",
+        specThemeLabel: "Customization",
+        specThemeVal: "Dark Mode & Custom Wallpapers",
+        featSectionTitle: "Everything You Need to Find Your Next Anime",
+        featSectionSub: "Engineered for anime fans who want both instant offline discovery and rich MyAnimeList integration.",
+        f1Title: "🎲 1-Tap Random Anime Roulette",
+        f1Desc: "Tap 'Let's Find An Awesome Random Anime' to pull a surprise recommendation from 15,000+ classic and modern anime titles with a theater-curtain reveal animation.",
+        f2Title: "🎯 Advanced Multi-Filter Search",
+        f2Desc: "Customize your random roll by selecting specific Anime Types (TV, Movie, OVA, Special, ONA), Age Ratings, multiple Genres at once, and exact Airing Year ranges (From / To).",
+        f3Title: "📅 Seasonal Anime Charts",
+        f3Desc: "Browse current or past anime seasons by selecting any year and season (Winter, Spring, Summer, Fall) to see every airing title and jump straight into its details.",
+        f4Title: "🌐 Synopsis Translation & Trailers",
+        f4Desc: "View English, Japanese, and alternative titles, episodes, studios, opening/ending themes, official trailers, 1-tap Google Translate for the story synopsis, and direct MyAnimeList links.",
+        f5Title: "🖼️ Exact-Screen Wallpaper Finder",
+        f5Desc: "View high-res anime image galleries with pinch-to-zoom, download or share posters, or launch a 1-tap Google Images search pre-filtered to your phone's exact screen resolution!",
+        f6Title: "😂 Anime Quotes, Memes & History",
+        f6Desc: "Read iconic anime quotes or memes while loading, unlock and expand your personal Memes Collection gallery, review your full discovery History, and set custom wallpapers & Dark Theme."
+      },
+      ar: {
+        navPrivacy: "🛡️ سياسة الخصوصية",
+        navHome: "🏠 كل تطبيقات الاستوديو",
+        heroBadge: "قاعدة بيانات +15,000 أنمي • يعمل محلياً ومع MyAnimeList",
+        heroTitle: 'MAL Random Anime — <span class="gradient-text">اكتشف أنميك المفضل القادم</span> بضغطة زر واحدة!',
+        heroLead: "محتار تتفرج على إيه النهاردة؟ ودّع الحيرة مع مولّد الأنمي العشوائي الذكي لأكثر من 15,000 أنمي، أو حدد شروطك الخاصة بالتصنيف، النوع، الفئة العمرية، وسنة العرض. تصفح أنميات المواسم، ترجم القصة فوراً، واجمع ألبوم ميمز الأنمي!",
+        ctaPlayStore: "حمّل التطبيق من Google Play",
+        ctaPrivacy: "سياسة الخصوصية الرسمية",
+        specDbLabel: "قاعدة البيانات المدمجة",
+        specDbVal: "أكثر من 15,000 أنمي",
+        specModesLabel: "أوضاع الاكتشاف",
+        specModesVal: "عشوائي، فلترة متقدمة، ومواسم",
+        specExtraLabel: "إضافات ترفيهية",
+        specExtraVal: "مقولات أنمي وألبوم ميمز",
+        specThemeLabel: "التخصيص والمظهر",
+        specThemeVal: "وضع ليلي وخلفيات مخصصة",
+        featSectionTitle: "كل ما يحتاجه أوتاكو لاكتشاف الأنمي القادم",
+        featSectionSub: "مصمم ليجمع بين سرعة قاعدة البيانات المحلية وتفاصيل موقع MyAnimeList الكاملة.",
+        f1Title: "🎲 اقتراح أنمي عشوائي بضغطة واحدة",
+        f1Desc: "اضغط على زر الاقتراح العشوائي لتحصل فوراً على أنمي جديد من بين أكثر من 15,000 عمل كلاسيكي وحديث مع مؤثرات فتح الستار المسرحي.",
+        f2Title: "🎯 فلترة متقدمة حسب ذوقك",
+        f2Desc: "خصص الاقتراح العشوائي باختيار نوع العرض (TV, Movie, OVA, Special, ONA)، التصنيف العمري، عدة تصنيفات (Genres) معاً، وفترة سنوات العرض (من سنة إلى سنة).",
+        f3Title: "📅 دليل أنميات المواسم (Seasonal Anime)",
+        f3Desc: "استعرض أنميات الموسم الحالي أو أي موسم سابق باختيار السنة والفصل (شتاء، ربيع، صيف، خريف) مع عرض البوسترات والتفاصيل الكاملة.",
+        f4Title: "🌐 ترجمة القصة، التريلر، وأغاني البداية والنهاية",
+        f4Desc: "تعرف على الأسماء الإنجليزية واليابانية، عدد الحلقات، الاستوديو، أغاني الـ OP/ED، مشاهدة التريلر، وترجمة قصة الأنمي بضغطة زر عبر ترجمة جوجل.",
+        f5Title: "🖼️ البحث عن خلفيات بمقاس شاشتك بالضبط",
+        f5Desc: "تصفح معرض صور الأنمي بجودة عالية مع إمكانية التحميل والمشاركة، أو ابحث في صور جوجل بضغطة واحدة عن خلفيات للأنمي مطابقة لأبعاد شاشة هاتفك!",
+        f6Title: "😂 مقولات، ألبوم ميمز، وسجل كامل",
+        f6Desc: "استمتع بمقولات وميمز الأنمي أثناء التحميل، وافتح خانات جديدة في معرض الميمز الخاص بك (Memes Collection)، مع حفظ سجل الأنميات السابقة ودعم الوضع الليلي."
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "en";
+    const langBtn = document.getElementById("langBtn");
+    const langLabel = document.getElementById("langLabel");
+
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      langLabel.textContent = l === "ar" ? "English" : "عربي";
+      const dict = I18N[l];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (dict[k]) el.textContent = dict[k];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const k = el.getAttribute("data-i18n-html");
+        if (dict[k]) el.innerHTML = dict[k];
+      });
+    }
+
+    langBtn.addEventListener("click", () => applyLang(lang === "en" ? "ar" : "en"));
+    applyLang(lang);
+  </script>
+</body>
+</html>
