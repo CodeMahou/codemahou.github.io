@@ -908,11 +908,48 @@
       overflow: hidden;
     }
 
-    .app-icon-box svg,
-    .app-icon-box img {
+    .app-icon-box svg {
       width: 42px;
       height: 42px;
+    }
+
+    .app-icon-box img.real-app-icon {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      display: block;
+      border-radius: 17px;
+    }
+
+    .app-title-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .app-title-link:hover {
+      color: var(--app-accent);
+    }
+
+    .btn-app-page {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 15px;
+      border-radius: 12px;
+      background: var(--app-icon-bg);
+      color: var(--app-accent);
+      border: 1px solid var(--app-accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-app-page:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px var(--app-glow);
     }
 
     .app-meta {
@@ -1475,6 +1512,14 @@
           <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
         </a>
 
+        <a href="./dosemint.html" class="legal-card">
+          <div class="legal-info">
+            <h3>DoseMint: Pill &amp; Med Reminder — Official App Page &amp; Guide</h3>
+            <p>dosemint.html • AR / EN</p>
+          </div>
+          <span class="legal-badge">App Page &rarr;</span>
+        </a>
+
         <a href="./cairo_metro_privacy_policy.html" class="legal-card">
           <div class="legal-info">
             <h3>Cairo Metro Guide: Map &amp; Fare — Privacy Policy</h3>
@@ -1483,12 +1528,28 @@
           <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
         </a>
 
+        <a href="./cairo-metro-guide.html" class="legal-card">
+          <div class="legal-info">
+            <h3>Cairo Metro Guide: Map &amp; Fare — Official App Page &amp; Guide</h3>
+            <p>cairo-metro-guide.html • AR / EN</p>
+          </div>
+          <span class="legal-badge">App Page &rarr;</span>
+        </a>
+
         <a href="./japandizer_privacy_policy.html" class="legal-card">
           <div class="legal-info">
             <h3>Japandizer: Learn Easy Japanese — Privacy Policy</h3>
             <p>com.codemahou.japandizer • AR / EN</p>
           </div>
           <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./japandizer.html" class="legal-card">
+          <div class="legal-info">
+            <h3>Japandizer: Learn Easy Japanese — Official App Page &amp; Guide</h3>
+            <p>japandizer.html • AR / EN</p>
+          </div>
+          <span class="legal-badge">App Page &rarr;</span>
         </a>
 
         <a href="./wimeco_privacy_policy.html" class="legal-card">
@@ -1567,6 +1628,9 @@
       <div class="footer-links">
         <a href="#apps" data-i18n="navApps">Applications</a>
         <a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a>
+        <a href="./dosemint.html">DoseMint</a>
+        <a href="./cairo-metro-guide.html">Cairo Metro Guide</a>
+        <a href="./japandizer.html">Japandizer</a>
         <a href="./score_memory.html">Score Memory</a>
         <a href="./wimeco.html">WiMeCo Windows App</a>
         <a href="./autobis_complete.html">Autobis Complete</a>
@@ -1602,19 +1666,16 @@
         glow: "rgba(16, 185, 129, 0.24)",
         playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.dosemint",
         privacyPolicyUrl: "./dosemint_privacy_policy.html",
+        webPageUrl: "./dosemint.html",
         description: {
-          en: "Smart family medication tracker and exact-time pill reminder. Manage prescriptions, track dosages for loved ones, and keep health records 100% private on your device with optional Google Drive backup.",
-          ar: "رفيقك الذكي لتنظيم مواعيد الأدوية والجرعات لجميع أفراد العائلة. منبهات دقيقة في موعدها، سجل التزام بالجرعات، وخصوصية تامة بتخزين محلي مع نسخ احتياطي اختياري عبر Google Drive."
+          en: "Smart family medication tracker and exact-time pill reminder. Manage prescriptions, dynamic dose rescheduling, 300+ offline medications catalog, and keep health records 100% private on your device with optional Google Drive backup.",
+          ar: "رفيقك الذكي لتنظيم مواعيد الأدوية والجرعات لجميع أفراد العائلة. منبهات دقيقة في موعدها، إعادة جدولة ذكية، موسوعة 300+ دواء بدون إنترنت، وخصوصية تامة بتخزين محلي مع نسخ احتياطي عبر Google Drive."
         },
         features: {
-          en: ["Exact-Time Alarms", "Family Profiles", "Local-First Privacy", "Google Drive Backup"],
-          ar: ["منبهات دقيقة", "ملفات للعائلة", "خصوصية محلية 100%", "نسخ احتياطي سحابي"]
+          en: ["Exact-Time Alarms", "Dynamic Rescheduling", "300+ Offline Meds", "Google Drive Backup"],
+          ar: ["منبهات دقيقة", "إعادة جدولة ذكية", "موسوعة 300+ دواء", "نسخ احتياطي سحابي"]
         },
-        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="18" width="32" height="16" rx="8" transform="rotate(-35 24 24)" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="2.5"/>
-          <path d="M18 19L29 30" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M34 10C34 14 36 16 40 16C36 16 34 18 34 22C34 18 32 16 28 16C32 16 34 14 34 10Z" fill="#34d399"/>
-        </svg>`
+        svgIcon: `<img src="./assets/dosemint-icon.png" alt="DoseMint: Pill & Med Reminder" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       },
       {
         id: "cairometro",
@@ -1628,21 +1689,16 @@
         glow: "rgba(59, 130, 246, 0.24)",
         playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.cairometroguide",
         privacyPolicyUrl: "./cairo_metro_privacy_policy.html",
+        webPageUrl: "./cairo-metro-guide.html",
         description: {
-          en: "The complete companion for navigating the Cairo Metro network. Instantly locate the nearest station via on-device GPS, plan optimal transfer routes across lines, and calculate ticket & subscription fares.",
-          ar: "الدليل الشامل للتنقل في شبكة مترو أنفاق القاهرة. تحديد أقرب محطة لموقعك عبر الـ GPS، تخطيط أسرع مسار والتحويلات بين الخطوط، وحساب أسعار التذاكر والاشتراكات بدقة."
+          en: "The complete offline companion for navigating Greater Cairo's 84 metro stations across all 3 lines. Instantly locate the nearest station via on-device GPS, plan optimal transfer routes, and calculate official 2026 ticket & subscription fares in 9 languages.",
+          ar: "الدليل الشامل للتنقل في شبكة مترو أنفاق القاهرة (84 محطة) بدون إنترنت. تحديد أقرب محطة لموقعك عبر الـ GPS، تخطيط أسرع مسار والتحويلات بين الخطوط، وحساب أسعار التذاكر والاشتراكات بـ 9 لغات."
         },
         features: {
-          en: ["Nearest Station GPS", "Route & Transfer Planner", "Fare Calculator", "Offline Ready"],
-          ar: ["أقرب محطة بالـ GPS", "مخطط المسارات والتحويلات", "حاسبة التذاكر والاشتراكات", "يعمل بدون إنترنت"]
+          en: ["Nearest Station GPS", "84-Station Offline Map", "2026 Fare Calculator", "9 Global Languages"],
+          ar: ["أقرب محطة بالـ GPS", "خريطة 84 محطة بدون نت", "حاسبة التذاكر والاشتراكات", "يدعم 9 لغات عالمية"]
         },
-        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="11" y="8" width="26" height="28" rx="6" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-width="2.5"/>
-          <path d="M11 24H37" stroke="#3b82f6" stroke-width="2.5"/>
-          <circle cx="17" cy="30" r="2.2" fill="#60a5fa"/>
-          <circle cx="31" cy="30" r="2.2" fill="#60a5fa"/>
-          <path d="M16 36L12 42M32 36L36 42" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>`
+        svgIcon: `<img src="./assets/cairometro-icon.png" alt="Cairo Metro Guide: Map & Fare" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       },
       {
         id: "japandizer",
@@ -1656,6 +1712,7 @@
         glow: "rgba(244, 63, 94, 0.24)",
         playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.japandizer",
         privacyPolicyUrl: "./japandizer_privacy_policy.html",
+        webPageUrl: "./japandizer.html",
         description: {
           en: "Master Japanese step by step in an interactive, gamified way. Practice Hiragana, Katakana, and essential Kanji with a touch handwriting pad, native Japanese audio pronunciation, 3D flashcards, daily streaks, and smart quizzes.",
           ar: "تعلّم اللغة اليابانية خطوة بخطوة بأسلوب تفاعلي ممتع ومبسط. إتقان الهيراغانا والكاتاكانا والكانجي مع لوحة تدريب على الرسم باللمس، نطق صوتي ياباني، بطاقات استذكار ثلاثية الأبعاد، واختبارات تفاعلية بنظام النقاط والمستويات."
@@ -1664,12 +1721,7 @@
           en: ["Handwriting Practice Pad", "Native Japanese TTS", "3D Kanji Flashcards", "XP, Streaks & Quizzes"],
           ar: ["لوحة رسم الكانجي باللمس", "نطق صوتي ياباني", "بطاقات استذكار تفاعلية", "نظام نقاط ومستويات"]
         },
-        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 14C18 17 30 17 40 14" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
-          <path d="M12 22H36" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M16 15V39M32 15V39" stroke="#f43f5e" stroke-width="2.8" stroke-linecap="round"/>
-          <circle cx="24" cy="31" r="5" fill="#fb7185" fill-opacity="0.35" stroke="#fb7185" stroke-width="2"/>
-        </svg>`
+        svgIcon: `<img src="./assets/japandizer-icon.png" alt="Japandizer: Learn Easy Japanese" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       },
       {
         id: "malrandomanime",
@@ -1715,12 +1767,7 @@
           en: ["Wi-Fi QR & Bluetooth", "Remote PC Touchpad", "Timeline & Session Switch", "Sleep & Pause Timer"],
           ar: ["توصيل Wi-Fi وبلوتوث", "ماوس وكيبورد عن بُعد", "تبديل المشغلات والتقديم", "مؤقت نوم وإيقاف الميديا"]
         },
-        svgIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 8L38 14V24C38 33 31.5 39.5 24 42C16.5 39.5 10 33 10 24V14L24 8Z" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
-          <path d="M18 26C21.5 22.5 26.5 22.5 30 26" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M15 21C20 16.5 28 16.5 33 21" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="24" cy="30" r="2.5" fill="#fbbf24"/>
-        </svg>`
+        svgIcon: `<img src="./assets/wimeco-icon.png" alt="WiMeCo: Windows Media Controller" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       },
       {
         id: "autobiscomplete",
@@ -1792,6 +1839,7 @@
         filterTransit: "Navigation & Transit",
         filterCulture: "Japanese & Anime",
         filterUtility: "Pro Utilities",
+        appPageBtn: "App Page",
         playStoreBtn: "Google Play",
         policyBtn: "Privacy Policy",
         copyBtn: "Copy",
@@ -1832,6 +1880,7 @@
         filterTransit: "المواصلات والملاحة",
         filterCulture: "اليابانية والأنمي",
         filterUtility: "أدوات احترافية",
+        appPageBtn: "صفحة التطبيق",
         playStoreBtn: "Google Play",
         policyBtn: "سياسة الخصوصية",
         copyBtn: "نسخ",

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cairo Metro Guide: Map &amp; Fare — Code Mahou</title>
+  <meta name="description" content="Offline Cairo Metro interactive map covering all 3 lines & 84 stations, route planner, official 2026 ticket fares, GPS nearest station finder, and 9 languages." />
+  <meta property="og:title" content="Cairo Metro Guide: Map &amp; Fare — Code Mahou" />
+  <meta property="og:description" content="Navigate Greater Cairo's entire metro network offline with smart transfer routing, official ticket & subscription calculator, and 9 global languages." />
+  <meta property="og:image" content="./assets/apps/cairometro/feature.webp" />
+  <link rel="icon" type="image/png" href="./assets/icons/cairometro.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root, [data-theme="dark"] {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.75);
+      --bg-glass: rgba(10, 14, 29, 0.84);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --app-accent: #3b82f6;
+      --app-accent-light: #60a5fa;
+      --app-glow: rgba(59, 130, 246, 0.28);
+      --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --wand-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36' fill='none'%3E%3Cpath d='M10 10L30 30' stroke='%230f172a' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 10L30 30' stroke='%233b82f6' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M10 10L14.5 14.5' stroke='%23fef08a' stroke-width='3.8' stroke-linecap='round'/%3E%3Cpath d='M8 1C8 5.5 9.7 7.2 14.2 7.2C9.7 7.2 8 8.9 8 13.4C8 8.9 6.3 7.2 1.8 7.2C6.3 7.2 8 5.5 8 1Z' fill='%23fbbf24'/%3E%3Ccircle cx='8' cy='7.2' r='1.8' fill='%23ffffff'/%3E%3C/svg%3E") 8 7, pointer;
+    }
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-glass: rgba(255, 255, 255, 0.88);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --shadow-card: 0 16px 40px rgba(15, 23, 42, 0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    html[dir="rtl"] body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand-link {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text-primary);
+      cursor: var(--wand-cursor);
+    }
+    .brand-link img { width: 40px; height: 40px; border-radius: 10px; }
+    .brand-title { font-weight: 800; font-size: 1.15rem; }
+    .brand-title span { color: var(--app-accent-light); }
+    .nav-controls { display: flex; align-items: center; gap: 10px; }
+    .control-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-card); color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      text-decoration: none;
+    }
+    .control-btn:hover { border-color: var(--app-accent); }
+
+    .app-hero {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px 40px;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: center;
+    }
+    .app-identity { display: flex; align-items: center; gap: 22px; margin-bottom: 24px; }
+    .app-real-icon {
+      width: 96px; height: 96px; border-radius: 24px;
+      box-shadow: 0 16px 36px var(--app-glow);
+      border: 2px solid rgba(59, 130, 246, 0.45);
+      flex-shrink: 0;
+    }
+    .app-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 999px;
+      background: rgba(59, 130, 246, 0.14); color: var(--app-accent-light);
+      font-size: 0.76rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .app-hero h1 { font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 800; line-height: 1.15; }
+    .pkg-pill {
+      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--text-secondary);
+      background: rgba(148, 163, 184, 0.1); padding: 4px 10px; border-radius: 8px;
+      margin-top: 6px;
+    }
+    .hero-desc { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 28px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn-play {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 14px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: #fff; font-weight: 800; font-size: 0.98rem; text-decoration: none;
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.35);
+      transition: transform 0.2s ease;
+    }
+    .btn-play:hover { transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 22px; border-radius: 14px;
+      background: var(--bg-card); color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    }
+    .btn-outline:hover { border-color: var(--app-accent); }
+
+    .feature-banner-box {
+      border-radius: 24px; overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      box-shadow: var(--shadow-card), 0 0 40px var(--app-glow);
+    }
+    .feature-banner-box img { width: 100%; height: auto; display: block; }
+
+    .section { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+    .section-title { font-size: 1.85rem; font-weight: 800; margin-bottom: 10px; }
+    .section-sub { color: var(--text-secondary); margin-bottom: 32px; }
+
+    .shots-rail {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .shot-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .shot-card:hover { transform: translateY(-6px); border-color: var(--app-accent); }
+    .shot-card img { width: 100%; height: auto; display: block; }
+
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 22px;
+    }
+    .feat-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 26px;
+    }
+    .feat-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--app-accent-light); }
+    .feat-card p { color: var(--text-secondary); font-size: 0.94rem; }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface); padding: 36px 24px; margin-top: 40px; text-align: center;
+      color: var(--text-muted); font-size: 0.88rem;
+    }
+    @media (max-width: 900px) {
+      .app-hero { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link" dir="ltr">
+        <img src="./assets/logo-main.png" alt="Code Mahou" />
+        <div class="brand-title">Code<span>Mahou</span></div>
+      </a>
+      <div class="nav-controls">
+        <a href="./index.html#apps" class="control-btn" data-i18n="backPortfolio">&larr; All Apps</a>
+        <button type="button" class="control-btn" id="langBtn">🌐 <span id="langLabel">عربي</span></button>
+        <button type="button" class="control-btn" id="themeBtn"><span id="themeIcon">☀️</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="app-hero">
+      <div>
+        <div class="app-identity">
+          <img src="./assets/icons/cairometro.png" alt="Cairo Metro Guide Official Icon" class="app-real-icon" />
+          <div>
+            <span class="app-badge" data-i18n="badge">Transit &amp; Navigation</span>
+            <h1 data-i18n="title">Cairo Metro Guide: Map &amp; Fare</h1>
+            <span class="pkg-pill" dir="ltr">com.codemahou.cairometroguide</span>
+          </div>
+        </div>
+
+        <p class="hero-desc" data-i18n="lead">
+          Your ultimate offline companion for navigating Greater Cairo's entire metro network. Features an interactive schematic map across all 3 lines (84 stations), smart multi-route transfer planning, official EGP ticket &amp; subscription calculators, GPS nearest-station finder, and full support for 9 global languages.
+        </p>
+
+        <div class="hero-btns">
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.cairometroguide" target="_blank" rel="noopener" class="btn-play">
+            <span data-i18n="btnPlay">Get it on Google Play</span>
+          </a>
+          <a href="./cairo_metro_privacy_policy.html" class="btn-outline">
+            <span>🛡️</span>
+            <span data-i18n="btnPolicy">Privacy Policy</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="feature-banner-box">
+        <img src="./assets/apps/cairometro/feature.webp" alt="Cairo Metro Guide Feature Graphic" />
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="featHeader">Key Features &amp; Capabilities</h2>
+      <p class="section-sub" data-i18n="featSub">Built for daily commuters, students, and tourists exploring Cairo.</p>
+
+      <div class="features-grid">
+        <div class="feat-card">
+          <h3 data-i18n="f1Title">🗺️ Interactive 84-Station Offline Map</h3>
+          <p data-i18n="f1Desc">High-precision schematic map covering Line 1, Line 2, and Line 3 (including Rod El-Farag Axis &amp; Cairo University branches) with Pinch-to-Zoom and station facilities.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f2Title">🧭 Smart Route &amp; Transfer Planner</h3>
+          <p data-i18n="f2Desc">Compares Shortest Route vs. Less-Crowded Transfer alternatives with station counts, travel time estimates, and Live Trip Tracker alerts.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f3Title">🎫 Official 2026 Ticket Fare Calculator</h3>
+          <p data-i18n="f3Desc">Automatically calculates ticket color (Yellow, Green, Pink, Purple) and EGP prices for Public, Seniors (60+/70+), Military/Police, and Special Needs.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f4Title">📍 On-Device GPS Nearest Station</h3>
+          <p data-i18n="f4Desc">Instantly locates the 3 closest Cairo Metro stations to your current GPS position with exact distance in kilometers—processed 100% locally on your device.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f5Title">💳 Subscription Savings &amp; Smart Wallet</h3>
+          <p data-i18n="f5Desc">Calculate monthly/quarterly pass savings, locate subscription offices, and simulate Contactless Smart Card Wallet balance deductions.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f6Title">🌍 Landmarks Guide &amp; 9 Languages</h3>
+          <p data-i18n="f6Desc">Explore Cairo's top tourist attractions with nearest metro stations, fully translated into Arabic, English, Russian, Chinese, Japanese, German, French, Spanish, and Italian.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="shotsHeader">App Screenshots</h2>
+      <p class="section-sub" data-i18n="shotsSub">Fast, modern, and works 100% offline anywhere underground.</p>
+      <div class="shots-rail">
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_1.webp" alt="Cairo Metro Screenshot 1" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_2.webp" alt="Cairo Metro Screenshot 2" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_3.webp" alt="Cairo Metro Screenshot 3" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_4.webp" alt="Cairo Metro Screenshot 4" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_5.webp" alt="Cairo Metro Screenshot 5" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_6.webp" alt="Cairo Metro Screenshot 6" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_7.webp" alt="Cairo Metro Screenshot 7" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/cairometro/shot_8.webp" alt="Cairo Metro Screenshot 8" loading="lazy" /></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 <strong>Code Mahou</strong> — Cairo Metro Guide (<code>com.codemahou.cairometroguide</code>). All rights reserved.
+  </footer>
+
+  <script>
+    const DICT = {
+      en: {
+        backPortfolio: "← All Apps",
+        badge: "Transit & Navigation",
+        title: "Cairo Metro Guide: Map & Fare",
+        lead: "Your ultimate offline companion for navigating Greater Cairo's entire metro network. Features an interactive schematic map across all 3 lines (84 stations), smart multi-route transfer planning, official EGP ticket & subscription calculators, GPS nearest-station finder, and full support for 9 global languages.",
+        btnPlay: "Get it on Google Play",
+        btnPolicy: "Privacy Policy",
+        featHeader: "Key Features & Capabilities",
+        featSub: "Built for daily commuters, students, and tourists exploring Cairo.",
+        f1Title: "🗺️ Interactive 84-Station Offline Map",
+        f1Desc: "High-precision schematic map covering Line 1, Line 2, and Line 3 (including Rod El-Farag Axis & Cairo University branches) with Pinch-to-Zoom and station facilities.",
+        f2Title: "🧭 Smart Route & Transfer Planner",
+        f2Desc: "Compares Shortest Route vs. Less-Crowded Transfer alternatives with station counts, travel time estimates, and Live Trip Tracker alerts.",
+        f3Title: "🎫 Official 2026 Ticket Fare Calculator",
+        f3Desc: "Automatically calculates ticket color (Yellow, Green, Pink, Purple) and EGP prices for Public, Seniors (60+/70+), Military/Police, and Special Needs.",
+        f4Title: "📍 On-Device GPS Nearest Station",
+        f4Desc: "Instantly locates the 3 closest Cairo Metro stations to your current GPS position with exact distance in kilometers—processed 100% locally on your device.",
+        f5Title: "💳 Subscription Savings & Smart Wallet",
+        f5Desc: "Calculate monthly/quarterly pass savings, locate subscription offices, and simulate Contactless Smart Card Wallet balance deductions.",
+        f6Title: "🌍 Landmarks Guide & 9 Languages",
+        f6Desc: "Explore Cairo's top tourist attractions with nearest metro stations, fully translated into Arabic, English, Russian, Chinese, Japanese, German, French, Spanish, and Italian.",
+        shotsHeader: "App Screenshots",
+        shotsSub: "Fast, modern, and works 100% offline anywhere underground."
+      },
+      ar: {
+        backPortfolio: "→ جميع التطبيقات",
+        badge: "المواصلات والملاحة",
+        title: "دليل مترو القاهرة: خريطة ومسار",
+        lead: "رفيقك الذكي الشامل للتنقل في جميع خطوط مترو أنفاق القاهرة الثلاثة (84 محطة) بدون إنترنت. خريطة تفاعلية عالية الوضوح، حساب أسرع المسارات والبدائل الأقل ازدحاماً، أسعار التذاكر والاشتراكات الرسمية، وتحديد أقرب محطة لموقعك عبر الـ GPS مع دعم 9 لغات عالمية.",
+        btnPlay: "حمّله من Google Play",
+        btnPolicy: "سياسة الخصوصية",
+        featHeader: "أهم المميزات والخصائص",
+        featSub: "مصمم لركاب المترو اليوميين والطلاب والسياح في القاهرة الكبرى.",
+        f1Title: "🗺️ خريطة تفاعلية لـ 84 محطة بدون إنترنت",
+        f1Desc: "خريطة شاملة للخطوط الثلاثة وتفرعات محور روض الفرج وجامعة القاهرة مع التكبير السلس وعرض خدمات المحطات (المصاعد، السلالم، الصراف الآلي).",
+        f2Title: "🧭 مخطط المسارات الذكي والتتبع الحي",
+        f2Desc: "مقارنة فورية بين المسار الأقصر والمسار الأقل ازدحاماً مع حساب الوقت التقديري وعدد المحطات وميزة التتبع الحي للرحلة.",
+        f3Title: "🎫 حاسبة أسعار التذاكر الرسمية (2026)",
+        f3Desc: "حساب تلقائي لسعر ولون التذكرة للجمهور العادي وتخفيضات كبار السن وذوي الهمم والإعفاء الكامل فوق 70 عاماً.",
+        f4Title: "📍 أقرب محطة مترو لموقعك (GPS)",
+        f4Desc: "تحديد أقرب 3 محطات مترو لموقعك الحالي مع المسافة الدقيقة بالكيلومتر بمعالجة محلية 100% على جهازك.",
+        f5Title: "💳 حاسبة توفير الاشتراكات والكارت الذكي",
+        f5Desc: "احسب التوفير الشهري والربع سنوي لاشتراكات المترو، وتعرّف على أماكن المكاتب ومحاكي رصيد المحفظة الذكية.",
+        f6Title: "🌍 دليل المعالم السياحية و9 لغات",
+        f6Desc: "اكتشف أشهر معالم ومتاحف القاهرة وأقرب محطة مترو لكل منها، مع ترجمة كاملة لجميع المحطات إلى 9 لغات عالمية.",
+        shotsHeader: "لقطات شاشة التطبيق",
+        shotsSub: "واجهة سريعة وعصرية تعمل بالكامل بدون الحاجة للاتصال بالإنترنت."
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "en";
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      document.getElementById("langLabel").textContent = l === "ar" ? "English" : "عربي";
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (DICT[l][k]) el.textContent = DICT[l][k];
+      });
+    }
+    document.getElementById("langBtn").addEventListener("click", () => applyLang(lang === "en" ? "ar" : "en"));
+
+    const savedTheme = localStorage.getItem("codemahou_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    document.getElementById("themeIcon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("codemahou_theme", next);
+      document.getElementById("themeIcon").textContent = next === "dark" ? "☀️" : "🌙";
+    });
+    applyLang(lang);
+  </script>
+</body>
+</html>

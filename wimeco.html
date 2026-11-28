@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WiMeCo v3.1 — Universal Windows Media, File Transfer &amp; PC Companion | Code Mahou</title>
   <meta name="description" content="Control Spotify, YouTube, VLC, MPC-HC, PotPlayer, system volume, touchpad, and power timers on your Windows PC directly from your Android phone over Wi-Fi or Bluetooth." />
-  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="./assets/wimeco-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -279,7 +279,7 @@
   <header class="navbar">
     <div class="nav-container">
       <a href="./index.html" class="brand-link">
-        <img src="./assets/logo-main.png" alt="Code Mahou" onerror="this.src='./assets/favicon.svg'" />
+        <img src="./assets/wimeco-icon.png" alt="WiMeCo Official Icon" onerror="this.src='./assets/logo-main.png'" />
         <span>Code Mahou • WiMeCo</span>
       </a>
       <div class="nav-actions">
@@ -317,7 +317,10 @@
       </div>
 
       <div class="download-card">
-        <h3 data-i18n="cardWinTitle">💻 WiMeCo Windows Companion v3.1</h3>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+          <img src="./assets/wimeco-icon.png" alt="WiMeCo Official App Icon" style="width:64px;height:64px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);" />
+          <h3 data-i18n="cardWinTitle" style="margin-bottom:0;">💻 WiMeCo Windows Companion v3.1</h3>
+        </div>
         <p style="color: var(--text-secondary); font-size: 0.9rem;" data-i18n="cardWinDesc">
           Lightweight, portable desktop server with instant QR code pairing, UDP auto-discovery, 2-way file &amp; clipboard sync, and native Windows 10/11 SMTC media session integration.
         </p>

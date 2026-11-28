@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoseMint: Pill &amp; Med Reminder — Code Mahou</title>
+  <meta name="description" content="Smart family medication alarm, dynamic dose rescheduling, 300+ offline medications catalog, refill stock alerts, and Google Drive backup by Code Mahou." />
+  <meta property="og:title" content="DoseMint: Pill &amp; Med Reminder — Code Mahou" />
+  <meta property="og:description" content="Never miss a dose again. Manage family prescriptions, dynamic dose rescheduling, and exact alarms with 100% local-first privacy." />
+  <meta property="og:image" content="./assets/apps/dosemint/feature.webp" />
+  <link rel="icon" type="image/png" href="./assets/icons/dosemint.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root, [data-theme="dark"] {
+      --bg-base: #060813;
+      --bg-surface: #0d1224;
+      --bg-card: rgba(17, 24, 46, 0.75);
+      --bg-glass: rgba(10, 14, 29, 0.84);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --app-accent: #10b981;
+      --app-accent-light: #34d399;
+      --app-glow: rgba(16, 185, 129, 0.25);
+      --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --wand-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36' fill='none'%3E%3Cpath d='M10 10L30 30' stroke='%230f172a' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 10L30 30' stroke='%2310b981' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M10 10L14.5 14.5' stroke='%23fef08a' stroke-width='3.8' stroke-linecap='round'/%3E%3Cpath d='M8 1C8 5.5 9.7 7.2 14.2 7.2C9.7 7.2 8 8.9 8 13.4C8 8.9 6.3 7.2 1.8 7.2C6.3 7.2 8 5.5 8 1Z' fill='%23fbbf24'/%3E%3Ccircle cx='8' cy='7.2' r='1.8' fill='%23ffffff'/%3E%3C/svg%3E") 8 7, pointer;
+    }
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-glass: rgba(255, 255, 255, 0.88);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --shadow-card: 0 16px 40px rgba(15, 23, 42, 0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    html[dir="rtl"] body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand-link {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text-primary);
+      cursor: var(--wand-cursor);
+    }
+    .brand-link img { width: 40px; height: 40px; border-radius: 10px; }
+    .brand-title { font-weight: 800; font-size: 1.15rem; }
+    .brand-title span { color: var(--app-accent-light); }
+    .nav-controls { display: flex; align-items: center; gap: 10px; }
+    .control-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-card); color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      text-decoration: none;
+    }
+    .control-btn:hover { border-color: var(--app-accent); }
+
+    .app-hero {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px 40px;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: center;
+    }
+    .app-identity { display: flex; align-items: center; gap: 22px; margin-bottom: 24px; }
+    .app-real-icon {
+      width: 96px; height: 96px; border-radius: 24px;
+      box-shadow: 0 16px 36px var(--app-glow);
+      border: 2px solid rgba(16, 185, 129, 0.45);
+      flex-shrink: 0;
+    }
+    .app-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14); color: var(--app-accent-light);
+      font-size: 0.76rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .app-hero h1 { font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 800; line-height: 1.15; }
+    .pkg-pill {
+      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--text-secondary);
+      background: rgba(148, 163, 184, 0.1); padding: 4px 10px; border-radius: 8px;
+      margin-top: 6px;
+    }
+    .hero-desc { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 28px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn-play {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 14px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; font-weight: 800; font-size: 0.98rem; text-decoration: none;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
+      transition: transform 0.2s ease;
+    }
+    .btn-play:hover { transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 22px; border-radius: 14px;
+      background: var(--bg-card); color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    }
+    .btn-outline:hover { border-color: var(--app-accent); }
+
+    .feature-banner-box {
+      border-radius: 24px; overflow: hidden;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: var(--shadow-card), 0 0 40px var(--app-glow);
+    }
+    .feature-banner-box img { width: 100%; height: auto; display: block; }
+
+    .section { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+    .section-title { font-size: 1.85rem; font-weight: 800; margin-bottom: 10px; }
+    .section-sub { color: var(--text-secondary); margin-bottom: 32px; }
+
+    /* Screenshots Gallery */
+    .shots-rail {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .shot-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .shot-card:hover { transform: translateY(-6px); border-color: var(--app-accent); }
+    .shot-card img { width: 100%; height: auto; display: block; }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 22px;
+    }
+    .feat-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 26px;
+    }
+    .feat-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--app-accent-light); }
+    .feat-card p { color: var(--text-secondary); font-size: 0.94rem; }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface); padding: 36px 24px; margin-top: 40px; text-align: center;
+      color: var(--text-muted); font-size: 0.88rem;
+    }
+    @media (max-width: 900px) {
+      .app-hero { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link" dir="ltr">
+        <img src="./assets/logo-main.png" alt="Code Mahou" />
+        <div class="brand-title">Code<span>Mahou</span></div>
+      </a>
+      <div class="nav-controls">
+        <a href="./index.html#apps" class="control-btn" data-i18n="backPortfolio">&larr; All Apps</a>
+        <button type="button" class="control-btn" id="langBtn">🌐 <span id="langLabel">عربي</span></button>
+        <button type="button" class="control-btn" id="themeBtn"><span id="themeIcon">☀️</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="app-hero">
+      <div>
+        <div class="app-identity">
+          <img src="./assets/icons/dosemint.png" alt="DoseMint Official Icon" class="app-real-icon" />
+          <div>
+            <span class="app-badge" data-i18n="badge">Health &amp; Medical</span>
+            <h1 data-i18n="title">DoseMint: Pill &amp; Med Reminder</h1>
+            <span class="pkg-pill" dir="ltr">com.codemahou.dosemint</span>
+          </div>
+        </div>
+
+        <p class="hero-desc" data-i18n="lead">
+          Never miss a dose again or struggle to manage complex medication schedules for your loved ones. DoseMint is the smart, all-in-one family medication reminder and treatment tracker with dynamic dose rescheduling, an offline catalog of 300+ medications, and 100% local-first privacy.
+        </p>
+
+        <div class="hero-btns">
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.dosemint" target="_blank" rel="noopener" class="btn-play">
+            <span data-i18n="btnPlay">Get it on Google Play</span>
+          </a>
+          <a href="./dosemint_privacy_policy.html" class="btn-outline">
+            <span>🛡️</span>
+            <span data-i18n="btnPolicy">Privacy Policy</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="feature-banner-box">
+        <img src="./assets/apps/dosemint/feature.webp" alt="DoseMint Feature Graphic" />
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="featHeader">Key Features &amp; Capabilities</h2>
+      <p class="section-sub" data-i18n="featSub">Engineered for precision, family care, and complete data privacy.</p>
+
+      <div class="features-grid">
+        <div class="feat-card">
+          <h3 data-i18n="f1Title">👨‍👩‍👧‍👦 Family Medication Profiles</h3>
+          <p data-i18n="f1Desc">Create dedicated profiles for yourself, parents, spouse, and children—complete with photos, blood type, drug allergies, and medical notes.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f2Title">🔄 Smart Dynamic Rescheduling</h3>
+          <p data-i18n="f2Desc">Took your 8-hour antibiotic an hour late? Automatically recalculate and shift future doses based on actual intake time to maintain safe intervals.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f3Title">🔍 300+ Offline Medications Catalog</h3>
+          <p data-i18n="f3Desc">Search over 300 popular medications in English or Arabic with instant Smart Auto-Fill for dosage form, strengths, and meal instructions.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f4Title">⏰ Exact Alarms &amp; Floating Window</h3>
+          <p data-i18n="f4Desc">Reliable background alarms with customizable ringtones and an optional floating confirmation overlay to confirm or snooze in one tap.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f5Title">📦 Refill Stock &amp; Doctor Follow-Ups</h3>
+          <p data-i18n="f5Desc">Track remaining pills with low-stock refill alerts and receive dual doctor appointment reminders 24 hours before and on checkup day.</p>
+        </div>
+        <div class="feat-card">
+          <h3 data-i18n="f6Title">☁️ Local-First + Google Drive Backup</h3>
+          <p data-i18n="f6Desc">All health records stay 100% private on your phone's local SQLite database, with optional encrypted backup &amp; restore to your personal Google Drive.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="shotsHeader">App Screenshots</h2>
+      <p class="section-sub" data-i18n="shotsSub">Explore DoseMint's clean, intuitive bilingual interface.</p>
+      <div class="shots-rail">
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_1.webp" alt="DoseMint Screenshot 1" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_2.webp" alt="DoseMint Screenshot 2" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_3.webp" alt="DoseMint Screenshot 3" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_4.webp" alt="DoseMint Screenshot 4" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_5.webp" alt="DoseMint Screenshot 5" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_6.webp" alt="DoseMint Screenshot 6" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_7.webp" alt="DoseMint Screenshot 7" loading="lazy" /></div>
+        <div class="shot-card"><img src="./assets/apps/dosemint/shot_8.webp" alt="DoseMint Screenshot 8" loading="lazy" /></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 <strong>Code Mahou</strong> — DoseMint (<code>com.codemahou.dosemint</code>). All rights reserved.
+  </footer>
+
+  <script>
+    const DICT = {
+      en: {
+        backPortfolio: "← All Apps",
+        badge: "Health & Medical",
+        title: "DoseMint: Pill & Med Reminder",
+        lead: "Never miss a dose again or struggle to manage complex medication schedules for your loved ones. DoseMint is the smart, all-in-one family medication reminder and treatment tracker with dynamic dose rescheduling, an offline catalog of 300+ medications, and 100% local-first privacy.",
+        btnPlay: "Get it on Google Play",
+        btnPolicy: "Privacy Policy",
+        featHeader: "Key Features & Capabilities",
+        featSub: "Engineered for precision, family care, and complete data privacy.",
+        f1Title: "👨‍👩‍👧‍👦 Family Medication Profiles",
+        f1Desc: "Create dedicated profiles for yourself, parents, spouse, and children—complete with photos, blood type, drug allergies, and medical notes.",
+        f2Title: "🔄 Smart Dynamic Rescheduling",
+        f2Desc: "Took your 8-hour antibiotic an hour late? Automatically recalculate and shift future doses based on actual intake time to maintain safe intervals.",
+        f3Title: "🔍 300+ Offline Medications Catalog",
+        f3Desc: "Search over 300 popular medications in English or Arabic with instant Smart Auto-Fill for dosage form, strengths, and meal instructions.",
+        f4Title: "⏰ Exact Alarms & Floating Window",
+        f4Desc: "Reliable background alarms with customizable ringtones and an optional floating confirmation overlay to confirm or snooze in one tap.",
+        f5Title: "📦 Refill Stock & Doctor Follow-Ups",
+        f5Desc: "Track remaining pills with low-stock refill alerts and receive dual doctor appointment reminders 24 hours before and on checkup day.",
+        f6Title: "☁️ Local-First + Google Drive Backup",
+        f6Desc: "All health records stay 100% private on your phone's local SQLite database, with optional backup & restore to your personal Google Drive.",
+        shotsHeader: "App Screenshots",
+        shotsSub: "Explore DoseMint's clean, intuitive bilingual interface."
+      },
+      ar: {
+        backPortfolio: "→ جميع التطبيقات",
+        badge: "الصحة والعناية الطبية",
+        title: "DoseMint: منبه الأدوية والجرعات",
+        lead: "تطبيق DoseMint (دوز مينت) هو رفيقك الذكي المتكامل لتنظيم مواعيد الأدوية، التذكير بالجرعات في أوقاتها بدقة، وإعادة حساب المواعيد تلقائياً عند التأخير، مع موسوعة مدمجة لأكثر من 300 دواء تعمل بدون إنترنت وخصوصية محلية 100% لجميع أفراد الأسرة.",
+        btnPlay: "حمّله من Google Play",
+        btnPolicy: "سياسة الخصوصية",
+        featHeader: "أهم المميزات والخصائص",
+        featSub: "مصمم بدقة عالية لرعاية جميع أفراد العائلة مع حماية كاملة لخصوصية بياناتك الصحية.",
+        f1Title: "👨‍👩‍👧‍👦 ملفات طبية لجميع أفراد العائلة",
+        f1Desc: "أضف ملفاً خاصاً لكل فرد من أفراد أسرتك مع صورته، فصيلة الدم، والملاحظات الطبية أو الحساسية الدوائية في تطبيق واحد.",
+        f2Title: "🔄 إعادة جدولة ذكية عند التأخير",
+        f2Desc: "تأخرت عن جرعة المضاد الحيوي؟ يتيح لك التطبيق إعادة حساب وترحيل المواعيد المستقبلية تلقائياً للحفاظ على الفارق الزمني الآمن بين الجرعات.",
+        f3Title: "🔍 موسوعة 300+ دواء بدون إنترنت",
+        f3Desc: "ابحث باسم الدواء بالعربية أو الإنجليزية أو المادة الفعالة ليتم ملء الشكل الدوائي والتركيز ونظام الساعات تلقائياً بضغطة واحدة.",
+        f4Title: "⏰ منبهات دقيقة ونافذة تأكيد عائمة",
+        f4Desc: "منبه قوي يعمل في الخلفية مع نافذة عائمة اختيارية لتأكيد أخذ الجرعة أو الغفوة لمدة 15 دقيقة دون الحاجة لفتح التطبيق.",
+        f5Title: "📦 متابعة المخزون ومواعيد الأطباء",
+        f5Desc: "تنبيهات قبل نفاد علبة الدواء وتذكير مزدوج بموعد إعادة الكشف الطبي (قبل الكشف بيوم وفي نفس يوم الكشف).",
+        f6Title: "☁️ تخزين محلي آمن ونسخ احتياطي",
+        f6Desc: "تُحفظ جميع بياناتك الصحية محلياً داخل هاتفك فقط، مع إمكانية النسخ الاحتياطي والاستعادة عبر حسابك الشخصي في Google Drive.",
+        shotsHeader: "لقطات شاشة التطبيق",
+        shotsSub: "تعرّف على واجهة تطبيق DoseMint العصرية والسهلة."
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "en";
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      document.getElementById("langLabel").textContent = l === "ar" ? "English" : "عربي";
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (DICT[l][k]) el.textContent = DICT[l][k];
+      });
+    }
+    document.getElementById("langBtn").addEventListener("click", () => applyLang(lang === "en" ? "ar" : "en"));
+
+    const savedTheme = localStorage.getItem("codemahou_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    document.getElementById("themeIcon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("codemahou_theme", next);
+      document.getElementById("themeIcon").textContent = next === "dark" ? "☀️" : "🌙";
+    });
+    applyLang(lang);
+  </script>
+</body>
+</html>
