@@ -1343,7 +1343,7 @@
 
           <div class="hero-metrics">
             <div class="metric-item">
-              <strong>6+</strong>
+              <strong>7+</strong>
               <span data-i18n="metricApps">Published Android Apps</span>
             </div>
             <div class="metric-item">
@@ -1403,10 +1403,10 @@
         </div>
 
         <div class="filter-bar" role="tablist" aria-label="Filter applications by category">
-          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filterAll">All Apps (6)</button>
+          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filterAll">All Apps (7)</button>
           <button type="button" class="filter-btn" data-filter="health" data-i18n="filterHealth">Health &amp; Care</button>
           <button type="button" class="filter-btn" data-filter="transit" data-i18n="filterTransit">Navigation &amp; Transit</button>
-          <button type="button" class="filter-btn" data-filter="culture" data-i18n="filterCulture">Japanese &amp; Anime</button>
+          <button type="button" class="filter-btn" data-filter="culture" data-i18n="filterCulture">Games &amp; Anime</button>
           <button type="button" class="filter-btn" data-filter="utility" data-i18n="filterUtility">Pro Utilities</button>
         </div>
       </div>
@@ -1538,6 +1538,22 @@
           </div>
           <span class="legal-badge">App Page &rarr;</span>
         </a>
+
+        <a href="./score_memory_privacy_policy.html" class="legal-card">
+          <div class="legal-info">
+            <h3>Score Memory: Game Scorekeeper — Privacy Policy</h3>
+            <p>com.codemahou.score_memory • AR / EN</p>
+          </div>
+          <span class="legal-badge" data-i18n="viewDoc">View Policy &rarr;</span>
+        </a>
+
+        <a href="./score_memory.html" class="legal-card">
+          <div class="legal-info">
+            <h3>سكور ميموري (Score Memory) — Official App Page &amp; Guide</h3>
+            <p>score_memory.html • AR / EN</p>
+          </div>
+          <span class="legal-badge">App Page &rarr;</span>
+        </a>
       </div>
     </section>
   </main>
@@ -1551,9 +1567,11 @@
       <div class="footer-links">
         <a href="#apps" data-i18n="navApps">Applications</a>
         <a href="#philosophy" data-i18n="navPhilosophy">Our Philosophy</a>
+        <a href="./score_memory.html">Score Memory</a>
         <a href="./wimeco.html">WiMeCo Windows App</a>
         <a href="./autobis_complete.html">Autobis Complete</a>
         <a href="./mal_random_anime.html">MAL Random Anime</a>
+        <a href="./score_memory_privacy_policy.html">Score Memory Policy</a>
         <a href="./autobis_complete_privacy_policy.html">Autobis Policy</a>
         <a href="./mal_random_anime_privacy_policy.html">MAL Anime Policy</a>
         <a href="./wimeco_privacy_policy.html">WiMeCo Policy</a>
@@ -1726,6 +1744,29 @@
           ar: ["لعب محلي بدون إنترنت", "أونلاين ومسح QR فوري", "تصحيح جماعي بالقلم الأحمر", "36+ فكرة وقوالب مخصصة"]
         },
         svgIcon: `<img src="./assets/autobis-icon.png" alt="Autobis Complete" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
+      },
+      {
+        id: "scorememory",
+        name: "Score Memory: Game Scorekeeper",
+        nameAr: "سكور ميموري: حاسبة نقاط الألعاب والدومينو",
+        packageId: "com.codemahou.score_memory",
+        categoryKey: "culture",
+        categoryLabel: { en: "Tabletop & Game Utility", ar: "ألعاب لوحية وحاسبة نقاط" },
+        accent: "#10b981",
+        iconBg: "rgba(16, 185, 129, 0.14)",
+        glow: "rgba(16, 185, 129, 0.24)",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.codemahou.score_memory",
+        privacyPolicyUrl: "./score_memory_privacy_policy.html",
+        webPageUrl: "./score_memory.html",
+        description: {
+          en: "Universal tabletop & game night scorekeeper with 22+ built-in presets (Dominoes 101, All Fives, Baloot, Tarneeb, Uno, Catan), AI Domino Camera Pip Counter, Voice Score Entry, 3D Dice & Coin Toolkit, 1v1 Rivalry Stats, and QR rule sharing across 14 languages.",
+          ar: "حاسبة نقاط الألعاب الشاملة لأكثر من 22 لعبة جاهزة (دومينو 101، مضاعفات 5، بلوت، طرنيب، تركس، أونو، كاتان، سكرو) مع عدّاد نقاط الدومينو بالكاميرا (AI)، إدخال صوتي، نرد وعملة 3D، إحصائيات 1 ضد 1، ومشاركة القواعد بالـ QR بـ 14 لغة."
+        },
+        features: {
+          en: ["22+ Presets & QR Rules", "AI Domino Camera Scanner", "3D Dice, Coin & Timer", "14 Languages & Cloud Sync"],
+          ar: ["+22 لعبة ومشاركة QR", "كاميرا دومينو بالذكاء الاصطناعي", "نرد 3D وعملة ومؤقت", "14 لغة ونسخ سحابي"]
+        },
+        svgIcon: `<img src="./assets/score-memory-icon.png" alt="Score Memory" style="width:100%;height:100%;border-radius:14px;object-fit:cover;" />`
       }
     ];
 
@@ -1746,7 +1787,7 @@
         appsSectionTag: "OFFICIAL PORTFOLIO",
         appsSectionTitle: "Our Featured Applications",
         appsSectionDesc: "Discover our suite of Android applications engineered for reliability, speed, and an effortless user experience.",
-        filterAll: "All Apps (6)",
+        filterAll: "All Apps (7)",
         filterHealth: "Health & Care",
         filterTransit: "Navigation & Transit",
         filterCulture: "Japanese & Anime",
@@ -1786,7 +1827,7 @@
         appsSectionTag: "OFFICIAL PORTFOLIO • معرض الأعمال",
         appsSectionTitle: "تطبيقات Code Mahou المميزة",
         appsSectionDesc: "تعرّف على باقة تطبيقاتنا المصممة بعناية لتقديم تجربة استخدام سلسة، سريعة، وموثوقة.",
-        filterAll: "الكل (6)",
+        filterAll: "الكل (7)",
         filterHealth: "الصحة والعناية",
         filterTransit: "المواصلات والملاحة",
         filterCulture: "اليابانية والأنمي",

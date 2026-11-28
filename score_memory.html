@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سكور ميموري - حاسبة نقاط الألعاب والدومينو | Score Memory: Game Scorekeeper | Code Mahou</title>
+  <meta name="description" content="تطبيق Score Memory لحساب نقاط الدومينو، البلوت، الطرنيب، الأونو، وأكثر من 22 لعبة جاهزة مع عداد الدومينو بالكاميرا (AI)، الإدخال الصوتي، نرد 3D، ومشاركة القواعد بالـ QR!" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-base: #060d0b;
+      --bg-surface: #0b1916;
+      --bg-card: rgba(14, 33, 28, 0.85);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --accent-gold: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-teal: #14b8a6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6, 13, 11, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 800;
+      font-size: 1.15rem;
+    }
+    .brand-link img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-gold);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-emerald);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #34d399 0%, #f59e0b 60%, #fde047 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .btn-playstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-playstore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(16, 185, 129, 0.5);
+    }
+
+    .showcase-card {
+      background: linear-gradient(160deg, rgba(6, 78, 59, 0.78), rgba(11, 25, 22, 0.96));
+      border: 2px solid rgba(245, 158, 11, 0.5);
+      border-radius: 28px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+    }
+    .showcase-card img {
+      width: 170px;
+      height: 170px;
+      border-radius: 36px;
+      border: 4px solid #fbbf24;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 18px;
+    }
+    .spec-list {
+      list-style: none;
+      margin: 16px 0 0;
+      text-align: start;
+    }
+    .spec-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .spec-list li strong {
+      color: #fde047;
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 44px 24px;
+    }
+    .section-title {
+      font-size: 1.9rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 26px;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #fde047;
+    }
+    .card p, .card li {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .card ul {
+      padding-inline-start: 20px;
+      margin-top: 8px;
+    }
+    .card li { margin-bottom: 6px; }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 36px 24px;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #34d399;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .cta-row { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-link">
+        <img src="./assets/score-memory-icon.png" alt="Score Memory" onerror="this.src='./assets/logo-main.png'" />
+        <span>Code Mahou • Score Memory</span>
+      </a>
+      <div class="nav-actions">
+        <button type="button" class="btn-outline" id="langBtn">🌐 <span id="langLabel">English</span></button>
+        <a href="./score_memory_privacy_policy.html" class="btn-outline" data-i18n="navPrivacy">🛡️ سياسة الخصوصية</a>
+        <a href="./index.html" class="btn-outline" data-i18n="navHome">🏠 كل تطبيقات الاستوديو</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge-pill">
+          <span>👑</span>
+          <span data-i18n="heroBadge">رفيق جلسات الدومينو والورق والألعاب اللوحية بـ 14 لغة</span>
+        </div>
+        <h1 data-i18n-html="heroTitle">
+          Score Memory — <span class="gradient-text">حاسبة نقاط الألعاب</span> الذكية مع شلتك!
+        </h1>
+        <p class="hero-lead" data-i18n="heroLead">
+          ودّع الورقة والقلم والخلافات على الحساب! سجّل نقاط أكثر من 22 لعبة جاهزة (دومينو 101، دومينو الأمريكاني مضاعفات 5، بلوت، طرنيب، تركس، أونو، كاتان، سكرو والمزيد) مع عدّاد نقاط الدومينو بالكاميرا (AI)، الإدخال الصوتي، نرد وعملة ثلاثية الأبعاد، ومشاركة القواعد بمسح الـ QR!
+        </p>
+
+        <div class="cta-row">
+          <a href="https://play.google.com/store/apps/details?id=com.codemahou.score_memory" target="_blank" rel="noopener" class="btn-playstore">
+            <span>▶</span>
+            <span data-i18n="btnPlayStore">حمّل التطبيق مجاناً من Google Play</span>
+          </a>
+          <a href="./score_memory_privacy_policy.html" class="btn-outline" style="padding: 15px 22px; font-size: 0.96rem;">
+            <span>🛡️</span>
+            <span data-i18n="btnPolicy">سياسة الخصوصية الرسمية</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <img src="./assets/score-memory-icon.png" alt="Score Memory: Game Scorekeeper" onerror="this.src='./assets/logo-main.png'" />
+        <h3 data-i18n="cardTitle">👑 Score Memory: Game Scorekeeper</h3>
+        <ul class="spec-list">
+          <li><span data-i18n="specPresets">قوالب الألعاب</span><strong data-i18n="specPresetsVal">+22 لعبة جاهزة + صانع قوالب &amp; QR</strong></li>
+          <li><span data-i18n="specAI">الأدوات الذكية</span><strong data-i18n="specAIVal">كاميرا دومينو AI • إدخال صوتي • حاسبة</strong></li>
+          <li><span data-i18n="specLangs">اللغات والثيمات</span><strong data-i18n="specLangsVal">14 لغة عالمية • 3 ثيمات • نسخ سحابي</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title" data-i18n="featTitle">✨ أهم مميزات تطبيق Score Memory</h2>
+      <p class="section-sub" data-i18n="featSub">مصمم خصيصاً لسهرات الألعاب العائلية والتنافسية بسرعة فائقة وبدون إنترنت.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-i18n="f1Title">🎲 +22 لعبة جاهزة ومشاركة بالـ QR</h3>
+          <ul>
+            <li data-i18n="f1_1"><strong>قوالب جاهزة لكل الألعاب:</strong> دومينو (101 ومضاعفات الـ 5)، بلوت (152)، طرنيب، تركس، هند، سكرو، أونو، كاتان، طاولة، شطرنج والمزيد.</li>
+            <li data-i18n="f1_2"><strong>صانع القواعد المخصصة ومسح QR:</strong> صمّم قواعد لعبتك الخاصة (أعلى نقاط، أقل نقاط، حد الخروج، وأزرار الإضافة السريعة) وشاركها مع أصدقائك بمسح الباركود بالكاميرا فوراً.</li>
+            <li data-i18n="f1_3"><strong>الفرق المحفوظة وبدء بلمسة واحدة:</strong> احفظ شلتك المعتادة وابدأ مباراة جديدة من الشاشة الرئيسية بضغطة زر.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f2Title">📷 كاميرا دومينو AI ولوحة نتائج مزدوجة</h3>
+          <ul>
+            <li data-i18n="f2_1"><strong>عدّاد نقاط الدومينو بالكاميرا (AI):</strong> التقط صورة لقطع الدومينو المتبقية على الطاولة ليقوم التطبيق بعدّ النقاط تلقائياً أو استخدم لوحة القطع البصرية السريعة.</li>
+            <li data-i18n="f2_2"><strong>وضعان للعرض المباشر:</strong> بدّل بلمسة بين جدول الجولات التفصيلي (Ledger View) وبطاقات الطاولة الكبيرة (Big Table Cards) الواضحة لكل الجالسين.</li>
+            <li data-i18n="f2_3"><strong>إدخال صوتي وحاسبة مدمجة:</strong> أضف النقاط بصوتك أو استخدم الحاسبة المصغرة مع تبديل الموزع وتاج المتصدر تلقائياً.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="f3Title">🏆 إحصائيات 1 ضد 1، أدوات 3D، ونسخ سحابي</h3>
+          <ul>
+            <li data-i18n="f3_1"><strong>احتفال الفوز وقاعة الأساطير:</strong> مؤثرات تصفيق حية، رسم بياني لمسار المباراة، وألقاب مميزة (القناص، ملك الصفر، سلسلة نار) مع إحصائيات المواجهات المباشرة 1v1.</li>
+            <li data-i18n="f3_2"><strong>حقيبة أدوات الطاولة والبطولات:</strong> نرد ثلاثي الأبعاد (1D / 2D / 3D)، رمي العملة 3D، قرعة من يبدأ، مؤقت الدور، وجدول بطولات خروج المغلوب.</li>
+            <li data-i18n="f3_3"><strong>14 لغة و3 ثيمات ونسخ Google Drive:</strong> ثيمات (OLED داكن، لاونج، ونهاري) مع نسخ احتياطي سحابي آمن عبر Google Drive.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Code Mahou</strong> — Score Memory (`com.codemahou.score_memory`).</p>
+    <p style="margin-top: 8px;">
+      <a href="./index.html">Code Mahou Studio</a> •
+      <a href="./score_memory_privacy_policy.html">Privacy Policy | سياسة الخصوصية</a> •
+      <a href="https://play.google.com/store/apps/details?id=com.codemahou.score_memory" target="_blank" rel="noopener">Google Play</a>
+    </p>
+  </footer>
+
+  <script>
+    const DICT = {
+      ar: {
+        navPrivacy: "🛡️ سياسة الخصوصية",
+        navHome: "🏠 كل تطبيقات الاستوديو",
+        heroBadge: "رفيق جلسات الدومينو والورق والألعاب اللوحية بـ 14 لغة",
+        heroTitle: 'Score Memory — <span class="gradient-text">حاسبة نقاط الألعاب</span> الذكية مع شلتك!',
+        heroLead: "ودّع الورقة والقلم والخلافات على الحساب! سجّل نقاط أكثر من 22 لعبة جاهزة (دومينو 101، دومينو الأمريكاني مضاعفات 5، بلوت، طرنيب، تركس، أونو، كاتان، سكرو والمزيد) مع عدّاد نقاط الدومينو بالكاميرا (AI)، الإدخال الصوتي، نرد وعملة ثلاثية الأبعاد، ومشاركة القواعد بمسح الـ QR!",
+        btnPlayStore: "حمّل التطبيق مجاناً من Google Play",
+        btnPolicy: "سياسة الخصوصية الرسمية",
+        cardTitle: "👑 Score Memory: Game Scorekeeper",
+        specPresets: "قوالب الألعاب",
+        specPresetsVal: "+22 لعبة جاهزة + صانع قوالب & QR",
+        specAI: "الأدوات الذكية",
+        specAIVal: "كاميرا دومينو AI • إدخال صوتي • حاسبة",
+        specLangs: "اللغات والثيمات",
+        specLangsVal: "14 لغة عالمية • 3 ثيمات • نسخ سحابي",
+        featTitle: "✨ أهم مميزات تطبيق Score Memory",
+        featSub: "مصمم خصيصاً لسهرات الألعاب العائلية والتنافسية بسرعة فائقة وبدون إنترنت.",
+        f1Title: "🎲 +22 لعبة جاهزة ومشاركة بالـ QR",
+        f1_1: "قوالب جاهزة لكل الألعاب: دومينو (101 ومضاعفات الـ 5)، بلوت (152)، طرنيب، تركس، هند، سكرو، أونو، كاتان، طاولة، شطرنج والمزيد.",
+        f1_2: "صانع القواعد المخصصة ومسح QR: صمّم قواعد لعبتك الخاصة وشاركها مع أصدقائك بمسح الباركود بالكاميرا فوراً.",
+        f1_3: "الفرق المحفوظة وبدء بلمسة واحدة: احفظ شلتك المعتادة وابدأ مباراة جديدة من الشاشة الرئيسية بضغطة زر.",
+        f2Title: "📷 كاميرا دومينو AI ولوحة نتائج مزدوجة",
+        f2_1: "عدّاد نقاط الدومينو بالكاميرا (AI): التقط صورة لقطع الدومينو المتبقية على الطاولة ليقوم التطبيق بعدّ النقاط تلقائياً أو استخدم لوحة القطع البصرية.",
+        f2_2: "وضعان للعرض المباشر: بدّل بلمسة بين جدول الجولات التفصيلي (Ledger View) وبطاقات الطاولة الكبيرة (Big Table Cards) الواضحة لكل الجالسين.",
+        f2_3: "إدخال صوتي وحاسبة مدمجة: أضف النقاط بصوتك أو استخدم الحاسبة المصغرة مع تبديل الموزع وتاج المتصدر تلقائياً.",
+        f3Title: "🏆 إحصائيات 1 ضد 1، أدوات 3D، ونسخ سحابي",
+        f3_1: "احتفال الفوز وقاعة الأساطير: مؤثرات تصفيق حية، رسم بياني لمسار المباراة، وألقاب مميزة مع إحصائيات المواجهات المباشرة 1v1.",
+        f3_2: "حقيبة أدوات الطاولة والبطولات: نرد ثلاثي الأبعاد (1D / 2D / 3D)، رمي العملة 3D، قرعة من يبدأ، مؤقت الدور، وجدول بطولات خروج المغلوب.",
+        f3_3: "14 لغة و3 ثيمات ونسخ Google Drive: ثيمات (OLED داكن، لاونج، ونهاري) مع نسخ احتياطي سحابي آمن عبر Google Drive."
+      },
+      en: {
+        navPrivacy: "🛡️ Privacy Policy",
+        navHome: "🏠 All Studio Apps",
+        heroBadge: "THE ULTIMATE TABLETOP & GAME NIGHT SCOREKEEPER IN 14 LANGUAGES",
+        heroTitle: 'Score Memory — Smart <span class="gradient-text">Game Scorekeeper</span> &amp; AI Domino Counter!',
+        heroLead: "Ditch scrap paper and mental math! Track scores effortlessly across 22+ built-in presets (Dominoes 101, All Fives, Baloot, Tarneeb, Uno, Catan, Spades, Rummy & more) with an AI Domino Camera Pip Counter, Voice Score Entry, 3D Dice & Coin Toolkit, and instant QR Rule Sharing!",
+        btnPlayStore: "Get It Free on Google Play",
+        btnPolicy: "Official Privacy Policy",
+        cardTitle: "👑 Score Memory: Game Scorekeeper",
+        specPresets: "Game Presets",
+        specPresetsVal: "22+ Built-In + Custom Builder & QR",
+        specAI: "Smart Tools",
+        specAIVal: "AI Domino Camera • Voice Entry • Mini Calc",
+        specLangs: "Languages & Themes",
+        specLangsVal: "14 Languages • 3 Themes • Drive Cloud Sync",
+        featTitle: "✨ Complete Feature Highlights",
+        featSub: "Engineered for fast, offline-first tabletop game nights with friends and family.",
+        f1Title: "🎲 22+ Game Presets & Camera QR Sharing",
+        f1_1: "22+ Built-In Cultural & Global Games: Dominoes 101, All Fives (Muggins), Mexican Train, Baloot, Tarneeb, Trix, Uno, Catan, Spades, Rummy, Skyjo, Backgammon & more.",
+        f1_2: "Custom Rule Builder & QR Scanner: Configure win conditions, elimination limits, and quick-score buttons, then share rules instantly via Camera QR scan.",
+        f1_3: "1-Tap Crew Quick-Start: Save your regular game night groups and launch a match in one tap from the Home screen.",
+        f2Title: "📷 AI Domino Camera Scanner & Dual Scoreboard",
+        f2_1: "AI Domino Camera Pip Counter: Snap a photo of remaining domino tiles on the table to automatically detect and sum pips, or use the interactive visual tile tapper.",
+        f2_2: "Dual Scoreboard Views: Switch seamlessly between the round-by-round Ledger Table View and Big Table Cards Mode readable from across the table.",
+        f2_3: "Voice Score Entry & Built-In Mini Calculator: Dictate round scores hands-free or sum complex hands with automatic dealer rotation and leader crown tracking.",
+        f3Title: "🏆 1v1 Rivalry Stats, 3D Toolkit & Cloud Sync",
+        f3_1: "Victory Fanfare & Hall of Fame: Celebrate wins with synthesized crowd applause, match momentum line graphs, Hall of Fame titles, and lifetime 1v1 rivalry records.",
+        f3_2: "3D Tabletop Toolkit & Knockout Brackets: Built-in 3D Animated Dice Roller (1D/2D/3D), 3D Coin Flip, random starter picker, custom turn timer, and 4-player tournament brackets.",
+        f3_3: "14 Languages, 3 Themes & Google Drive Backup: Play in 14 native languages across OLED Dark, Lounge, and Daylight themes with encrypted Google Drive cloud backup."
+      }
+    };
+
+    let lang = localStorage.getItem("codemahou_lang") || "ar";
+    const langBtn = document.getElementById("langBtn");
+    const langLabel = document.getElementById("langLabel");
+
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem("codemahou_lang", l);
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      langLabel.textContent = l === "ar" ? "English" : "عربي";
+      const d = DICT[l];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (d[k]) el.textContent = d[k];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const k = el.getAttribute("data-i18n-html");
+        if (d[k]) el.innerHTML = d[k];
+      });
+    }
+
+    langBtn.addEventListener("click", () => setLang(lang === "ar" ? "en" : "ar"));
+    setLang(lang);
+  </script>
+</body>
+</html>

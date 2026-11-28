@@ -3,8 +3,8 @@
   "studio_ar": "كود ماهو (Code Mahou)",
   "website": "https://codemahou.github.io/",
   "developer_play_url": "https://play.google.com/store/apps/developer?id=Code+Mahou",
-  "updated_at": "2026-11-25",
-  "version": 2,
+  "updated_at": "2026-11-28",
+  "version": 3,
   "ads": [
     {
       "id": 1,
@@ -107,6 +107,23 @@
       "accent": "#F59E0B",
       "badge": "36 Categories • Wi-Fi & Online Party",
       "badge_ar": "36 فئة تحدي • أونلاين وواي فاي محلي"
+    },
+    {
+      "id": 7,
+      "package_id": "com.codemahou.score_memory",
+      "name": "Score Memory: Game Scorekeeper",
+      "name_ar": "سكور ميموري: حاسبة نقاط الألعاب والدومينو",
+      "category": "Tabletop & Game Utility",
+      "category_ar": "ألعاب لوحية وحاسبة نقاط",
+      "desc": "Universal game night scorekeeper with 22+ built-in presets (Dominoes 101, All Fives, Baloot, Tarneeb, Uno, Catan), AI Domino Camera Pip Counter, Voice Score Entry, 3D Dice & Coin Toolkit, 1v1 Rivalry Stats, and QR rule sharing across 14 languages.",
+      "desc_ar": "حاسبة نقاط الألعاب الشاملة لأكثر من 22 لعبة جاهزة (دومينو 101، مضاعفات 5، بلوت، طرنيب، تركس، أونو، كاتان، سكرو) مع عدّاد نقاط الدومينو بالكاميرا (AI)، إدخال صوتي، نرد وعملة 3D، إحصائيات 1 ضد 1، ومشاركة القواعد بالـ QR بـ 14 لغة.",
+      "url": "https://play.google.com/store/apps/details?id=com.codemahou.score_memory",
+      "page_url": "https://codemahou.github.io/score_memory.html",
+      "privacy_url": "https://codemahou.github.io/score_memory_privacy_policy.html",
+      "icon": "https://codemahou.github.io/assets/score-memory-icon.png",
+      "accent": "#10B981",
+      "badge": "22+ Games • AI Domino Camera & 3D Dice",
+      "badge_ar": "+22 لعبة • كاميرا دومينو AI ونرد 3D"
     }
   ],
   "apps": [
@@ -211,6 +228,23 @@
       "accent": "#F59E0B",
       "badge": "36 Categories • Wi-Fi & Online Party",
       "badge_ar": "36 فئة تحدي • أونلاين وواي فاي محلي"
+    },
+    {
+      "id": 7,
+      "package_id": "com.codemahou.score_memory",
+      "name": "Score Memory: Game Scorekeeper",
+      "name_ar": "سكور ميموري: حاسبة نقاط الألعاب والدومينو",
+      "category": "Tabletop & Game Utility",
+      "category_ar": "ألعاب لوحية وحاسبة نقاط",
+      "desc": "Universal game night scorekeeper with 22+ built-in presets (Dominoes 101, All Fives, Baloot, Tarneeb, Uno, Catan), AI Domino Camera Pip Counter, Voice Score Entry, 3D Dice & Coin Toolkit, 1v1 Rivalry Stats, and QR rule sharing across 14 languages.",
+      "desc_ar": "حاسبة نقاط الألعاب الشاملة لأكثر من 22 لعبة جاهزة (دومينو 101، مضاعفات 5، بلوت، طرنيب، تركس، أونو، كاتان، سكرو) مع عدّاد نقاط الدومينو بالكاميرا (AI)، إدخال صوتي، نرد وعملة 3D، إحصائيات 1 ضد 1، ومشاركة القواعد بالـ QR بـ 14 لغة.",
+      "url": "https://play.google.com/store/apps/details?id=com.codemahou.score_memory",
+      "page_url": "https://codemahou.github.io/score_memory.html",
+      "privacy_url": "https://codemahou.github.io/score_memory_privacy_policy.html",
+      "icon": "https://codemahou.github.io/assets/score-memory-icon.png",
+      "accent": "#10B981",
+      "badge": "22+ Games • AI Domino Camera & 3D Dice",
+      "badge_ar": "+22 لعبة • كاميرا دومينو AI ونرد 3D"
     }
   ]
 }

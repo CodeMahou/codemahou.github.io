@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Score Memory Privacy Policy | سياسة الخصوصية لتطبيق سكور ميموري</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <style>
+    :root {
+      --primary: #0d9488;
+      --primary-dark: #064e3b;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", Tahoma, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #061310, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--accent);
+    }
+    header img {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      border: 3px solid var(--accent);
+      margin-bottom: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; opacity: 0.92; font-size: 15px; }
+    .container {
+      max-width: 920px;
+      margin: 28px auto;
+      padding: 0 16px 48px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+    h2 {
+      color: var(--primary-dark);
+      margin-top: 0;
+      border-bottom: 2px solid #ccfbf1;
+      padding-bottom: 8px;
+    }
+    h3 { color: var(--primary); margin-bottom: 6px; }
+    ul { padding-inline-start: 22px; }
+    li { margin-bottom: 6px; }
+    a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .en-section { direction: ltr; text-align: left; }
+    .badge {
+      display: inline-block;
+      background: #ccfbf1;
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="./assets/score-memory-icon.png" alt="Score Memory Icon" onerror="this.style.display='none'" />
+    <h1>Score Memory: Game Scorekeeper — Privacy Policy | سياسة الخصوصية</h1>
+    <p>Package: com.codemahou.score_memory • Developer: Code Mahou • Effective Date: November 28, 2026</p>
+  </header>
+
+  <div class="container">
+    <!-- ARABIC SECTION -->
+    <div class="card" dir="rtl">
+      <span class="badge">النسخة العربية</span>
+      <h2>سياسة الخصوصية لتطبيق Score Memory (`com.codemahou.score_memory`)</h2>
+      <p>
+        طور استوديو <strong>Code Mahou</strong> تطبيق <strong>Score Memory (سكور ميموري - حاسبة نقاط الألعاب والدومينو والورق)</strong> ليكون رفيقك الذكي في تسجيل نقاط الألعاب اللوحية والجلسات مع الأصدقاء. توضح هذه الوثيقة كيفية تعامل التطبيق مع البيانات والصلاحيات التزاماً بسياسات متجر Google Play.
+      </p>
+
+      <h3>1. التخزين المحلي الكامل للبيانات (100% Local-First Data Storage)</h3>
+      <ul>
+        <li>جميع بيانات المباريات، الجولات، أسماء اللاعبين، الفرق المحفوظة (Crews)، إحصائيات المواجهات المباشرة (1v1 Head-to-Head)، البطولات، وقوالب الألعاب المخصصة تُحفظ <strong>محلياً داخل قاعدة بيانات هاتفك فقط (SQLite)</strong>.</li>
+        <li>نحن لا نمتلك أي خوادم خارجية تجمع أو تطلع على سجلات مبارياتك أو أسماء اللاعبين، ويمكن للتطبيق العمل بالكامل بدون اتصال بالإنترنت.</li>
+      </ul>
+
+      <h3>2. النسخ الاحتياطي السحابي عبر Google Drive (اختياري للمشتركين في Pro)</h3>
+      <ul>
+        <li>يتيح التطبيق ميزة اختيارية للنسخ الاحتياطي والاستعادة عبر حسابك الشخصي في <strong>Google Drive</strong> باستخدام تسجيل دخول Google الرسمي (<code>google_sign_in</code>) ونطاق المجلد الخاص بالتطبيق فقط (<code>https://www.googleapis.com/auth/drive.appdata</code>).</li>
+        <li>هذا النطاق المحدود يتيح للتطبيق حفظ واسترجاع ملف النسخة الاحتياطية الخاص به فقط داخل مجلد مخفي في حسابك على Google Drive، ولا يمنح التطبيق أي صلاحية للوصول إلى ملفاتك أو صورك الأخرى على Google Drive.</li>
+      </ul>
+
+      <h3>3. الصلاحيات التي يستخدمها التطبيق والغرض منها</h3>
+      <ul>
+        <li><strong>الكاميرا (<code>android.permission.CAMERA</code>):</strong> تُستخدم حصرياً داخل الجهاز لميزتين فقط:
+          <ol>
+            <li><strong>عدّاد نقاط الدومينو بالذكاء الاصطناعي (AI Domino Camera Pip Counter):</strong> لتحليل صورة قطع الدومينو وحساب مجموع النقاط محلياً على هاتفك فوراً.</li>
+            <li><strong>ماسح رمز الاستجابة السريعة (QR Code Rule Scanner):</strong> لمسح ومشاركة قوالب قواعد الألعاب المخصصة بين الهواتف مباشرة عبر تقنية Google ML Kit.</li>
+          </ol>
+          تتم معالجة جميع صور الكاميرا محلياً داخل ذاكرة الهاتف ولا يتم رفع أو تخزين أي صور أو وجوه على أي خادم خارجي.
+        </li>
+        <li><strong>الميكروفون (<code>android.permission.RECORD_AUDIO</code>):</strong> يُستخدم حصرياً عند ضغطك على زر الإدخال الصوتي للنقاط (Voice Score Entry) لتحويل كلامك إلى نقاط رقمية عبر محرك التعرف الصوتي للنظام، ولا يتم تسجيل أو حفظ أي ملفات صوتية.</li>
+        <li><strong>الإنترنت وحالة الشبكة (<code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code>):</strong> تُستخدم لتحميل الإعلانات في النسخة المجانية عبر Google AdMob، والتحقق من اشتراكات النسخة الاحترافية عبر Google Play Billing، ومزامنة النسخة الاحتياطية الاختيارية مع Google Drive.</li>
+      </ul>
+
+      <h3>4. الإعلانات واشتراكات النسخة الاحترافية (Google AdMob &amp; Google Play Billing)</h3>
+      <ul>
+        <li><strong>إعلانات Google AdMob:</strong> يعرض التطبيق في النسخة المجانية إعلانات (Banner، Native Advanced مع MediaView، Interstitial، Rewarded، و App Open). قد تستخدم حزمة Google Mobile Ads SDK معرّف الإعلانات الخاص بالجهاز (Advertising ID) وبيانات التشخيص لتقديم الإعلانات ومكافحة الاحتيال وفقاً لسياسة خصوصية Google.</li>
+        <li><strong>اشتراكات Score Memory Pro (Google Play Billing):</strong> يتيح التطبيق باقات اشتراك اختيارية (شهرية، ربع سنوية، نصف سنوية، وسنوية) لإزالة جميع الإعلانات نهائياً وفتح كافة الميزات الاحترافية (ماسح الدومينو بالكاميرا، الإدخال الصوتي، مشاركة القوالب بالـ QR، والنسخ السحابي عبر Google Drive). تتم جميع المعاملات المالية بشكل آمن ومباشر عبر متجر Google Play دون أن يطلع التطبيق على أي بيانات بطاقات بنكية.</li>
+        <li>روابط سياسات الخصوصية الرسمية لشركة Google:
+          <ul>
+            <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">سياسة خصوصية Google</a></li>
+            <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">معلومات خصوصية Google AdMob</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>5. التحكم في البيانات والتواصل معنا</h3>
+      <ul>
+        <li>يمكنك في أي وقت تعديل أو حذف أي مباراة، لاعب، فريق، أو قالب لعبة من داخل التطبيق، أو مسح بيانات التطبيق بالكامل من إعدادات نظام الأندرويد، كما يمكنك حذف النسخة السحابية من إعدادات Google Drive.</li>
+        <li>التطبيق مناسب لجميع الفئات العمرية ولا يجمع عمداً أي بيانات شخصية من الأطفال.</li>
+        <li>لأي استفسار يخص الخصوصية أو الدعم الفني، يسعدنا تواصلكم عبر البريد الإلكتروني: <a href="mailto:world.nice44@gmail.com">world.nice44@gmail.com</a> أو زيارة صفحة التطبيق الرسمية: <a href="./score_memory.html">https://codemahou.github.io/score_memory.html</a>.</li>
+      </ul>
+    </div>
+
+    <!-- ENGLISH SECTION -->
+    <div class="card en-section" dir="ltr">
+      <span class="badge">English Version</span>
+      <h2>Privacy Policy for Score Memory (`com.codemahou.score_memory`)</h2>
+      <p>
+        <strong>Code Mahou</strong> built the <strong>Score Memory: Game Scorekeeper</strong> mobile application for Android. This Privacy Policy explains how information and device permissions are handled when you use our app.
+      </p>
+
+      <h3>1. 100% Local-First Data Storage</h3>
+      <ul>
+        <li>All game sessions, round scores, player profiles, saved crews, head-to-head rivalry statistics, tournament brackets, and custom game rule presets created in Score Memory are stored <strong>locally on your device</strong> in an internal SQLite database.</li>
+        <li>Code Mahou does not operate external servers that collect, view, or sell your personal match history or player names.</li>
+      </ul>
+
+      <h3>2. Optional Google Drive Cloud Backup &amp; Restore</h3>
+      <ul>
+        <li>If you choose to use the optional Cloud Backup feature (Score Memory Pro), the App uses official Google Sign-In and the restricted Google Drive <code>https://www.googleapis.com/auth/drive.appdata</code> scope.</li>
+        <li>This scope only allows Score Memory to read and write its own private backup file inside your personal Google Drive <code>appDataFolder</code>. The App cannot view, access, or modify any other files or photos in your Google Drive.</li>
+      </ul>
+
+      <h3>3. Device Permissions &amp; On-Device Processing</h3>
+      <ul>
+        <li><strong>Camera (<code>android.permission.CAMERA</code>):</strong> Used strictly for two user-initiated features:
+          <ol>
+            <li><strong>AI Domino Camera Pip Counter:</strong> Analyzes photos of domino tiles locally on your device to automatically sum remaining pips.</li>
+            <li><strong>QR Code Rule Preset Scanner:</strong> Scans QR codes via on-device Google ML Kit Barcode Scanning to import custom game rule templates shared by friends.</li>
+          </ol>
+          All camera images are processed entirely in local device memory and are never uploaded to or stored on any external server.
+        </li>
+        <li><strong>Microphone (<code>android.permission.RECORD_AUDIO</code>):</strong> Used strictly when you tap the Voice Score Entry button to convert spoken score commands into numbers on-device. No audio recordings are stored or transmitted to us.</li>
+        <li><strong>Internet &amp; Network State (<code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code>):</strong> Used to load Google AdMob advertisements in the free tier, verify Google Play Billing Pro subscriptions, and perform optional Google Drive cloud backups.</li>
+      </ul>
+
+      <h3>4. Third-Party Services &amp; Pro Subscriptions</h3>
+      <ul>
+        <li><strong>Google AdMob:</strong> The free tier displays advertisements (Banner, Native Advanced with MediaView, Interstitial, Rewarded Interstitial, Rewarded, and App Open ads). The Google Mobile Ads SDK may collect and use your device's Advertising ID (AAID), coarse location, and diagnostic data for ad delivery, frequency capping, and fraud prevention in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li><strong>Google Play Billing (Score Memory Pro):</strong> Optional auto-renewing subscriptions (Monthly, Quarterly, Half-Yearly, and Yearly) unlock a 100% ad-free experience and all Pro features (AI Domino Camera Scanner, Voice Score Entry, Unlimited Custom Presets &amp; QR Sharing, and Google Drive Cloud Backup). All billing transactions are processed securely by Google Play; we never access or store your payment card details.</li>
+      </ul>
+
+      <h3>5. Data Deletion, Children's Privacy &amp; Contact Us</h3>
+      <ul>
+        <li>You retain full control over your data and can delete any match, player profile, saved crew, or custom preset at any time inside the App, clear App storage via Android Settings, or disconnect/delete your backup from Google Drive settings.</li>
+        <li>Score Memory does not knowingly collect personally identifiable information from children under 13.</li>
+        <li>If you have any questions about this Privacy Policy, please contact <strong>Code Mahou</strong> at <a href="mailto:world.nice44@gmail.com">world.nice44@gmail.com</a> or visit <a href="./score_memory.html">https://codemahou.github.io/score_memory.html</a>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Code Mahou — Score Memory (`com.codemahou.score_memory`). All rights reserved. • <a href="./score_memory.html">Score Memory Official Page</a> • <a href="./index.html">Code Mahou Home</a>
+  </footer>
+</body>
+</html>
